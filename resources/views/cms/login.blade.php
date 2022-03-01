@@ -48,14 +48,16 @@
       border-top-left-radius: 0px;
       border-bottom-left-radius: 0px;
     }
-     #login-form .input-group-text{
-      border-top-right-radius: 0px;
-      border-bottom-right-radius: 0px;
-      border-top-left-radius: 0.25rem;
-      border-bottom-left-radius: 0.25rem;
+     
+    /* #login-form button{
+     width: 119px; */
 
+     #login-form a {
+    width: 119px;
     }
+
   </style>
+
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -70,7 +72,7 @@
 
       <form id="login-form" action="cms/index3.html" method="post">
         <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="رقم الهوية ">
+          <input type="number" class="form-control" placeholder="رقم الهوية ">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-id-card"></span>
@@ -90,13 +92,17 @@
             <div class="icheck-primary">
               <input type="checkbox" id="remember">
               <label for="remember">
-                Remember Me
+                تذكرني
               </label>
             </div>
           </div>
+          
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+            {{-- <button type="submit" class="btn btn-primary btn-block">تسجيل الدخول </button> --}}
+            <a href="{{route('cms.parent')}}" class="btn btn-primary btn-block">تسجيل الدخول</a>
+            {{-- <button type="submit" class="btn btn-primary btn-block">تسجيل الدخول</button> --}}
+
           </div> 
           <!-- /.col -->
         </div>    

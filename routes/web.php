@@ -23,7 +23,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('cms/admin')->group(function () {
     Route::view('login', 'cms.login');
-    Route::view('parent', 'cms-notauthorized.parent');
+    Route::view('register', 'cms.register');
+    Route::view('parent', 'cms.parent')->name('cms.parent');
 
     Route::view('/', 'cms.temp');
 });
