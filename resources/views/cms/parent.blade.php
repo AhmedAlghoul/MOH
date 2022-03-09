@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Admin Cms | @yield('title')</title>
+  <title> لوحة التحكم | @yield('title')</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -30,13 +30,13 @@
   <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css">
   <!-- Custom style for RTL -->
   <link rel="stylesheet" href="{{asset('cms/dist/css/custom.css')}}">
-  
+                  
  
 @yield('styles')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
-
+          
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -130,7 +130,7 @@
                with font-awesome or any other icon font library -->
 
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
+            <a href="{{route('cms.dashboard')}}" class="nav-link">
               <i class="nav-icon fas fa-home"></i>
               <p>
                 الصفحة الرئيسية
@@ -144,44 +144,19 @@
               <p>
                 المسستشفيات
                 <i class="fas fa-angle-left right"></i>
-                <span class="badge badge-info right">6</span>
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="pages/layout/top-nav.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Top Navigation</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/layout/boxed.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Boxed</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/layout/fixed-sidebar.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Fixed Sidebar</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/layout/fixed-topnav.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Fixed Navbar</p>
-                </a>
-              </li>
+        <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="pages/layout/fixed-footer.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Fixed Footer</p>
+                  <i class="fas fa-list nav-icon"></i>
+                  <p>عرض</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="pages/layout/collapsed-sidebar.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Collapsed Sidebar</p>
+                  <i class="fas fa-plus-square nav-icon"></i>
+                  <p>إنشاء</p>
                 </a>
               </li>
             </ul>
@@ -189,15 +164,28 @@
         
 
           <li class="nav-header">التخصصات</li>
-          <li class="nav-item">
-            <a href="pages/calendar.html" class="nav-link">
+            <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-user-md"></i>
               <p>
-               
                 الأطباء
-                {{-- <span class="badge badge-info right">2</span> --}}
+                <i class="fas fa-angle-left right"></i>
               </p>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('doctor.index')}}" class="nav-link">
+                  <i class="fas fa-list nav-icon"></i>
+                  <p>عرض</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="pages/layout/collapsed-sidebar.html" class="nav-link">
+                  <i class="fas fa-plus-square nav-icon"></i>
+                  <p>إنشاء</p>
+                </a>
+              </li>
+            </ul>
           </li>
           <li class="nav-item">
             <a href="pages/gallery.html" class="nav-link">
@@ -285,10 +273,9 @@
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <section class="content">
 
-   @yield('content') 
-   
+     @yield('content') 
+    {{-- <section class="content">
         <!-- Main row -->
         <div class="row">
           <!-- Left col -->
@@ -302,7 +289,7 @@
         <!-- /.row (main row) -->
 
       </div><!-- /.container-fluid -->
-    </section>
+    </section> --}}
     <!-- /.content -->
 
 
@@ -314,7 +301,7 @@
     
    
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 0.1
+      <b> النسخة</b> {{env('App_Version')}}  
     </div>
   </footer>
 

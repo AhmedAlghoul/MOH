@@ -1,6 +1,6 @@
 @extends('cms.parent')
 
-@section('title'.'')
+@section('title','')
 
 @section('styles')
     
@@ -22,3 +22,5 @@
 
 
 @section('scripts')
+
+@endsection
