@@ -32,7 +32,11 @@
   <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css">
   <!-- Custom style for RTL -->
   <link rel="stylesheet" href="{{asset('cms/dist/css/custom.css')}}">
-
+  <style>
+    .image {
+      padding-right: 18px;
+    }
+  </style>
   @yield('styles')
 </head>
 

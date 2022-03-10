@@ -1,6 +1,6 @@
 @extends('cms.parent')
 
-@section('title','')
+@section('title','إضافة طبيب جديد')
 
 @section('styles')
 <style>
@@ -16,12 +16,9 @@
 
 @endsection
 
+@section('page-name','إضافة طبيب جديد')
 
-@section('page-name','Title')
-
-@section('small-page-name','title')
-
-
+@section('small-page-name','إضافة طبيب')
 
 @section('content')
 
@@ -29,36 +26,47 @@
   <!-- general form elements -->
   <div class="card card-primary" id="form-card">
     <div class="card-header">
-      <h3 class="card-title">إضافة طبيب</h3>
+      <h3 class="card-title">إضافة</h3>
     </div>
     <!-- /.card-header -->
     <!-- form start -->
-    <form id="create-form"  role="form">
-      <div class="card-body">
-        <div class="form-group">
-          <label>اسم الطبيب</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+    <form id="create-form" role="form">
+      <div class="card-body form-row">
+        <div class="form-group col-md-6">
+          <label>الرقم الوظيفي</label>
+          <input type="number" class="form-control" placeholder="أدخل الرقم الوظيفي">
         </div>
 
-        <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        <div class="form-group col-md-6">
+          <label>اسم الطبيب</label>
+          <input type="text" class="form-control" placeholder="ادخل اسم الطبيب">
         </div>
-        <div class="form-group">
-          <label for="exampleInputFile">File input</label>
-          <div class="input-group">
-            <div class="custom-file">
-              <input type="file" class="custom-file-input" id="exampleInputFile">
-              <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-            </div>
-            <div class="input-group-append">
-              <span class="input-group-text" id="">Upload</span>
-            </div>
-          </div>
+
+        <div class="form-group col-md-6">
+          <label>تاريخ التعيين</label>
+          <input type="date" class="form-control">
         </div>
-        <div class="form-check">
+
+        <div class="form-group col-md-6">
+          <label>المستشفى</label>
+          <select class="form-control">
+            <option>Default select</option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label>القسم</label>
+          <select class="form-control">
+            <option>Default select</option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label> رقم الجوال</label>
+          <input type="number" class="form-control" placeholder="أدخل رقم الجوال">
+        </div>
+
+        <div class="form-check ">
           <input type="checkbox" class="form-check-input" id="exampleCheck1">
-          <label class="form-check-label" for="exampleCheck1">Check me out</label>
+          <label class="form-check-label">تم التأكد من صحة البيانات</label>
         </div>
       </div>
       <!-- /.card-body -->
