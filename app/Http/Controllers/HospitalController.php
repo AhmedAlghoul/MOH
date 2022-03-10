@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Hospital;
 use Illuminate\Http\Request;
 
 class HospitalController extends Controller
@@ -14,8 +13,9 @@ class HospitalController extends Controller
      */
     public function index()
     {
-
         //
+
+        return response()->view('cms.Hospitals.index');
     }
 
     /**
@@ -25,8 +25,8 @@ class HospitalController extends Controller
      */
     public function create()
     {
-
         //
+        return response()->view('cms.Hospitals.form');
     }
 
     /**
@@ -37,17 +37,16 @@ class HospitalController extends Controller
      */
     public function store(Request $request)
     {
-        
         //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Hospital  $hospital
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Hospital $hospital)
+    public function show($id)
     {
         //
     }
@@ -55,10 +54,10 @@ class HospitalController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Hospital  $hospital
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Hospital $hospital)
+    public function edit($id)
     {
         //
     }
@@ -67,10 +66,10 @@ class HospitalController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Hospital  $hospital
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Hospital $hospital)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -78,10 +77,10 @@ class HospitalController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Hospital  $hospital
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Hospital $hospital)
+    public function destroy($id)
     {
         //
     }

@@ -150,13 +150,13 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="pages/layout/fixed-footer.html" class="nav-link">
+                  <a href="{{route('hospital.index')}}" class="nav-link">
                     <i class="fas fa-list nav-icon"></i>
                     <p>عرض</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="pages/layout/collapsed-sidebar.html" class="nav-link">
+                  <a href="{{route('hospital.create')}}" class="nav-link">
                     <i class="fas fa-plus-square nav-icon"></i>
                     <p>إنشاء</p>
                   </a>

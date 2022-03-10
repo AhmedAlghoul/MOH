@@ -16,9 +16,9 @@
 
 @endsection
 
-@section('page-name','إضافة ممرض جديد')
+@section('page-name','إضافة مستشفى جديد')
 
-@section('small-page-name','إضافة ممرض')
+@section('small-page-name','إضافة مستشفى ')
 
 @section('content')
 
@@ -33,14 +33,15 @@
     <form id="create-form" role="form">
       <div class="card-body form-row">
         <div class="form-group col-md-6">
+          <label>اسم المستشفى</label>
+          <input type="text" class="form-control" placeholder="ادخل اسم المستشفى">
+        </div>
+        <div class="form-group col-md-6">
           <label>الرقم الوظيفي</label>
           <input type="number" class="form-control" placeholder="أدخل الرقم الوظيفي">
         </div>
 
-        <div class="form-group col-md-6">
-          <label>اسم الممرض</label>
-          <input type="text" class="form-control" placeholder="ادخل اسم الممرض">
-        </div>
+
 
         <div class="form-group col-md-6">
           <label>تاريخ التعيين</label>
