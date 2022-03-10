@@ -1,6 +1,6 @@
 @extends('cms.parent')
 
-@section('title','عرض الأطباء')
+@section('title','عرض الممرضين')
 
 @section('styles')
 <style>
@@ -19,7 +19,7 @@
 
 @section('page-name','عرض')
 
-@section('small-page-name','عرض الأطباء')
+@section('small-page-name','عرض الممرضين')
 
 
 
@@ -32,7 +32,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">عرض الأطباء</h3>
+            <h3 class="card-title">عرض الممرضين </h3>
 
             <div class="card-tools">
               <div class="input-group input-group-sm" style="width: 150px;">

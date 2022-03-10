@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\doctors;
 use Illuminate\Http\Request;
 
-class DoctorsController extends Controller
+class NurseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +13,8 @@ class DoctorsController extends Controller
      */
     public function index()
     {
-
         //
-        return response()->view('cms.doctors.index');
+        return response()->view('cms.nurses.index');
     }
 
     /**
@@ -27,7 +25,7 @@ class DoctorsController extends Controller
     public function create()
     {
         //
-        return response()->view('cms.doctors.form');
+        return response()->view('cms.nurses.form');
     }
 
     /**
@@ -44,10 +42,10 @@ class DoctorsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\doctors  $doctors
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(doctors $doctors)
+    public function show($id)
     {
         //
     }
@@ -55,10 +53,10 @@ class DoctorsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\doctors  $doctors
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(doctors $doctors)
+    public function edit($id)
     {
         //
     }
@@ -67,10 +65,10 @@ class DoctorsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\doctors  $doctors
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, doctors $doctors)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -78,10 +76,10 @@ class DoctorsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\doctors  $doctors
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(doctors $doctors)
+    public function destroy($id)
     {
         //
     }

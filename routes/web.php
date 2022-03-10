@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DoctorsController;
+use App\Http\Controllers\NurseController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,4 +31,9 @@ Route::prefix('cms/admin')->group(function () {
     Route::view('doctor', 'cms.doctors.index');
     Route::view('/', 'cms.dashboard')->name('cms.dashboard');
     Route::resource('doctor', DoctorsController::class);
+    Route::resource('nurse', NurseController::class);
+});
+
+Route::get('/', function () {
+    return view('cms.login');
 });
