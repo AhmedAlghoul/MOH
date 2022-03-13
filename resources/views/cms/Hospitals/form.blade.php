@@ -12,6 +12,22 @@
     float: right;
     font-size: 25px;
   }
+
+  /*add new section button style start*/
+  #add-btn {
+    width: 128px !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    height: 40px !important;
+    background: #007bff;
+    text-align: center;
+    padding: 0px;
+    font-size: 15px;
+    font-weight: bold;
+
+  }
+
+  /*button style end*/
 </style>
 
 @endsection
@@ -29,15 +45,35 @@
       <h3 class="card-title">إضافة</h3>
     </div>
     <!-- /.card-header -->
+
     <!-- form start -->
     <form id="create-form" role="form">
-      <div class="card-body form-row">
-        <div class="form-group col-md-12">
-          <label>اسم المستشفى</label>
-          <input type="text" class="form-control" placeholder="ادخل اسم المستشفى">
+      <div class="card-body ">
+        <div class="form-group form-inline" style="padding-bottom: 20px">
+          <label style="padding-left: 20px ">اسم المستشفى</label>
+          <input style="width: 500px" type="text" class="form-control " placeholder="ادخل اسم المستشفى">
         </div>
 
 
+        <div class="form-group " style="width: 100%; height: 20px; border-top: 1px solid black;  text-align: right">
+          <span style=" font-size: 16px; font-weight: bold;  padding: 0 10px;">
+            الأقسام
+            <!--Padding is optional-->
+          </span>
+        </div>
+
+        <div id="addsection" class="form-inline " style="padding-bottom: 20px">
+          <label style="padding-left: 55px  " class="form-group ">اسم القسم</label>
+          <input style="width: 500px; " type="text" class="form-control " placeholder="ادخل اسم القسم">
+          <br> <br> <br>
+        </div>
+
+
+        <div class="form-group">
+          <button type="button" id="add-btn" class="btn btn-primary" style="margin-right: 280px"><i
+              class="fas fa-plus"></i> &nbsp;إضافة قسم
+            جديد</button>
+        </div>
 
       </div>
       <!-- /.card-body -->
@@ -51,11 +87,26 @@
 </div>
 <!-- /.card -->
 
-
-
 @endsection
 
 
 @section('scripts')
+<script>
+  $(document).ready(function(){
+    $('#add-btn').click(function(){
+      var new_section = '<div class="form-inline " style="padding-bottom: 20px">'+
+      '<label style="padding-left: 55px  " class="form-group ">اسم القسم</label>'+
+      '<input style="width: 500px; " type="text" class="form-control " placeholder="ادخل اسم القسم">'+
+      '</div>';
+      $('#addsection').append(new_section);
+      //add delete button to each section added new and make it work properly
+      $('#addsection').find('.form-inline').last().append('<button type="button" class="btn btn-danger" style="margin-right: 15px"><i class="fas fa-trash-alt"></i> &nbsp;حذف</button>');
+      //make delete button work
+      $('#addsection').find('.form-inline').last().find('.btn-danger').click(function(){
+        $(this).parent().remove();
+      });
+    });
+  });
+</script>
 
 @endsection
