@@ -169,6 +169,17 @@
             </li>
 
 
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-calculator"></i>
+                <p>
+                  حساب مفتاح الكادر البشري
+                </p>
+              </a>
+            </li>
+
+
+
             <li class="nav-header">التخصصات</li>
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
