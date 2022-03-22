@@ -49,22 +49,48 @@
             <table class="table table-hover table-bordered table-striped">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>User</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                  <th>Reason</th>
+                  <th>الرقم</th>
+                  <th>الرقم الوظيفي</th>
+                  <th>اسم الممرض</th>
+                  <th>تاريخ التعيين</th>
+                  <th>المستشفى</th>
+                  <th>القسم</th>
+                  <th>رقم الجوال</th>
+                  <th> الأوامر</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>183</td>
-                  <td>John Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-success">Approved</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
 
+                @foreach ($nurses as $nurse)
+                <tr>
+                  <td>{{$nurse->id}}</td>
+                  <td>{{$nurse->job_number}}</td>
+                  <td>{{$nurse->name}}</td>
+                  <td>{{$nurse->date_of_hiring}}</td>
+                  <td>{{$nurse->Hospital_name}}</td>
+                  <td>{{$nurse->Section_name}}</td>
+                  <td>{{$nurse->mobile_number}}</td>
+    
+                  <td>
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-info">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button type="button" class="btn btn-danger">
+                        <i class="fas fa-trash-alt"></i>
+                      </button>
+                    </div>
+                  </td>
+                  {{-- <td>
+                    <a href="{{route('nurses.edit',$nurse->id)}}" class="btn btn-primary btn-sm">تعديل</a>
+                    <form action="{{route('nurses.destroy',$nurse->id)}}" method="post" class="d-inline-block">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" class="btn btn-danger btn-sm">حذف</button>
+                    </form>
+                  </td> --}}
+                </tr>
+                @endforeach
               </tbody>
             </table>
           </div>
