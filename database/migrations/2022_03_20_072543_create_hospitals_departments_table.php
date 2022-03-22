@@ -13,9 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('hospitals', function (Blueprint $table) {
+        Schema::create('hospitals_departments', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            // $table->int('hospital_id');
+            // $table->int('department_id');
+            // $table->foreign('hospital_id')->references('id')->on('hospitals');
+            // $table->foreign('department_id')->references('id')->on('departments');
+            // $table->unique(['hospital_id', 'department_id']);
             $table->timestamps();
         });
     }
@@ -27,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hospitals');
+        Schema::dropIfExists('hospitals_departments');
     }
 };
