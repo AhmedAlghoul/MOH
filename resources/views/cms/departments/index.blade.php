@@ -70,10 +70,10 @@
                   </td>
                   <td>
                     <div class="btn-group">
-                      <button type="button" class="btn btn-info">
+                      <a href="{{route('department.edit',$department->id)}}" class="btn btn-info">
                         <i class="fas fa-edit"></i>
-                      </button>
-                      {{-- we sent id to destroy method $department->id--}}
+                      </a>
+                      {{-- we sent id to destroy method ($department->id)--}}
                       <form action="{{route('department.destroy',$department->id )}}" method="post">
                         @csrf
                         @method('delete')
@@ -85,7 +85,7 @@
                     </div>
                   </td>
                 </tr>
-                @endforeach 
+                @endforeach
                 {{-- <td>
                   <a href="{{route('nurses.edit',$nurse->id)}}" class="btn btn-primary btn-sm">تعديل</a>
                   <form action="{{route('nurses.destroy',$nurse->id)}}" method="post" class="d-inline-block">
@@ -110,7 +110,6 @@
 
   </div>
 </section>
-
 
 @endsection
 

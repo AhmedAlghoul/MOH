@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -14,6 +15,9 @@ class DepartmentController extends Controller
     public function index()
     {
         //
+        $data = Department::all();
+
+        return response()->view('cms.departments.index', ['departments' => $data]);
     }
 
     /**
@@ -24,6 +28,7 @@ class DepartmentController extends Controller
     public function create()
     {
         //
+        return response()->view('cms.departments.form');
     }
 
     /**
@@ -34,7 +39,22 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validate data
+        $request->validate(
+            [
+                'name' => 'required',
+                'is_active' => 'in:on',
+            ],
+            [
+                'name.required' => 'الرجاء إدخال اسم القسم',
+            ]
+        );
+        $department = new Department();
+        $department->name = $request->name;
+        $department->is_active = $request->has('is_active') ? true : false;
+        $department->save();
+        session()->flash('success', 'تم إضافة القسم بنجاح');
+        return redirect()->route('department.create');
     }
 
     /**
@@ -57,6 +77,8 @@ class DepartmentController extends Controller
     public function edit($id)
     {
         //
+        $department = Department::findOrFail($id);
+        return response()->view('cms.departments.edit', ['department' => $department]);
     }
 
     /**
@@ -69,6 +91,22 @@ class DepartmentController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate(
+            [
+                'name' => 'required',
+                'is_active' => 'in:on',
+            ],
+            [
+                'name.required' => 'الرجاء إدخال اسم القسم',
+            ]
+        );
+        $department = Department::findOrFail($id);
+        $department->name = $request->name;
+        $department->is_active = $request->has('is_active') ? true : false;
+        $department->save();
+        session()->flash('success', 'تم تعديل القسم بنجاح');
+        return redirect()->back();
+
     }
 
     /**
@@ -79,6 +117,9 @@ class DepartmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $department = Department::findOrFail($id);
+        $department->delete();
+        session()->flash('success', 'تم حذف القسم بنجاح');
+        return redirect()->route('department.index');
     }
 }
