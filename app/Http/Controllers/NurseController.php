@@ -71,7 +71,7 @@ class NurseController extends Controller
         $nurse->Section_name = $request->get('Section_name');
         $nurse->mobile_number = $request->get('mobile_number');
         $nurse->save();
-        session()->flash('success', 'تم إضافة الطبيب بنجاح  ');
+        session()->flash('success', 'تم إضافة الممرض بنجاح  ');
         return redirect()->route('nurse.create');
     }
 
@@ -106,7 +106,38 @@ class NurseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //write the update code here
+        //validate the data
+        $request->validate(
+            [
+                'job_number' => 'required',
+                'name' => 'required',
+                'date_of_hiring' => 'required',
+                'Hospital_name' => 'required',
+                'Section_name' => 'required',
+                'mobile_number' => 'required',
+            ],
+            [
+                'job_number.required' => 'الرجاء إدخال الرقم الوظيفي',
+                'name.required' => 'الرجاء إدخال الاسم',
+                'date_of_hiring.required' => 'الرجاء إدخال تاريخ التعيين',
+                'Hospital_name.required' => 'الرجاء إدخال اسم المستشفى',
+                'Section_name.required' => 'الرجاء إدخال اسم القسم',
+                'mobile_number.required' => 'الرجاء إدخال رقم الجوال',
+            ]
+        );
+        //get the nurse
+        $nurse = nurse::findOrFail($id);
+        //update the nurse
+        $nurse->job_number = $request->get('job_number');
+        $nurse->name = $request->get('name');
+        $nurse->date_of_hiring = $request->get('date_of_hiring');
+        $nurse->Hospital_name = $request->get('Hospital_name');
+        $nurse->Section_name = $request->get('Section_name');
+        $nurse->mobile_number = $request->get('mobile_number');
+        $nurse->save();
+        session()->flash('success', 'تم تعديل الممرض بنجاح  ');
+        return redirect()->back();
     }
 
     /**
