@@ -70,7 +70,7 @@
     <!-- /.login-logo -->
     <div class="card card-outline card-primary" id="form-card">
       <div class="card-header text-center">
-        <img src="http://127.0.0.1:8000/cms/dist/img/moh.png" class="logo" />
+        <img src="{{asset('/cms/dist/img/moh.png')}}" class="logo" />
         <a href="cms/index2.html" class="ma">نظام إحصاء الكادر البشري وزارة الصحة</a>
         @if (session('error'))
         <div class="alert alert-danger alert-dismissible">
