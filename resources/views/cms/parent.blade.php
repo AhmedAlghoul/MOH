@@ -51,17 +51,15 @@
           <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="index3.html" class="nav-link">الرئيسية</a>
+          <a href="{{route('cms.dashboard')}}" class="nav-link">الرئيسية</a>
         </li>
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" class="nav-link">Contact</a>
-        </li>
+
       </ul>
 
       <!-- SEARCH FORM -->
       <form class="form-inline ml-3">
         <div class="input-group input-group-sm">
-          <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+          <input class="form-control form-control-navbar" type="search" placeholder="البحث" aria-label="Search">
           <div class="input-group-append">
             <button class="btn btn-navbar" type="submit">
               <i class="fas fa-search"></i>
@@ -99,11 +97,7 @@
             <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
           </div>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
-            <i class="fas fa-th-large"></i>
-          </a>
-        </li>
+
       </ul>
     </nav>
     <!-- /.navbar -->
@@ -144,29 +138,6 @@
                 </p>
               </a>
             </li>
-            <li class="nav-item has-treeview">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-hospital"></i>
-                <p>
-                  المسستشفيات
-                  <i class="fas fa-angle-left right"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="{{route('hospital.index')}}" class="nav-link">
-                    <i class="fas fa-list nav-icon"></i>
-                    <p>عرض</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{route('hospital.create')}}" class="nav-link">
-                    <i class="fas fa-plus-square nav-icon"></i>
-                    <p>إنشاء</p>
-                  </a>
-                </li>
-              </ul>
-            </li>
 
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
@@ -191,10 +162,82 @@
                 </li>
               </ul>
             </li>
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-hospital"></i>
+                <p>
+                  المسستشفيات
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{route('hospital.index')}}" class="nav-link">
+                    <i class="fas fa-list nav-icon"></i>
+                    <p>عرض</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('hospital.create')}}" class="nav-link">
+                    <i class="fas fa-plus-square nav-icon"></i>
+                    <p>إنشاء</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
 
+
+
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-file-signature"></i>
+                <p>
+                  الدور الوظيفي
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{route('role.index')}}" class="nav-link">
+                    <i class="fas fa-list nav-icon"></i>
+                    <p>عرض</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('role.create')}}" class="nav-link">
+                    <i class="fas fa-plus-square nav-icon"></i>
+                    <p>إنشاء</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-key nav-icon"></i>
+                <p>
+                  مفتاح كادر التخصصات
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{route('key.index')}}" class="nav-link">
+                    <i class="fas fa-list nav-icon"></i>
+                    <p>عرض</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('key.create')}}" class="nav-link">
+                    <i class="fas fa-plus-square nav-icon"></i>
+                    <p>إنشاء</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
 
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="{{route('cms.humanresources')}}" class="nav-link">
                 <i class="nav-icon fas fa-calculator"></i>
                 <p>
                   حساب مفتاح الكادر البشري
@@ -202,10 +245,34 @@
               </a>
             </li>
 
+            <li class="nav-header">الموظفين</li>
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-user-alt"></i>
+                <p>
+                  الموظفين
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{route('employee.index')}}" class="nav-link">
+                    <i class="fas fa-list nav-icon"></i>
+                    <p>عرض</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('employee.create')}}" class="nav-link">
+                    <i class="fas fa-plus-square nav-icon"></i>
+                    <p>إنشاء</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
 
 
             <li class="nav-header">التخصصات</li>
-            <li class="nav-item has-treeview">
+            {{-- <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-user-md"></i>
                 <p>
@@ -227,7 +294,7 @@
                   </a>
                 </li>
               </ul>
-            </li>
+            </li> --}}
 
 
 
@@ -252,17 +319,87 @@
                     <p>إنشاء</p>
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a href="{{route('cms.nurseskey')}}" class="nav-link">
+                    <i class="fas fa-key nav-icon"></i>
+                    <p>مفتاح الكادر</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('cms.nurses.calculate')}}" class="nav-link">
+                    <i class="nav-icon fas fa-calculator"></i>
+                    <p>
+                      حساب مفتاح كادر التمريض
+                    </p>
+                  </a>
+                </li>
               </ul>
             </li>
 
 
 
-
+            {{--
             <li class="nav-item">
               <a href="pages/gallery.html" class="nav-link">
                 <i class="nav-icon fas fa-prescription"></i>
                 <p>
                   الصيدلة
+                </p>
+              </a>
+            </li> --}}
+
+            {{-- start of multilevel sidebar menu example in cace i want to use it --}}
+
+            {{-- <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-x-ray"></i>
+                <p>
+                  Level 1
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview" style="display: none;">
+
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>
+                      Level 2
+                      <i class="right fas fa-angle-left"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview" style="display: none;">
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        <i class="far fa-dot-circle nav-icon"></i>
+                        <p>Level 3</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        <i class="far fa-dot-circle nav-icon"></i>
+                        <p>Level 3</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        <i class="far fa-dot-circle nav-icon"></i>
+                        <p>Level 3</p>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+
+              </ul>
+            </li> --}}
+
+            {{-- end of multilevel sidebar menu example in cace i want to use it --}}
+
+            {{-- <li class="nav-item">
+              <a href="pages/gallery.html" class="nav-link">
+                <i class="nav-icon fas fa-prescription"></i>
+                <p>
+                  العلاج الطبيعي
                 </p>
               </a>
             </li>
@@ -271,7 +408,16 @@
               <a href="pages/gallery.html" class="nav-link">
                 <i class="nav-icon fas fa-x-ray"></i>
                 <p>
-                  المهن الطبية
+                  فني الأشعة
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="pages/gallery.html" class="nav-link">
+                <i class="nav-icon fas fa-flask"></i>
+                <p>
+                  فني المختبرات
                 </p>
               </a>
             </li>
@@ -283,7 +429,7 @@
                   الإداريين
                 </p>
               </a>
-            </li>
+            </li> --}}
             {{-- settings --}}
             <li class="nav-header">الإعدادات</li>
             <li class="nav-item">
