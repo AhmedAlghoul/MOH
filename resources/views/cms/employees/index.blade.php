@@ -30,9 +30,11 @@
     <!-- /.row -->
     <div class="row">
       <div class="col-12">
+        {{-- downlad Employee names Excel file --}}
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">عرض الموظفين </h3>
+            <h3 class="card-title"> عرض الموظفين <a class="btn btn-success" href="{{ route('file-export') }}">تحميل
+                الأسماء</a> </h3>
 
             <div class="card-tools">
               <div class="input-group input-group-sm" style="width: 150px;">
@@ -74,14 +76,14 @@
                   <td>{{$employee->Roles->Role_name}}</td>
                   <td>{{$employee->mobile_number}}</td>
                   <td>
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-info">
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      <button type="button" class="btn btn-danger">
-                        <i class="fas fa-trash-alt"></i>
-                      </button>
-                    </div>
+
+                    <button type="button" class="btn btn-info">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger">
+                      <i class="fas fa-trash-alt"></i>
+                    </button>
+
                   </td>
 
                   {{-- <td>
