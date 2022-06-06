@@ -30,11 +30,9 @@ class KeyController extends Controller
     {
         //
         $departments = Department::where('is_active', 1)->get();
-        //get roles that are active and associated with the department
-
-
         $roles = Role::where('is_active', 1)->get();
-        return response()->view('cms.keys.form', compact('departments'));
+        return response()->view('cms.Keys.form', compact('departments', 'roles'));
+        // return response()->view('cms.keys.form', compact('departments','roles'));
     }
 
     /**
@@ -46,7 +44,24 @@ class KeyController extends Controller
     public function store(Request $request)
     {
         //
-
+        $request->validate(
+            [
+                'department' => 'required',
+                'role' => 'required',
+                'key_value' => 'required',
+            ],
+            [
+                'department.required' => 'الرجاء اختيار القسم',
+                'role.required' => 'الرجاء اختيار الدور',
+                'key_value.required' => 'الرجاء إدخال مفتاح الكادر',
+            ]
+        );
+        $key = new Key();
+        $key->department_id = $request->department;
+        $key->role_id = $request->role;
+        $key->key_value = $request->key_value;
+        $key->save();
+        return redirect()->back();
     }
 
     /**

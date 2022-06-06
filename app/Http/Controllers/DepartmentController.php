@@ -15,7 +15,7 @@ class DepartmentController extends Controller
     public function index()
     {
         //
-        $data = Department::all();
+        $data = Department::paginate(6);
 
         return response()->view('cms.departments.index', ['departments' => $data]);
     }
@@ -106,7 +106,6 @@ class DepartmentController extends Controller
         $department->save();
         session()->flash('success', 'تم تعديل القسم بنجاح');
         return redirect()->back();
-
     }
 
     /**
@@ -117,9 +116,13 @@ class DepartmentController extends Controller
      */
     public function destroy($id)
     {
-        $department = Department::findOrFail($id);
-        $department->delete();
-        session()->flash('success', 'تم حذف القسم بنجاح');
-        return redirect()->route('department.index');
+        //form submit code
+        // $department = Department::findOrFail($id);
+        // $department->delete();
+        // session()->flash('success', 'تم حذف القسم بنجاح');
+        // return redirect()->route('department.index');
+
+        $isDestroyed = Department::destroy($id);
+        return response()->json();
     }
 }
