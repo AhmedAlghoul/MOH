@@ -14,7 +14,9 @@ return new class extends Migration
     public function up()
     { 
         Schema::create('employees', function (Blueprint $table) {
-            $table->id()->autoIncrement();
+            // $table->id(); // id()when i delete row it will deleted from database but the numbering will continue from the deleted row
+            $table->bigIncrements('id');
+            $table->id()->autoIncrement( true  ); 
             $table->integer('job_number')->unique();
             $table->string('employee_name');
             $table->date('date_of_hiring');

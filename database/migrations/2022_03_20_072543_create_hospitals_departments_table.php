@@ -15,11 +15,13 @@ return new class extends Migration
     {
         Schema::create('hospitals_departments', function (Blueprint $table) {
             $table->id();
-            // $table->int('hospital_id');
-            // $table->int('department_id');
+            // $table->bigInteger('hospital_id');
+            // $table->bigInteger('department_id');
             // $table->foreign('hospital_id')->references('id')->on('hospitals');
+            $table->foreignId('hospital_id')->constrained('hospitals', 'id')->cascadeOnDelete();
             // $table->foreign('department_id')->references('id')->on('departments');
-            // $table->unique(['hospital_id', 'department_id']);
+            $table->foreignId('department_id')->constrained('departments', 'id')->cascadeOnDelete();
+            $table->unique(['hospital_id', 'department_id']);
             $table->timestamps();
         });
     }
