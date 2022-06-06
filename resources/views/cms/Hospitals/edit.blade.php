@@ -1,6 +1,6 @@
 @extends('cms.parent')
 
-@section('title','إضافة مستشفى جديد')
+@section('title','تعديل مستشفى')
 
 @section('styles')
 <style>
@@ -32,9 +32,9 @@
 
 @endsection
 
-@section('page-name','إضافة مستشفى جديد')
+@section('page-name','تعديل مستشفى ')
 
-@section('small-page-name','إضافة مستشفى ')
+@section('small-page-name','تعديل مستشفى ')
 
 @section('content')
 
@@ -42,18 +42,19 @@
   <!-- general form elements -->
   <div class="card card-primary" id="form-card">
     <div class="card-header">
-      <h3 class="card-title">إضافة</h3>
+      <h3 class="card-title">تعديل</h3>
     </div>
     <!-- /.card-header -->
 
     <!-- form start -->
-    <form id="create-form" role="form" action="{{route('hospital.store')}}" method="POST">
+    <form id="create-form" role="form" action="{{route('hospital.update',$hospital->id)}}" method="POST">
       @csrf
+      @method('PUT')
       <div class="card-body ">
         <div class="form-group form-inline" style="padding-bottom: 20px">
           <label style="padding-left: 20px ">اسم المستشفى</label>
           <input style="width: 500px" type="text" class="form-control " placeholder="ادخل اسم المستشفى"
-            name="hospital_name">
+            name="hospital_name" value="{{$hospital->name}}">
         </div>
 
 
@@ -66,9 +67,9 @@
         <div class="form-group col-md-12">
           <label for="department-choice">اختر الاقسام</label>
           <select class="form-control" id="department-choice" multiple name="department[]">
-            @foreach ($departments as $department)
-            <option value="{{$department->id}}">{{$department->name}}</option>
-            @endforeach
+
+            <option value="{{$department->id}}">{{$department->name ? 'selected': ''}}</option>
+   
 
           </select>
         </div>

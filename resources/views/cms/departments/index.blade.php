@@ -69,20 +69,22 @@
                     @endif
                   </td>
                   <td>
-                    <div class="btn-group">
-                      <a href="{{route('department.edit',$department->id)}}" class="btn btn-info">
-                        <i class="fas fa-edit"></i>
-                      </a>
-                      {{-- we sent id to destroy method ($department->id)--}}
-                      <form action="{{route('department.destroy',$department->id )}}" method="post">
-                        @csrf
-                        @method('delete')
-                        <button type="submit" class="btn btn-danger">
-                          <i class="fas fa-trash-alt"></i>
-                        </button>
-                      </form>
+                    <a href="{{route('department.edit',$department->id)}}" class="btn btn-info">
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    {{-- we sent id to destroy method ($department->id)--}}
+                    {{-- <form action="{{route('department.destroy',$department->id )}}" method="post">
+                      @csrf
+                      @method('delete')
+                      <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash-alt"></i>
+                      </button>
+                    </form> --}}
 
-                    </div>
+                    {{-- using javascript method instead of form method --}}
+                    <a href="#" class="btn btn-danger" onclick="confirmDestroy({{$department->id}})">
+                      <i class="fas fa-trash-alt"></i>
+                    </a>
                   </td>
                 </tr>
                 @endforeach
@@ -98,22 +100,81 @@
 
                 --}}
               </tbody>
+
             </table>
+            {{$departments->links()}}
           </div>
           <!-- /.card-body -->
+
         </div>
         <!-- /.card -->
+
       </div>
+
     </div>
     <!-- /.row -->
 
-
   </div>
+
 </section>
 
 @endsection
 
 
 @section('scripts')
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
+<script>
+  function confirmDestroy(id){
+  Swal.fire({
+      title: 'هل أنت متأكد؟',
+      text: "لن تستطيع عكس عملية الحذف مرة أخرى!",
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonText: 'إلغاء',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'نعم, قم بالحذف!',
+    }).then((result) => {
+  if (result.isConfirmed) {
+    destroy(id);
+    // showSuccessMessage();
+
+ }})
+}
+//  implement delete function using axios
+function destroy(id){
+  axios.delete('/cms/admin/department/'+id)
+    .then(function (response) {
+  // handle success 2xx-3xx 
+  console.log( response.data);
+  Swal.fire(
+    'تم الحذف!',
+    'تم حذف القسم بنجاح.',
+    'success'
+  )
+  location.reload();
+  
+  })
+  .catch(function (error) {
+  // handle error 4xx-5xx 
+    console.log(error);
+  })
+  .then(function () {
+  // always executed
+  });
+
+}
+
+function showSuccessMessage(){
+Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: 'تمت العملية بنجاح',
+  showConfirmButton: false,
+  timer: 1500
+});
+}
+</script>
 @endsection

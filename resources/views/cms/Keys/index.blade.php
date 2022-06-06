@@ -58,27 +58,20 @@
               </thead>
               <tbody>
 
-                {{-- @foreach ($nurses as $nurse)
+                @foreach ($keys as $key)
                 <tr>
-                  <td>{{$nurse->id}}</td>
-                  <td>{{$nurse->job_number}}</td>
-                  <td>{{$nurse->name}}</td>
-                  <td>{{$nurse->date_of_hiring}}</td>
-                  <td>{{$nurse->Hospital_name}}</td>
-                  <td>{{$nurse->Section_name}}</td>
-                  <td>{{$nurse->mobile_number}}</td> --}}
-                  {{-- <td>
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-info">
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      <button type="button" class="btn btn-danger">
-                        <i class="fas fa-trash-alt"></i>
-                      </button>
-                    </div>
-                  </td> --}}
-
-
+                  <td>{{$key->id}}</td>
+                  <td>{{$key->departments->name}}</td>
+                  <td>{{$key->roles->Role_name}}</td>
+                  <td>{{$key->key_value}}</td>
+                  <td>
+                    <button type="button" class="btn btn-info">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger">
+                      <i class="fas fa-trash-alt"></i>
+                    </button>
+                  </td>
 
                   {{-- <td>
                     <a href="{{route('nurses.edit',$nurse->id)}}" class="btn btn-primary btn-sm">تعديل</a>
@@ -90,10 +83,11 @@
                   </td> --}}
 
 
-                  {{--
+
                 </tr>
-                @endforeach --}}
-                
+
+
+                @endforeach
               </tbody>
             </table>
           </div>

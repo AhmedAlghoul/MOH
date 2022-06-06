@@ -237,13 +237,70 @@
             </li>
 
             <li class="nav-item">
-              <a href="{{route('cms.humanresources')}}" class="nav-link">
+              <a href="{{route('cms.keycalc')}}" class="nav-link">
                 <i class="nav-icon fas fa-calculator"></i>
                 <p>
                   حساب مفتاح الكادر البشري
                 </p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="{{route('nursecalc')}}" class="nav-link">
+                <i class="nav-icon fas fa-calculator"></i>
+                <p>
+                  حساب التمريض
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{route('physicaltherapycalc')}}" class="nav-link">
+                <i class="nav-icon fas fa-calculator"></i>
+                <p>
+                  حساب العلاج الطبيعي
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{route('medicalimagingcalc')}}" class="nav-link">
+                <i class="nav-icon fas fa-calculator"></i>
+                <p>
+                  حساب الأشعة
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{route('pharmacycalc')}}" class="nav-link">
+                <i class="nav-icon fas fa-calculator"></i>
+                <p>
+                  حساب مفتاح الصيدلة
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{route('laboratorycalc')}}" class="nav-link">
+                <i class="nav-icon fas fa-calculator"></i>
+                <p>
+                  حساب مفتاح المختبرات
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{route('doctorcalc')}}" class="nav-link">
+                <i class="nav-icon fas fa-calculator"></i>
+                <p>
+                  حساب مفتاح الأطباء
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{route('administrativecalc')}}" class="nav-link">
+                <i class="nav-icon fas fa-calculator"></i>
+                <p>
+                  حساب مفتاح الإداريين
+                </p>
+              </a>
+            </li>
+
 
             <li class="nav-header">الموظفين</li>
             <li class="nav-item has-treeview">
@@ -271,7 +328,8 @@
             </li>
 
 
-            <li class="nav-header">التخصصات</li>
+            {{-- <li class="nav-header">التخصصات</li> --}}
+
             {{-- <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-user-md"></i>
@@ -298,7 +356,7 @@
 
 
 
-            <li class="nav-item has-treeview">
+            {{-- <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-user-nurse"></i>
                 <p>
@@ -334,7 +392,7 @@
                   </a>
                 </li>
               </ul>
-            </li>
+            </li> --}}
 
 
 
@@ -507,7 +565,8 @@
   <footer class="main-footer">
     <strong> جميع الحقوق محفوظة </strong>
     <a href="https://www.moh.gov.ps/portal/" target="_blank"> وزارة الصحة-غزة &copy;</a>
-
+    <strong> تصميم وتطوير </strong>
+    <a href="https://www.linkedin.com/in/ahmedalghoul/" target="_blank"> م.أحمد الغول </a>
 
     <div class="float-right d-none d-sm-inline-block">
       <b> النسخة</b> {{env('App_Version')}}

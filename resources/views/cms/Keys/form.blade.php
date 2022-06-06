@@ -80,14 +80,16 @@
 
         <div class="form-group col-md-6">
           <label>الدور الوظيفي</label>
-          <select class="form-control">
-            <option>Default select</option>
+          <select class="form-control" id="department-choice" name="role">
+            @foreach ($roles as $role)
+            <option value="{{$role->id}}">{{$role->Role_name}}</option>
+            @endforeach
           </select>
         </div>
 
         <div class="form-group col-md-6">
           <label>مفتاح الكادر </label>
-          <input type="number" name="job_key" class="form-control" placeholder="أدخل مفتاح الكادر">
+          <input type="number" name="key_value" class="form-control" placeholder="أدخل مفتاح الكادر">
         </div>
 
       </div>

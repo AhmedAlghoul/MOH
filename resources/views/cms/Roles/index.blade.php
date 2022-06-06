@@ -69,7 +69,7 @@
                     @endif
                   </td>
                   <td>
-                    <div class="btn-group">
+                 
                       <a href="{{route('role.edit',$role->id)}}" class="btn btn-info">
                         <i class="fas fa-edit"></i>
                       </a>
@@ -86,7 +86,6 @@
                       <a href="#" class="btn btn-danger" onclick="confirmDestroy({{$role->id}})">
                         <i class="fas fa-trash-alt"></i>
                       </a>
-                    </div>
                   </td>
                 </tr>
                 @endforeach
