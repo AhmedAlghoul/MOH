@@ -9,7 +9,12 @@ class Key extends Model
 {
     use HasFactory;
 
-    public function department(){
+    public function departments()
+    {
         return $this->belongsTo(Department::class, 'department_id', 'id');
+    }
+    public function roles()
+    {
+        return $this->belongsTo(Role::class, 'role_id', 'id');
     }
 }

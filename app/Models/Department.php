@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Department extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'name',
+        'is_active'
+    ];
+    protected $table = 'departments';
+    //write relation to has many hospitals
+    // public function hospitals()
+    // {
+    //     return $this->belongsToMany(Hospital::class, 'hospitals_departments','department_id', 'hospital_id');
+    // }
 }

@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
     use HasFactory;
-    // protected $fillable = [
-    //     'employee_name', 'hospital_id', 'role_id', 'department_id', 'job_number', 'date_of_hiring', 'mobile_number'
-    // ];
+    protected $fillable = [
+        'job_number', 'employee_name', 'date_of_hiring', 'hospital_id', 'department_id', 'role_id', 'mobile_number'
+    ];
     public function departments()
     {
         return $this->belongsTo(Department::class, 'department_id', 'id');
