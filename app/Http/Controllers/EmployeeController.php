@@ -52,7 +52,7 @@ class EmployeeController extends Controller
             [
                 'job_number' => 'required|unique:employees',
                 'employee_name' => 'required',
-                'date_of_hiring' => 'required',
+                // 'date_of_hiring' => 'required',
                 'department' => 'required',
                 'hospital' => 'required',
                 'role' => 'required',
@@ -62,7 +62,7 @@ class EmployeeController extends Controller
                 'job_number.required' => 'الرجاء إدخال رقم الوظيفة',
 
                 'employee_name.required' => 'الرجاء إدخال اسم الموظف',
-                'date_of_hiring.required' => 'الرجاء إدخال تاريخ التعيين',
+                // 'date_of_hiring.required' => 'الرجاء إدخال تاريخ التعيين',
                 'department.required' => 'الرجاء اختيار القسم',
                 'hospital.required' => 'الرجاء ختيار المستشفى',
                 'role.required' => 'الرجاء اختيار الدور',
@@ -74,7 +74,7 @@ class EmployeeController extends Controller
         $employee = new Employee();
         $employee->job_number = $request->job_number;
         $employee->employee_name = $request->employee_name;
-        $employee->date_of_hiring = $request->date_of_hiring;
+        // $employee->date_of_hiring = $request->date_of_hiring;
         //get the id of the last inserted row
         $employee->hospital_id = $request->hospital;
         $employee->department_id = $request->department;
