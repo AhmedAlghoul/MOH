@@ -1,6 +1,6 @@
 @extends('cms.parent')
 
-@section('title','إضافة مفتاح كادر جديد')
+@section('title','تعديل مفتاح الكادر')
 
 @section('styles')
 <style>
@@ -16,9 +16,9 @@
 
 @endsection
 
-@section('page-name','إضافة مفتاح كادر جديد')
+@section('page-name','تعديل مفتاح الكادر')
 
-@section('small-page-name','إضافة مفتاح كادر')
+@section('small-page-name','تعديل مفتاح الكادر')
 
 @section('content')
 
@@ -26,11 +26,11 @@
   <!-- general form elements -->
   <div class="card card-primary" id="form-card">
     <div class="card-header">
-      <h3 class="card-title">إضافة</h3>
+      <h3 class="card-title">تعديل</h3>
     </div>
     <!-- /.card-header -->
     <!-- form start -->
-    <form id="create-form" role="form" method="POST" action="{{route('key.store')}}">
+    <form id="create-form" role="form" method="POST" action="{{route('key.update')}}">
       {{-- csrf must be in the form tag --}}
       @csrf
       <div class="card-body form-row">
@@ -89,7 +89,7 @@
 
         <div class="form-group col-md-6">
           <label>مفتاح الكادر </label>
-          <input type="number" step=any min=0 name="key_value" class="form-control" placeholder="أدخل مفتاح الكادر">
+          <input type="number" name="key_value" class="form-control" placeholder="أدخل مفتاح الكادر">
         </div>
 
       </div>

@@ -68,9 +68,10 @@
                     <button type="button" class="btn btn-info">
                       <i class="fas fa-edit"></i>
                     </button>
-                    <button type="button" class="btn btn-danger">
+                    {{-- using javascript method -axios --}}
+                    <a href="#" class="btn btn-danger" onclick="confirmDestroy({{$key->id}})">
                       <i class="fas fa-trash-alt"></i>
-                    </button>
+                    </a>
                   </td>
 
                   {{-- <td>
@@ -107,5 +108,59 @@
 
 
 @section('scripts')
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
+<script>
+  function confirmDestroy(id){
+  Swal.fire({
+      title: 'هل أنت متأكد؟',
+      text: "لن تستطيع عكس عملية الحذف مرة أخرى!",
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonText: 'إلغاء',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'نعم, قم بالحذف!',
+    }).then((result) => {
+  if (result.isConfirmed) {
+    destroy(id);
+    // showSuccessMessage();
+
+ }})
+}
+//  implement delete function using axios
+function destroy(id){
+  axios.delete('/cms/admin/key/'+id)
+    .then(function (response) {
+  // handle success 2xx-3xx 
+  console.log( response.data);
+  Swal.fire(
+    'تم الحذف!',
+    'تم حذف القسم بنجاح.',
+    'success'
+  )
+  location.reload();
+  
+  })
+  .catch(function (error) {
+  // handle error 4xx-5xx 
+    console.log(error);
+  })
+  .then(function () {
+  // always executed
+  });
+
+}
+
+function showSuccessMessage(){
+Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: 'تمت العملية بنجاح',
+  showConfirmButton: false,
+  timer: 1500
+});
+}
+</script>
 @endsection
