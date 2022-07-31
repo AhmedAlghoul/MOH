@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('department_id')->constrained('departments', 'id')->cascadeOnDelete();
             $table->foreignId('role_id')->constrained('roles', 'id')->cascadeOnDelete();
-            $table->bigInteger('key_value');
+            $table->double('key_value');
             $table->timestamps();
         });
     }
