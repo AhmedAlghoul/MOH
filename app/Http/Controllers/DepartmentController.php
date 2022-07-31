@@ -43,14 +43,17 @@ class DepartmentController extends Controller
         $request->validate(
             [
                 'name' => 'required',
+                'department_description' => 'required',
                 'is_active' => 'in:on',
             ],
             [
                 'name.required' => 'الرجاء إدخال اسم القسم',
+                'department_description.required' => 'الرجاء إدخال الوصف الوظيفي للقسم',
             ]
         );
         $department = new Department();
         $department->name = $request->name;
+        $department->department_description = $request->department_description;
         $department->is_active = $request->has('is_active') ? true : false;
         $department->save();
         session()->flash('success', 'تم إضافة القسم بنجاح');
@@ -94,18 +97,24 @@ class DepartmentController extends Controller
         $request->validate(
             [
                 'name' => 'required',
+                'department_description' => 'required',
                 'is_active' => 'in:on',
             ],
             [
                 'name.required' => 'الرجاء إدخال اسم القسم',
+                'department_description.required' => 'الرجاء إدخال الوصف الوظيفي للقسم',
+
+
             ]
         );
         $department = Department::findOrFail($id);
         $department->name = $request->name;
+        $department->department_description = $request->department_description;
         $department->is_active = $request->has('is_active') ? true : false;
         $department->save();
         session()->flash('success', 'تم تعديل القسم بنجاح');
         return redirect()->back();
+        
     }
 
     /**

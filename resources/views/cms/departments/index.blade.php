@@ -49,8 +49,9 @@
             <table class="table table-hover table-bordered table-striped">
               <thead>
                 <tr>
-                  <th>الرقم</th>
-                  <th>اسم القسم</th>
+                  <th span="1" style="width: 7%">الرقم</th>
+                  <th span="1" style="width: 20%">اسم القسم</th>
+                  <th span="1" style="width: 55%">الوصف الوظيفي</th>
                   <th>الفعالية</th>
                   <th> الأوامر</th>
                 </tr>
@@ -61,6 +62,7 @@
                 <tr>
                   <td>{{$department->id}}</td>
                   <td>{{$department->name}}</td>
+                  <td>{{$department->department_description}}</td>
 
                   <td>@if ($department->is_active)
                     <span class="badge badge-success">نشط</span>

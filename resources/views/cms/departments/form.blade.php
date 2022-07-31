@@ -62,6 +62,12 @@
           <input type="text" name="name" class="form-control" placeholder="ادخل اسم القسم">
         </div>
 
+        <div class="form-group">
+          <label for="department_description">الوصف الوظيفي للقسم:</label>
+          <textarea class="form-control" rows="5" name="department_description" id="department_description"
+            placeholder="الرجاء ادخال الوصف الوظيفي للقسم"></textarea>
+        </div>
+
         <div class="form-check ">
           <input type="checkbox" name="is_active" class="form-check-input" id="check">
           <label class="form-check-label" for="check">نشط</label>
