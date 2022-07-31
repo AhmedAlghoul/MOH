@@ -20,6 +20,10 @@
 @section('content')
 
 <div class="col-md-12">
+    <div class="callout callout-warning">
+        <h5>طريقة حساب مفتاح المختبرات</h5>
+        <p> عن طريق معادلة (عدد الفحوصات شهريا *مدة الفحص )/(عدد دقائق العمل يوميا*ايام العمل)</p>
+    </div>
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">حساب ناتج مفتاح المختبرات</h3>

@@ -22,6 +22,10 @@
 
 
 <div class="col-md-12">
+    <div class="callout callout-warning">
+        <h5>طريقة حساب مفتاح العلاج الطبيعي</h5>
+        <p> عن طريق معادلة (عدد الجلسات شهريا *مدة الجلسة )/(دقائق العمل يوميا*أيام العمل)</p>
+    </div>
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">حساب ناتج مفتاح العلاج الطبيعي</h3>

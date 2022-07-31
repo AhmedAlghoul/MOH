@@ -21,7 +21,12 @@
 @section('content')
 
 <div class="col-md-12">
+    <div class="callout callout-warning">
+        <h5>طريقة حساب مفتاح التمريض</h5>
+        <p>يتم حساب المفتاح بناء على نسبة معينة لكل قسم مضروبة في عدد الأسرة </p>
+    </div>
     <div class="card">
+
         <div class="card-header">
             <h3 class="card-title">حساب ناتج مفتاح التمريض</h3>
 
@@ -51,6 +56,8 @@
                     </tr>
                 </thead>
                 <tbody>
+
+
                     <tr>
                         <td>1.</td>
                         <td>Update software</td>

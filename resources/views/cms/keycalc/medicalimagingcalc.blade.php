@@ -19,6 +19,17 @@
 
 @section('content')
 <div class="col-md-12">
+    <div class="callout callout-warning">
+        <h5>طريقة حساب مفتاح قسم الأشعة</h5>
+        <p> يكون بناء على نوع الجهاز بحيث أن كل جهاز يحتاج إلى عدد معين من الفنيين </p>
+        <ul>
+            <li>جهاز أشعة عادية يحتاج 2 فني أشعة</li>
+            <li>جهاز فلورو يحتاج 2 فني أشعة</li>
+            <li>جهاز الأشعة المقطعية يحتاح 3 فني أشعة</li>
+            <li>جهاز الرنين المغناطيسي يحتاج 3 فني أشعة</li>
+        </ul>
+
+    </div>
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">-حساب ناتج مفتاح الأشعة مبدئي-- </h3>
@@ -69,7 +80,7 @@
 
             </table>
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary">حساب</button> 
+                <button type="submit" class="btn btn-primary">حساب</button>
             </div>
         </div>
         <!-- /.card-body -->

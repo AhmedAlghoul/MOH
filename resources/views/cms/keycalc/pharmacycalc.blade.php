@@ -21,6 +21,11 @@
 @section('content')
 
 <div class="col-md-12">
+    <div class="callout callout-warning">
+        <h5>طريقة حساب مفتاح الصيدلة</h5>
+        <p>كل 1000 روشتة تحتاج إلى دكتور صيدلي واحد ، كل 300 تقرير طبي تعادل 1000 روشتة ويكون الاحتياج صيدلي اضافي ايضا
+        </p>
+    </div>
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">حساب ناتج مفتاح الصيدلة</h3>
