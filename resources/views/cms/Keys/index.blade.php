@@ -62,7 +62,7 @@
                 <tr>
                   <td>{{$key->id}}</td>
                   <td>{{$key->departments->name}}</td>
-                  <td>{{$key->roles->Role_name}}</td>
+                  <td>{{$key->EmployeesRoles->Role_name}}</td>
                   <td>{{$key->key_value}}</td>
                   <td>
                     <button type="button" class="btn btn-info">

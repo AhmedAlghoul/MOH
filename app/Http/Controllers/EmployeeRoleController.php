@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Key;
-use App\Models\Department;
 use App\Models\EmployeeRole;
+
 use Illuminate\Http\Request;
 
-class KeyController extends Controller
+class EmployeeRoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +16,9 @@ class KeyController extends Controller
     public function index()
     {
         //
-        $data = Key::all();
-        return response()->view('cms.Keys.index', ['keys' => $data]);
+        $data = EmployeeRole::paginate(6);
+
+        return response()->view('cms.Roles.index', ['roles' => $data]);
     }
 
     /**
@@ -29,10 +29,7 @@ class KeyController extends Controller
     public function create()
     {
         //
-        $departments = Department::where('is_active', 1)->get();
-        $roles = EmployeeRole::where('is_active', 1)->get();
-        return response()->view('cms.Keys.form', compact('departments', 'roles'));
-        // return response()->view('cms.keys.form', compact('departments','roles'));
+        return response()->view('cms.Roles.form');
     }
 
     /**
@@ -46,25 +43,22 @@ class KeyController extends Controller
         //
         $request->validate(
             [
-                'department' => 'required',
-                'role' => 'required',
-                'key_value' => 'required',
+                'Role_name' => 'required',
+                'is_active' => 'in:on',
             ],
             [
-                'department.required' => 'الرجاء اختيار القسم',
-                'role.required' => 'الرجاء اختيار الدور',
-                'key_value.required' => 'الرجاء إدخال مفتاح الكادر',
+                'Role_name.required' => 'الرجاء إدخال اسم الدور وظيفي',
             ]
         );
-        $key = new Key();
-        $key->department_id = $request->department;
-        $key->role_id = $request->role;
-        $key->key_value = $request->key_value;
-        $key->save();
+        $Role = new EmployeeRole();
+        $Role->Role_name = $request->Role_name;
+        $Role->is_active = $request->has('is_active') ? true : false;
+        $Role->save();
+        session()->flash('success', 'تم إضافة الدور وظيفي بنجاح');
         return redirect()->back();
     }
 
-    /**
+    /**Role
      * Display the specified resource.
      *
      * @param  int  $id
@@ -73,6 +67,7 @@ class KeyController extends Controller
     public function show($id)
     {
         //
+
     }
 
     /**
@@ -84,6 +79,8 @@ class KeyController extends Controller
     public function edit($id)
     {
         //
+        $role = EmployeeRole::find($id);
+        return response()->view('cms.roles.edit', ['role' => $role]);
     }
 
     /**
@@ -96,6 +93,22 @@ class KeyController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate(
+            [
+                'Role_name' => 'required',
+                'is_active' => 'in:on',
+            ],
+            [
+                'Role_name.required' => 'الرجاء إدخال اسم الدور وظيفي',
+            ]
+
+        );
+        $Role = EmployeeRole::find($id);
+        $Role->Role_name = $request->Role_name;
+        $Role->is_active = $request->has('is_active') ? true : false;
+        $Role->save();
+        session()->flash('success', 'تم تعديل الدور وظيفي بنجاح');
+        return redirect()->back();
     }
 
     /**
@@ -107,7 +120,7 @@ class KeyController extends Controller
     public function destroy($id)
     {
         //
-        $isDestroyed = Key::destroy($id);
+        $isDestroyed = EmployeeRole::destroy($id);
         return response()->json();
     }
 }

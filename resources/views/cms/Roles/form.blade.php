@@ -30,7 +30,7 @@
     </div>
     <!-- /.card-header -->
     <!-- form start -->
-    <form id="create-form" role="form" method="POST" action="{{route('role.store')}}">
+    <form id="create-form" role="form" method="POST" action="{{route('employeeroles.store')}}">
       {{-- csrf must be in the form tag --}}
       @csrf
       <div class="card-body">

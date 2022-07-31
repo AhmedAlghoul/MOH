@@ -19,8 +19,8 @@ class Employee extends Model
     {
         return $this->belongsTo(Hospital::class, 'hospital_id', 'id');
     }
-    public function Roles()
+    public function EmployeesRoles()
     {
-        return $this->belongsTo(Role::class, 'role_id', 'id');
+        return $this->belongsTo(EmployeeRole::class, 'role_id', 'id');
     }
 }

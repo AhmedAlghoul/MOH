@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Department;
 use App\Models\Employee;
 use App\Models\Hospital;
-use App\Models\Role;
+use App\Models\EmployeeRole;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\EmployeesImport;
@@ -35,7 +35,7 @@ class EmployeeController extends Controller
         //
         $departments = Department::where('is_active', 1)->get();
         $hospitals = Hospital::all();
-        $roles = Role::where('is_active', 1)->get();
+        $roles = EmployeeRole::where('is_active', 1)->get();
         return view('cms.employees.form', compact('departments', 'hospitals', 'roles'));
     }
 

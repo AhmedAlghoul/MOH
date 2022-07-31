@@ -69,23 +69,23 @@
                     @endif
                   </td>
                   <td>
-                 
-                      <a href="{{route('role.edit',$role->id)}}" class="btn btn-info">
-                        <i class="fas fa-edit"></i>
-                      </a>
-                      {{-- we sent id to destroy method ($department->id)--}}
-                      {{-- <form action="{{route('department.destroy',$department->id )}}" method="post">
-                        @csrf
-                        @method('delete')
-                        <button type="submit" class="btn btn-danger">
-                          <i class="fas fa-trash-alt"></i>
-                        </button>
-                      </form> --}}
 
-                      {{-- using javascript method instead of form method --}}
-                      <a href="#" class="btn btn-danger" onclick="confirmDestroy({{$role->id}})">
+                    <a href="{{route('employeeroles.edit',$role->id)}}" class="btn btn-info">
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    {{-- we sent id to destroy method ($department->id)--}}
+                    {{-- <form action="{{route('department.destroy',$department->id )}}" method="post">
+                      @csrf
+                      @method('delete')
+                      <button type="submit" class="btn btn-danger">
                         <i class="fas fa-trash-alt"></i>
-                      </a>
+                      </button>
+                    </form> --}}
+
+                    {{-- using javascript method instead of form method --}}
+                    <a href="#" class="btn btn-danger" onclick="confirmDestroy({{$role->id}})">
+                      <i class="fas fa-trash-alt"></i>
+                    </a>
                   </td>
                 </tr>
                 @endforeach
@@ -146,7 +146,7 @@
 }
 //  implement delete function using axios
 function destroy(id){
-  axios.delete('/cms/admin/role/'+id)
+  axios.delete('/cms/admin/employeeroles/'+id)
     .then(function (response) {
   // handle success 2xx-3xx 
   console.log( response.data);

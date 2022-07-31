@@ -31,7 +31,7 @@
     </div>
     <!-- /.card-header -->
     <!-- form start -->
-    <form id="create-form" role="form" method="POST" action="{{route('role.update',$role->id)}}">
+    <form id="create-form" role="form" method="POST" action="{{route('employeeroles.update',$role->id)}}">
       {{-- csrf must be in the form tag --}}
       @csrf
       @method('PUT')
