@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id()->autoIncrement();
             $table->integer('job_number')->unique();
             $table->string('name');
-            $table->date('date_of_hiring');
+            // $table->date('date_of_hiring');
             $table->string('Hospital_name');
             $table->string('Section_name');
             $table->string('mobile_number');

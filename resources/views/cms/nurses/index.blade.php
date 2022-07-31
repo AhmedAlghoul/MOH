@@ -66,7 +66,7 @@
                   <td>{{$nurse->id}}</td>
                   <td>{{$nurse->job_number}}</td>
                   <td>{{$nurse->name}}</td>
-                  <td>{{$nurse->date_of_hiring}}</td>
+                  {{-- <td>{{$nurse->date_of_hiring}}</td> --}}
                   <td>{{$nurse->Hospital_name}}</td>
                   <td>{{$nurse->Section_name}}</td>
                   <td>{{$nurse->mobile_number}}</td>

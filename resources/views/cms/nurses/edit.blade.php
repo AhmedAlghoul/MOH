@@ -80,12 +80,12 @@
           <label>اسم الممرض</label>
           <input type="text" name="name" class="form-control" placeholder="ادخل اسم الممرض">
         </div>
-
+{{-- 
         <div class="form-group col-md-6">
           <label>تاريخ التعيين</label>
           <input type="date" name="date_of_hiring" class="form-control">
         </div>
-
+ --}}
 
 
         <div class="form-group col-md-6">

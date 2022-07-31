@@ -12,14 +12,13 @@ return new class extends Migration
      * @return void
      */
     public function up()
-    { 
+    {
         Schema::create('employees', function (Blueprint $table) {
             // $table->id(); // id()when i delete row it will deleted from database but the numbering will continue from the deleted row
-            $table->bigIncrements('id');
-            $table->id()->autoIncrement( true  ); 
+            $table->id()->autoIncrement(true);
             $table->integer('job_number')->unique();
             $table->string('employee_name');
-            $table->date('date_of_hiring');
+            // $table->date('date_of_hiring');
             $table->foreignId('hospital_id')->constrained('hospitals', 'id')->cascadeOnDelete();
             $table->foreignId('department_id')->constrained('departments', 'id')->cascadeOnDelete();
             $table->foreignId('role_id')->constrained('roles', 'id')->cascadeOnDelete();
