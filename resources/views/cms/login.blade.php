@@ -123,7 +123,7 @@
             <!-- /.col -->
             <div class="col-4">
               <button type="submit" class="btn btn-primary btn-block">تسجيل الدخول </button>
-              {{-- <a href="{{route('cms.dashboard')}}" class="btn btn-primary btn-block">تسجيل الدخول</a> --}}
+              {{-- <a href="{{route('cms.homepage')}}" class="btn btn-primary btn-block">تسجيل الدخول</a> --}}
               {{-- <button type="submit" class="btn btn-primary btn-block">تسجيل الدخول</button> --}}
 
             </div>
