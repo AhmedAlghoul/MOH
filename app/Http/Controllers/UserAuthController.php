@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -58,6 +60,37 @@ class UserAuthController extends Controller
     public function updateProfile()
     {
     }
+
+    public function changePassword()
+    {
+        return view('cms.changepassword');
+    }
+
+    //the password update 
+    public function updatePassword(Request $request)
+    {
+        #Validation
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|confirmed',
+        ]);
+
+
+        #Match The Old Password
+        if (!Hash::check($request->old_password, auth()->user()->user_password)) {
+            return back()->with("error", "كلمة المرور القديمة غير مطابقة!");
+        }
+
+
+        #Update the new Password
+        Admin::whereId(auth()->user()->id)->update([
+            'user_password' => Hash::make($request->new_password)
+        ]);
+
+        return back()->with("status", "تم تغيير كلمة المرور بنجاح!");
+    }
+
+
     //reset password for admin using the past password and new password
     // public function resetPassword(Request $request)
     // {
@@ -82,7 +115,7 @@ class UserAuthController extends Controller
     //         return redirect()->back()->with('error', 'كلمة المرور القديمة غير صحيحة');
     //     }
     // }
-    
+
     public function logout(Request $request)
     {
         Auth::guard('admin')->logout();
