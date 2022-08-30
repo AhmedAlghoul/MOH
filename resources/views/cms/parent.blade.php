@@ -51,7 +51,7 @@
           <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="{{route('cms.homepage')}}" class="nav-link">الرئيسية</a>
+          <a href="{{route('cms.dashboard')}}" class="nav-link">الرئيسية</a>
         </li>
 
       </ul>
@@ -105,7 +105,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="{{route('cms.homepage')}}" class="brand-link">
+      <a href="{{route('cms.dashboard')}}" class="brand-link">
         <img src="{{asset('cms/dist/img/moh.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
           style="opacity: .8">
         <span class="brand-text font-weight-light">وزارة الصحة</span>
@@ -130,7 +130,7 @@
                with font-awesome or any other icon font library -->
 
             <li class="nav-item">
-              <a href="{{route('cms.homepage')}}" class="nav-link">
+              <a href="{{route('cms.dashboard')}}" class="nav-link">
                 <i class="nav-icon fas fa-home"></i>
                 <p>
                   الصفحة الرئيسية
@@ -198,13 +198,13 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="{{route('employeeroles.index')}}" class="nav-link">
+                  <a href="{{route('role.index')}}" class="nav-link">
                     <i class="fas fa-list nav-icon"></i>
                     <p>عرض</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="{{route('employeeroles.create')}}" class="nav-link">
+                  <a href="{{route('role.create')}}" class="nav-link">
                     <i class="fas fa-plus-square nav-icon"></i>
                     <p>إنشاء</p>
                   </a>
@@ -237,7 +237,7 @@
             </li>
 
             <li class="nav-item">
-              <a href="{{route('keycalc.create')}}" class="nav-link">
+              <a href="{{route('cms.keycalc')}}" class="nav-link">
                 <i class="nav-icon fas fa-calculator"></i>
                 <p>
                   حساب مفتاح الكادر البشري
@@ -293,14 +293,6 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{route('doctorsecond')}}" class="nav-link">
-                <i class="nav-icon fas fa-calculator"></i>
-                <p>
-                  مخفي- حساب مفتاح الأطباء
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
               <a href="{{route('administrativecalc')}}" class="nav-link">
                 <i class="nav-icon fas fa-calculator"></i>
                 <p>
@@ -335,57 +327,6 @@
               </ul>
             </li>
 
-            {{-- spatie roles for users --}}
-
-            <li class="nav-header">الصلاحيات و الأدوار الوظيفية</li>
-            {{-- Roles --}}
-            <li class="nav-item has-treeview">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-user-tag"></i>
-                <p>
-                  منح الأدوار الوظيفية
-                  <i class="fas fa-angle-left right"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="{{route('roles.index')}}" class="nav-link">
-                    <i class="fas fa-list nav-icon"></i>
-                    <p>عرض</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{route('roles.create')}}" class="nav-link">
-                    <i class="fas fa-plus-square nav-icon"></i>
-                    <p>إنشاء</p>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            {{-- permissions --}}
-            <li class="nav-item has-treeview">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-magic"></i>
-                <p>
-                  منح الصلاحيات
-                  <i class="fas fa-angle-left right"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="{{route('permissions.index')}}" class="nav-link">
-                    <i class="fas fa-list nav-icon"></i>
-                    <p>عرض</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{route('employee.create')}}" class="nav-link">
-                    <i class="fas fa-plus-square nav-icon"></i>
-                    <p>إنشاء</p>
-                  </a>
-                </li>
-              </ul>
-            </li>
 
             {{-- <li class="nav-header">التخصصات</li> --}}
 
@@ -550,7 +491,7 @@
             {{-- settings --}}
             <li class="nav-header">الإعدادات</li>
             <li class="nav-item">
-              <a href="{{route('cms.changepassword')}}" class="nav-link">
+              <a href="pages/calendar.html" class="nav-link">
                 <i class="nav-icon fas fa-lock"></i>
                 <p>
 
