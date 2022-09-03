@@ -245,6 +245,22 @@
               </a>
             </li>
             <li class="nav-item">
+              <a href="{{route('doctorcalc')}}" class="nav-link">
+                <i class="nav-icon fas fa-calculator"></i>
+                <p>
+                  حساب مفتاح الأطباء
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{route('doctorsecond')}}" class="nav-link">
+                <i class="nav-icon fas fa-calculator"></i>
+                <p>
+                  مخفي- حساب مفتاح الأطباء
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="{{route('nursecalc')}}" class="nav-link">
                 <i class="nav-icon fas fa-calculator"></i>
                 <p>
@@ -284,22 +300,7 @@
                 </p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="{{route('doctorcalc')}}" class="nav-link">
-                <i class="nav-icon fas fa-calculator"></i>
-                <p>
-                  حساب مفتاح الأطباء
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{route('doctorsecond')}}" class="nav-link">
-                <i class="nav-icon fas fa-calculator"></i>
-                <p>
-                  مخفي- حساب مفتاح الأطباء
-                </p>
-              </a>
-            </li>
+
             <li class="nav-item">
               <a href="{{route('administrativecalc')}}" class="nav-link">
                 <i class="nav-icon fas fa-calculator"></i>

@@ -75,7 +75,7 @@
                     <a href="{{route('hospital.edit',$hospital->id)}}" class="btn btn-info">
                       <i class="fas fa-edit"></i>
                     </a>
-                    <a href="#" class="btn btn-danger" onclick="confirmDestroy({{$hospital->id}})">
+                    <a href="{{route('hospital.delete',$hospital->id)}}" class="btn btn-danger">
                       <i class="fas fa-trash-alt"></i>
                     </a>
                   </td>
@@ -107,55 +107,93 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
-  function confirmDestroy(id){
-  Swal.fire({
-      title: 'هل أنت متأكد؟',
-      text: "لن تستطيع عكس عملية الحذف مرة أخرى!",
-      icon: 'warning',
-      showCancelButton: true,
-      cancelButtonText: 'إلغاء',
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'نعم, قم بالحذف!',
-    }).then((result) => {
-  if (result.isConfirmed) {
-    destroy(id);
-    // showSuccessMessage();
+// $(document).on('click', '.deleteProduct', function (e) {
+// e.preventDefault();
+// var $this = $(this);
 
- }})
-}
-//  implement delete function using axios
-function destroy(id){
-  axios.delete('/cms/admin/hospital/'+id)
-    .then(function (response) {
-  // handle success 2xx-3xx 
-  console.log( response.data);
-  Swal.fire(
-    'تم الحذف!',
-    'تم حذف المستشفى بنجاح.',
-    'success'
-  )
-  location.reload();
+// var posted_data = {
+// _token: $("meta[name='csrf-token']").attr("content"),
+// }
+
+// var title = '';
+
+// if(lang == '_en'){
+// title = 'Are you sure to delete the product?';
+// }else{
+// title = 'هل أنت متأكد من حذف المنتج ؟';
+// }
+
+// swal({
+// title: title,
+// icon: "warning",
+// dangerMode: true,
+// buttons: ["{{__('lang.cancel')}}", "{{__('lang.confirm')}}"]
+// })
+// .then((process) => {
+// if(!process){
+// return;
+// }
+
+// $.post($("meta[name='BASE_URL']").attr("content") + "/admin/products/" + $this.attr('data-id') + "/destroy",
+// posted_data, function(response){
+// getData();
+// toastr.success(response.message)
+
+// });
+// });
+// });
+
+
+
+  //   function confirmDestroy(id){
+//   Swal.fire({
+//       title: 'هل أنت متأكد؟',
+//       text: "لن تستطيع عكس عملية الحذف مرة أخرى!",
+//       icon: 'warning',
+//       showCancelButton: true,
+//       cancelButtonText: 'إلغاء',
+//       confirmButtonColor: '#3085d6',
+//       cancelButtonColor: '#d33',
+//       confirmButtonText: 'نعم, قم بالحذف!',
+//     }).then((result) => {
+//   if (result.isConfirmed) {
+//     destroy(id);
+//     // showSuccessMessage();
+
+//  }})
+// }
+// //  implement delete function using axios
+// function destroy(id){
+//   axios.delete('/cms/admin/hospital/'+id)
+//     .then(function (response) {
+//   // handle success 2xx-3xx 
+//   console.log( response.data);
+//   Swal.fire(
+//     'تم الحذف!',
+//     'تم حذف المستشفى بنجاح.',
+//     'success'
+//   )
+//   location.reload();
   
-  })
-  .catch(function (error) {
-  // handle error 4xx-5xx 
-    console.log(error);
-  })
-  .then(function () {
-  // always executed
-  });
+//   })
+//   .catch(function (error) {
+//   // handle error 4xx-5xx 
+//     console.log(error);
+//   })
+//   .then(function () {
+//   // always executed
+//   });
 
-}
+// }
 
-function showSuccessMessage(){
-Swal.fire({
-  position: 'center',
-  icon: 'success',
-  title: 'تمت العملية بنجاح',
-  showConfirmButton: false,
-  timer: 1500
-});
-}
+// function showSuccessMessage(){
+// Swal.fire({
+//   position: 'center',
+//   icon: 'success',
+//   title: 'تمت العملية بنجاح',
+//   showConfirmButton: false,
+//   timer: 1500
+// });
+// }
 </script>
 @endsection

@@ -18,7 +18,7 @@
 
 @section('page-name','إضافة موظف جديد')
 
-@section('small-page-name','إضافة موظف')
+@section('small-page-name','إضافة موظف')`
 
 @section('content')
 
@@ -79,11 +79,11 @@
           <label>اسم الموظف</label>
           <input type="text" name="employee_name" class="form-control" placeholder="ادخل اسم الموظف">
         </div>
-
+        {{--
         <div class="form-group col-md-6">
           <label>تاريخ التعيين</label>
           <input type="date" name="date_of_hiring" class="form-control">
-        </div>
+        </div> --}}
 
 
 
@@ -91,7 +91,7 @@
           <label for="hospital-choice">اختر المستشفى</label>
           <select class="form-control" id="hospital-choice" name="hospital">
             @foreach ($hospitals as $hospital)
-            <option  value="{{$hospital->id}}">{{$hospital->name}} </option>
+            <option value="{{$hospital->id}}">{{$hospital->name}} </option>
             @endforeach
           </select>
         </div>
@@ -113,7 +113,7 @@
             <option value="{{$role->id}}">{{$role->Role_name}}</option>
             @endforeach
           </select>
-        </div> 
+        </div>
 
         {{-- <div class="form-group col-md-6">
           <label>المستشفى</label>

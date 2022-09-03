@@ -19,6 +19,6 @@ class Department extends Model
     //write relation to has many hospitals
     // public function hospitals()
     // {
-    //     return $this->belongsToMany(Hospital::class, 'hospitals_departments','department_id', 'hospital_id');
+    //     return $this->belongsToMany(Hospital::class, 'hospital_departments','department_id', 'hospital_id');
     // }
 }

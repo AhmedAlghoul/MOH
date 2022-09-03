@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('hospitals_departments', function (Blueprint $table) {
+        Schema::create('hospital_departments', function (Blueprint $table) {
             $table->id();
             // $table->bigInteger('hospital_id');
             // $table->bigInteger('department_id');
@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreignId('department_id')->constrained('departments', 'id')->cascadeOnDelete();
             $table->unique(['hospital_id', 'department_id']);
             $table->timestamps();
+            
         });
     }
 
@@ -33,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hospitals_departments');
+        Schema::dropIfExists('hospital_departments');
     }
 };

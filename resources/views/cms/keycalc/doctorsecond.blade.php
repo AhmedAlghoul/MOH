@@ -14,21 +14,16 @@
 
 {{-- @section('page-name','حساب مفتاح التمريض') --}}
 
-@section('small-page-name','حساب مفتاح التمريض')
+@section('small-page-name','حساب مفتاح الأطباء')
 
 
 
 @section('content')
 
 <div class="col-md-12">
-    <div class="callout callout-warning">
-        <h5>طريقة حساب مفتاح التمريض</h5>
-        <p>يتم حساب المفتاح بناء على نسبة معينة لكل قسم مضروبة في عدد الأسرة </p>
-    </div>
     <div class="card">
-
         <div class="card-header">
-            <h3 class="card-title">حساب ناتج مفتاح التمريض</h3>
+            <h3 class="card-title">حساب ناتج مفتاح الأطباء</h3>
 
             <div class="card-tools" style="float: left">
                 <ul class="pagination pagination-sm float-left">
@@ -45,14 +40,18 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th style="width: 10px">#</th>
-                        <th>القسم</th>
-                        <th style="width: 40px">المفتاح</th>
-                        <th>عدد الأسرة </th>
-                        <th>عدد الممرضين الحالي</th>
-                        <th>الكادر المطلوب</th>
+                        <th style="width: 400px">بند الخدمة</th>
                         <th>الاحتياج</th>
-
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>اسم القسم///</th>
+                        <th>الأيام</th>
+                        <th style="width: 40px">عدد الساعات</th>
+                        <th>عدد الأطباء </th>
+                        <th>مجموع الساعات </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,7 +64,7 @@
                             10
                         </td>
                         <td><input type="number"></td>
-                        <td></td>
+                        <td><input type="number"></td>
                         <td></td>
                         <td></td>
                     </tr>

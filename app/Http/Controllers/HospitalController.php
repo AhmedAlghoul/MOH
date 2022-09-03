@@ -80,11 +80,17 @@ class HospitalController extends Controller
     public function edit($id)
     {
         //
+
         $hospital = Hospital::findOrFail($id);
         //get all selected departments and return it to array
         $department = $hospital->departments()->get();
+
+        $department_collect = collect();
+        foreach ($hospital->departments as $departments) {
+            $department_collect[] = $departments;
+        }
         // $department = $hospital->departments()->get();
-        return response()->view('cms.hospitals.edit', ['hospital' => $hospital, 'department' => $department]);
+        return response()->view('cms.hospitals.edit', compact('hospital', 'department_collect', 'department'));
     }
 
     /**
@@ -97,6 +103,11 @@ class HospitalController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $hospital = new Hospital();
+        $hospital->name = $request->hospital_name;
+        $hospital->save();
+        $hospital->departments()->attach($request->department);
+        return redirect()->back();
     }
 
     /**
@@ -108,7 +119,12 @@ class HospitalController extends Controller
     public function destroy($id)
     {
         //
-        $isDestroyed = Hospital::destroy($id);
-        return response()->json();
+        $isDestroyed = Hospital::find($id);
+        count($isDestroyed->departments);
+        if (count($isDestroyed->departments) > 0) {
+            return response()->json(['error' => 'لا يمكن حذف المستشفى لأنه مرتبط بأقسام']);
+        } else {
+            $isDestroyed->delete();
+        }
     }
 }

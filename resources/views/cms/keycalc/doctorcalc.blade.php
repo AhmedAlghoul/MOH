@@ -13,9 +13,9 @@
 @endsection
 
 
-@section('page-name','Title')
+@section('page-name','حساب مفتاح الأطباء')
 
-@section('small-page-name','title')
+@section('small-page-name','حساب مفتاح الأطباء')
 
 
 
@@ -26,19 +26,26 @@
     <h2> التخصص </h2>
     <h3>الدور الوظيفي</h3>
 
-    <h5 for="hoursmonthly" style="display: inline-block">عدد ساعات العمل شهرياً <input type="number"> <label
+    <h5 for="hoursmonthly" style="display: inline-block">عدد ساعات العمل شهرياً <input id="hours" name="hours" type="number"> <label
             style="in">/140</label></h5>
 
     <br>
-    <button>النتيجة </button>
+
+    @php
+        
+    @endphp
+
+
+
+    <a href="#">النتيجة </a>
     <br> <br>
-    <label for="doctorresult">الكادر المطلوب حسب المفتاح: </label>
+    <label for="doctorresult">الكادر المطلوب حسب المفتاح: <p> {{ 140 / 140 }}</p> </label>
     <br> <br>
     <label>عدد الأطباء في القسم: </label>
     <br> <br>
     <label>الاحتياج: </label>
     <br> <br>
-    <button>اضافة تفاصيل ساعات العمل</button>
+    <a href="{{route('doctorsecond')}}">اضافة تفاصيل ساعات العمل</a>
 
 </div>
 

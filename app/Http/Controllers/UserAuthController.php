@@ -36,7 +36,7 @@ class UserAuthController extends Controller
 
         if (auth()->guard('admin')->attempt(['user_id_number' => $request->user_id_number, 'password' => $request->user_password], $remember_me)) {
             // notify()->success('تم الدخول بنجاح  ');
-            return redirect()->route('cms.homepage');
+             return redirect()->route('cms.homepage');
         }
         // notify()->error('خطا في البيانات  برجاء المجاولة مجدا ');
         return redirect()->back()->with(['error' => 'هناك خطأ بالبيانات']);

@@ -68,8 +68,18 @@
           <label for="department-choice">اختر الاقسام</label>
           <select class="form-control" id="department-choice" multiple name="department[]">
 
-            <option value="{{$department->id}}">{{$department->name ? 'selected': ''}}</option>
-   
+            @isset($department)
+
+            @foreach ($department as $department_choice )
+
+            <option value="{{$department_choice->id }}" @if($department_collect->contains('id', $department_choice->id)
+              ==
+              $department_choice->id)
+              selected @endif>{{$department_choice->name}}</option>
+              
+            @endforeach
+
+            @endisset
 
           </select>
         </div>
@@ -91,7 +101,7 @@
       <!-- /.card-body -->
 
       <div class="card-footer">
-        <button type="submit" class="btn btn-primary">إضافة</button>
+        <button type="submit" class="btn btn-primary">تعديل</button>
       </div>
     </form>
   </div>

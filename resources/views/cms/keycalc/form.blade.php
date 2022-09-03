@@ -30,10 +30,11 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        {{-- role="form" method="POST" action="#" --}}
-        <form id="create-form">
+
+        <form id="create-form" role="form" method="GET" action="{{route('keycalc.getEmployeeRole')}}">
             {{-- csrf must be in the form tag --}}
             @csrf
+
             <div class="card-body form-row">
 
 
@@ -74,16 +75,17 @@
                 <div class="form-group col-md-6">
                     <label for="hospital-choice">اختر المستشفى</label>
                     <select class="form-control" id="hospital-choice" name="hospital">
-
-                        <option></option>
-
+                        <option name="hospital" id="hospital-choice" selected> اختر المستشفى </option>
+                        @foreach ($hospitals as $hospital)
+                        
+                        <option value="{{$hospital->id}}">{{$hospital->name}}</option>
+                        @endforeach
                     </select>
                 </div>
 
                 <div class="form-group col-md-6">
                     <label for="department-choice">اختر القسم</label>
                     <select class="form-control" id="department-choice" name="department">
-                        <option></option>
 
                     </select>
                 </div>
@@ -91,7 +93,9 @@
                 <div class="form-group col-md-6">
                     <label for="role-choice">الدور الوظيفي</label>
                     <select class="form-control" id="role-choice" name="role">
-                        <option></option>
+                        @foreach ($roles as $role)
+                        <option value="{{$role->Role_name}}">{{$role->Role_name}} </option>
+                        @endforeach
                     </select>
                 </div>
 
@@ -100,6 +104,7 @@
             <!-- /.card-body -->
 
             <div class="card-footer">
+                {{-- //when press on submit button it should go to page due to the action in the form tag --}}
                 <button type="submit" class="btn btn-primary">اختيار</button>
             </div>
 
@@ -115,5 +120,52 @@
 
 
 @section('scripts')
+{{-- <script>
+    $(document).ready(function() {
+            $('select[name="hospital"]').on('change', function() {
+                var hospital_id = $(this).val();
+                if (hospital_id) {
+                    $.ajax({
+                        url: "{{ URL::to('hospital') }}/" + hospital_id,
+                        type: "GET",
+                        dataType: "json",
+                        success: function(data) {
+                            $('select[name="department"]').empty();
+                            $.each(data, function(key, value) {
+                                $('select[name="department"]').append('<option value="' +
+                                    value + '">' + value + '</option>');
+                            });
+                        },
+                    });
+                } else {
+                    console.log('AJAX load did not work');
+                }
+            });
+        });
+</script> --}}
 
+
+<script>
+    //write ajax request to get departments choices according to the hospital 
+    $('#hospital-choice').change(function () {
+        var hospital_id = $(this).val();
+        $.ajax({
+            url: "{{route('keycalc.getDepartments')}}",
+            type: "get",
+            data: {
+                hospital_id: hospital_id
+            },
+            success: function(data) {
+            $('select[name="department"]').empty();
+            $.each(data, function(key, value) {
+            $('select[name="department"]').append('<option value="' +
+                                                value + '">' + value + '</option>');
+            });
+            },
+            // success: function (data) {
+            //     $('#department-choice').html(data);
+            // }
+        });
+    });
+</script>
 @endsection

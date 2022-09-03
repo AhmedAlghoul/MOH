@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class KeyCalculate extends Model
 {
     use HasFactory;
+    public function hospitals()
+    {
+        return $this->belongsTo(Hospital::class, 'hospital_id', 'id');
+    }
+    public function departments()
+    {
+        return $this->belongsTo(department::class, 'department_id', 'id');
+    }
+    public function EmployeesRoles()
+    {
+        return $this->belongsTo(EmployeeRole::class, 'role_id', 'id');
+    }
 }

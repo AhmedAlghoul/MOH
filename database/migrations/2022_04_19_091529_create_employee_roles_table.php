@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('Role_name')->default('');
             $table->boolean('is_active')->default(true);
+            $table->string('redirect_url')->default('');
             $table->timestamps();
         });
     }
