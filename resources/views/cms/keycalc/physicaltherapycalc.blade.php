@@ -1,6 +1,6 @@
 @extends('cms.parent')
 
-@section('title','')
+@section('title','حساب مفتاح العلاج الطبيعي')
 
 @section('styles')
 <style>
@@ -12,9 +12,9 @@
 @endsection
 
 
-@section('page-name','Title')
+@section('page-name','حساب مفتاح العلاج الطبيعي')
 
-@section('small-page-name','title')
+@section('small-page-name','حساب مفتاح العلاج الطبيعي')
 
 
 
@@ -56,11 +56,9 @@
                 <tbody>
                     <tr>
                         <td>1.</td>
-                        <td>Update software</td>
-                        <td>
-                            <input type="number">
-                        </td>
-                        <td><input type="number"></td>
+                        <td></td>
+                        <td></td>
+                        <td><input type="number" id="physicins_number" ></td>
                         <td></td>
                         <td></td>
 
@@ -82,5 +80,8 @@
 
 
 @section('scripts')
+<script>
 
+document.getElementById("physicins_number").defaultValue = "21";
+</script>
 @endsection

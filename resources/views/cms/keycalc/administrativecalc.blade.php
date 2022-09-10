@@ -12,9 +12,9 @@
 @endsection
 
 
-@section('page-name','Title')
+@section('page-name','حساب مفتاح الإداريين')
 
-@section('small-page-name','title')
+@section('small-page-name','حساب مفتاح الإداريين')
 
 
 

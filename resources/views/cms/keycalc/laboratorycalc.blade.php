@@ -1,6 +1,6 @@
 @extends('cms.parent')
 
-@section('title','')
+@section('title','حساب مفتاح المختبرات')
 
 @section('styles')
 <style>
@@ -11,9 +11,9 @@
 @endsection
 
 
-@section('page-name','Title')
+@section('page-name','حساب مفتاح المختبرات')
 
-@section('small-page-name','title')
+@section('small-page-name','حساب مفتاح المختبرات')
 
 
 
