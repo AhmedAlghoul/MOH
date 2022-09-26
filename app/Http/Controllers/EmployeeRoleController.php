@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\EmployeeRolesExport;
 use App\Models\EmployeeRole;
 
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EmployeeRoleController extends Controller
 {
@@ -16,7 +18,7 @@ class EmployeeRoleController extends Controller
     public function index()
     {
         //
-        $data = EmployeeRole::paginate(6);
+        $data = EmployeeRole::paginate(10);
 
         return response()->view('cms.Roles.index', ['roles' => $data]);
     }
@@ -122,5 +124,9 @@ class EmployeeRoleController extends Controller
         //
         $isDestroyed = EmployeeRole::destroy($id);
         return response()->json();
+    }
+    public function export()
+    {
+        return Excel::download(new EmployeeRolesExport, 'EmployeeRoles.xlsx');
     }
 }

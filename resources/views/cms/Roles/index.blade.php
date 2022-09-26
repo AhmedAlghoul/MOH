@@ -33,7 +33,9 @@
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">عرض الأدوار الوظيفية </h3>
-
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a class="btn btn-success" style="width: 250px;" href="{{route('employeerolesexport')}}">تصدير
+              اكسل</a>
             <div class="card-tools">
               <div class="input-group input-group-sm" style="width: 150px;">
                 <input type="text" name="table_search" class="form-control float-right" placeholder="البحث">
@@ -123,8 +125,8 @@
 
 
 @section('scripts')
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+{{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> --}}
 
 <script>
   function confirmDestroy(id){

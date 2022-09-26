@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\HospitalsExport;
 use App\Models\Department;
 use App\Models\Hospital;
+use App\Models\HospitalDepartment;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class HospitalController extends Controller
 {
@@ -27,8 +30,9 @@ class HospitalController extends Controller
      */
     public function create()
     {
-        //
+
         $departments = Department::where('is_active', 1)->get();
+
         return response()->view('cms.Hospitals.form', compact('departments'));
     }
 
@@ -53,6 +57,20 @@ class HospitalController extends Controller
         //         'department.required' => 'الرجاء إختيار الأقسام',
         //     ]
         // );
+        //create validation rules for the name of hospital to be unique in the database
+
+        //to be contintued (revise the validation rules)
+
+        // $request->validate(
+        //     [
+        //         'name' => 'required|unique:hospitals',
+        //     ],
+        //     [
+        //         'name.required' => 'الرجاء إدخال اسم المستشفى',
+        //         'name.unique' => 'هذا المستشفى موجود بالفعل',
+        //     ]
+        // );
+
         $hospital = new Hospital();
         $hospital->name = $request->hospital_name;
         $hospital->save();
@@ -84,13 +102,25 @@ class HospitalController extends Controller
         $hospital = Hospital::findOrFail($id);
         //get all selected departments and return it to array
         $department = $hospital->departments()->get();
+        $all_departments = Department::where('is_active', 1)->get();
 
         $department_collect = collect();
         foreach ($hospital->departments as $departments) {
             $department_collect[] = $departments;
         }
-        // $department = $hospital->departments()->get();
-        return response()->view('cms.hospitals.edit', compact('hospital', 'department_collect', 'department'));
+
+        //get all departments and return it to array and show it in the form
+
+        // $departments = Department::where('is_active',  1)->get( );
+
+        // $departments_collect = collect();
+        // foreach ($departments as $department) {
+        //     $departments_collect[] = $department;
+        // }
+
+        return response()->view('cms.Hospitals.edit', compact('hospital',   'department', 'department_collect', 'all_departments'));
+
+        // return response()->view('cms.hospitals.edit', compact('hospital', 'department_collect', 'department', 'departments'));
     }
 
     /**
@@ -102,12 +132,19 @@ class HospitalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        $hospital = new Hospital();
+        // write function to update hospital and show other departments to select
+        $hospital = Hospital::findOrFail($id)->first();
         $hospital->name = $request->hospital_name;
-        $hospital->save();
-        $hospital->departments()->attach($request->department);
-        return redirect()->back();
+        $hospitaldepartment = HospitalDepartment::where('hospital_id', $id)->get();
+        $hospitaldepartment->department_id = $request->department;
+
+        $hospital = Hospital::updateOrCreate([
+            'name' => $request->hospital_name,
+        ]);
+
+        $hospital->departments()->sync($request->department);
+        //redirect to the index page
+        return redirect()->route('hospital.index');
     }
 
     /**
@@ -122,9 +159,25 @@ class HospitalController extends Controller
         $isDestroyed = Hospital::find($id);
         count($isDestroyed->departments);
         if (count($isDestroyed->departments) > 0) {
-            return response()->json(['error' => 'لا يمكن حذف المستشفى لأنه مرتبط بأقسام']);
+            //return error message to user that he can't delete this hospital because it has departments in pop up message'
+
+            return redirect()->back()->with('error', 'لا يمكن حذف هذا المستشفى لأنه يحتوي على أقسام');
         } else {
             $isDestroyed->delete();
+            session()->flash('success', 'تم حذف المستشفى بنجاح');
+            return redirect()->back();
         }
     }
+    public function export()
+    {
+        return Excel::download(new HospitalsExport, 'hospitals.xlsx');
+    }
 }
+
+//             return redirect()->back()->with('error', 'لا يمكن حذف هذا المستشفى لوجود أقسام مرتبطة به');
+//             // return response()->json(['error' => 'لا يمكن حذف المستشفى لأنه مرتبط بأقسام']);
+//         } else {
+//             $isDestroyed->delete();
+//         }
+//     }
+// }

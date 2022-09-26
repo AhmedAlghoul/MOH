@@ -33,7 +33,9 @@
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">عرض المستشفيات </h3>
-
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a class="btn btn-success" style="width: 250px;" href="{{route('hospitlasexport')}}">تصدير
+              اكسل</a>
             <div class="card-tools">
               <div class="input-group input-group-sm" style="width: 150px;">
                 <input type="text" name="table_search" class="form-control float-right" placeholder="البحث">
@@ -46,6 +48,27 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body table-responsive p-0">
+            {{-- //Recepion error message from controller --}}
+            @if ($errors->any())
+            <div class="alert alert-danger">
+
+              <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+              </ul>
+            </div>
+            @endif
+
+            @if (session('success'))
+
+            <div class="alert alert-success alert-dismissible col-md-12">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <h5><i class="icon fas fa-check"></i> رسالة تأكيد!</h5>
+              {{ session('success') }}
+            </div>
+            @endif
+
             <table class="table table-hover table-bordered table-striped">
               <thead>
                 <tr>
@@ -107,7 +130,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
-// $(document).on('click', '.deleteProduct', function (e) {
+  // $(document).on('click', '.deleteProduct', function (e) {
 // e.preventDefault();
 // var $this = $(this);
 

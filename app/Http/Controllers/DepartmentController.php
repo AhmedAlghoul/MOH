@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DepartmentsExport;
 use App\Models\Department;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DepartmentController extends Controller
 {
@@ -15,7 +17,7 @@ class DepartmentController extends Controller
     public function index()
     {
         //
-        $data = Department::paginate(6);
+        $data = Department::paginate(15);
 
         return response()->view('cms.departments.index', ['departments' => $data]);
     }
@@ -114,7 +116,6 @@ class DepartmentController extends Controller
         $department->save();
         session()->flash('success', 'تم تعديل القسم بنجاح');
         return redirect()->back();
-        
     }
 
     /**
@@ -133,5 +134,10 @@ class DepartmentController extends Controller
 
         $isDestroyed = Department::destroy($id);
         return response()->json();
+    }
+
+    public function export()
+    {
+        return Excel::download(new DepartmentsExport, 'departments.xlsx');
     }
 }
