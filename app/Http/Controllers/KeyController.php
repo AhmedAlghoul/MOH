@@ -77,13 +77,18 @@ class KeyController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
+     * 
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         //
+        $key = Key::findOrFail($id);
+        $departments = Department::where('is_active', 1)->get();
+        $roles = EmployeeRole::where('is_active', 1)->get();
+        $key_value = $key->key_value;
+        return response()->view('cms.Keys.edit', ['key' => $key, 'departments' => $departments, 'roles' => $roles, 'key_value' => $key_value]);
     }
 
     /**
@@ -96,6 +101,13 @@ class KeyController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $key = Key::findOrFail($id);
+        $key->department_id = $request->department;
+        $key->role_id = $request->role;
+        $key->key_value = $request->key_value;
+        $key->save();
+        //redirect to the index page
+        return redirect()->route('key.index');
     }
 
     /**

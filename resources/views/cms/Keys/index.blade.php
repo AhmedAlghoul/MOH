@@ -65,15 +65,18 @@
                   <td>{{$key->EmployeesRoles->Role_name}}</td>
                   <td>{{$key->key_value}}</td>
                   <td>
-                    <button type="button" class="btn btn-info">
+                    <a href="{{route('key.edit',$key->id)}}" class="btn btn-info">
                       <i class="fas fa-edit"></i>
-                    </button>
+                    </a>
+                    {{-- <a href="{{route('key.edit',$key->id)}}" class="btn btn-info">
+                      <i class="fas fa-edit"></i>
+                    </a> --}}
                     {{-- using javascript method -axios --}}
                     <a href="#" class="btn btn-danger" onclick="confirmDestroy({{$key->id}})">
                       <i class="fas fa-trash-alt"></i>
                     </a>
                   </td>
-
+ 
                   {{-- <td>
                     <a href="{{route('nurses.edit',$nurse->id)}}" class="btn btn-primary btn-sm">تعديل</a>
                     <form action="{{route('nurses.destroy',$nurse->id)}}" method="post" class="d-inline-block">

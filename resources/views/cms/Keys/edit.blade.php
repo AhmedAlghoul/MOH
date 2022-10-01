@@ -1,6 +1,6 @@
 @extends('cms.parent')
 
-@section('title','تعديل مفتاح الكادر')
+@section('title','تعديل مفتاح كادر ')
 
 @section('styles')
 <style>
@@ -26,13 +26,14 @@
   <!-- general form elements -->
   <div class="card card-primary" id="form-card">
     <div class="card-header">
-      <h3 class="card-title">تعديل</h3>
+      <h3 class="card-title">تعديل مفتاح الكادر</h3>
     </div>
     <!-- /.card-header -->
     <!-- form start -->
-    <form id="create-form" role="form" method="POST" action="{{route('key.update')}}">
+    <form id="create-form" role="form" method="POST" action="{{route('key.update',$key->id)}}">
       {{-- csrf must be in the form tag --}}
       @csrf
+      @method('PUT')
       <div class="card-body form-row">
 
 
@@ -72,8 +73,10 @@
         <div class="form-group col-md-6">
           <label for="department-choice">القسم</label>
           <select class="form-control" id="department-choice" name="department">
+
             @foreach ($departments as $department)
-            <option value="{{$department->id}}">{{$department->name}}</option>
+            <option value="{{$department->id}}" @if ($department->id == $key->department_id)
+              selected @endif>{{$department->name}}</option>
             @endforeach
           </select>
         </div>
@@ -82,21 +85,23 @@
           <label>الدور الوظيفي</label>
           <select class="form-control" id="department-choice" name="role">
             @foreach ($roles as $role)
-            <option value="{{$role->id}}">{{$role->Role_name}}</option>
+            <option value="{{$role->id}}" @if ($role->id == $key->role_id)
+              selected @endif>{{$role->Role_name}}</option>
             @endforeach
           </select>
         </div>
 
         <div class="form-group col-md-6">
           <label>مفتاح الكادر </label>
-          <input type="number" name="key_value" class="form-control" placeholder="أدخل مفتاح الكادر">
+          <input type="number" step=any min=0 name="key_value" class="form-control" placeholder="أدخل مفتاح الكادر"
+            value="{{$key->key_value}}">
         </div>
 
       </div>
       <!-- /.card-body -->
 
       <div class="card-footer">
-        <button type="submit" class="btn btn-primary">إضافة</button>
+        <button type="submit" class="btn btn-primary">تعديل</button>
       </div>
     </form>
   </div>
