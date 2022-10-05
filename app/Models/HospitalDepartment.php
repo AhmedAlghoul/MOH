@@ -8,8 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class HospitalDepartment extends Model
 {
     use HasFactory;
-
-//relation to get departments
+    
+    protected $fillable = [
+        'hospital_id',
+        'department_id',
+    ];
+    //relation to get departments
     public function departments()
     {
         return $this->belongsTo(Department::class, 'department_id', 'id');
@@ -19,5 +23,5 @@ class HospitalDepartment extends Model
     // {
     //     return $this->hasMany(Department::class, 'department_id', 'id');
     // }
-    
+
 }

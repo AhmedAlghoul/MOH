@@ -50,6 +50,18 @@
     <form id="create-form" role="form" action="{{route('hospital.store')}}" method="POST">
       @csrf
       <div class="card-body ">
+        
+        @if($errors->any())
+        <div class="alert alert-danger">
+          <ul>
+            @foreach($errors->all() as $error)
+            <li>{{$error}}</li>
+            @endforeach
+          </ul>
+        </div>
+        
+        @endif
+
         <div class="form-group form-inline" style="padding-bottom: 20px">
           <label style="padding-left: 20px ">اسم المستشفى</label>
           <input style="width: 500px" type="text" class="form-control " placeholder="ادخل اسم المستشفى"

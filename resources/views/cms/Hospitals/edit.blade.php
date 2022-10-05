@@ -68,9 +68,9 @@
           <label for="department-choice">اختر الاقسام</label>
           <select class="form-control" id="department-choice" multiple name="department[]">
 
-            @isset($department)
+            {{-- @isset($department) --}}
 
-            @foreach ($department as $department_choice )
+            @foreach ($all_departments as $department_choice )
 
             <option value="{{$department_choice->id }}" @if($department_collect->contains('id', $department_choice->id)
               ==
@@ -79,7 +79,7 @@
               
             @endforeach
 
-            @endisset
+            {{-- @endisset --}}
 
           </select>
         </div>
