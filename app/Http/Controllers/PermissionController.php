@@ -27,6 +27,7 @@ class PermissionController extends Controller
     public function create()
     {
         //
+        return response()->view('cms.spatie.permissions.form');
     }
 
     /**
@@ -38,6 +39,28 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
         //
+        $validator = Validator(
+            $request->all(),
+            [
+                'name' => 'required|string|max:100',
+                'guard' => 'required|in:web,admin',
+
+            ],
+            [
+                'name.required' => 'الرجاء إدخال اسم الصلاحية',
+                'guard.required' => 'الرجاء إدخال نوع الصلاحية',
+                'guard.in' => 'الرجاء إدخال نوع الصلاحية بشكل صحيح',
+            ]
+        );
+        if (!$validator->fails()) {
+            $permission = new Permission();
+            $permission->name = $request->get('name');
+            $permission->guard_name = $request->get('guard');
+            $isSaved = $permission->save();
+            return response()->json(['message' => $isSaved ? "تم إنشاء الصلاحية بنجاح" : "لم يتم إنشاء الصلاحية بنجاح"], $isSaved ? 200 : 400);
+        } else {
+            return response()->json(['message' => $validator->getMessageBag()->first()], 400);
+        }
     }
 
     /**
@@ -60,6 +83,8 @@ class PermissionController extends Controller
     public function edit($id)
     {
         //
+        $permission = Permission::findById($id);
+        return response()->view('cms.spatie.permissions.edit', ['permission' => $permission]);
     }
 
     /**
@@ -72,6 +97,28 @@ class PermissionController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $validator = Validator(
+            $request->all(),
+            [
+                'name' => 'required|string|max:100',
+                'guard' => 'required|in:web,admin',
+
+            ],
+            [
+                'name.required' => 'الرجاء إدخال اسم الصلاحية',
+                'guard.required' => 'الرجاء إدخال نوع الصلاحية',
+                'guard.in' => 'الرجاء إدخال نوع الصلاحية بشكل صحيح',
+            ]
+        );
+        if (!$validator->fails()) {
+            $permission = Permission::findById($id);
+            $permission->name = $request->get('name');
+            $permission->guard_name = $request->get('guard');
+            $isSaved = $permission->save();
+            return response()->json(['message' => $isSaved ? "تم إنشاء الصلاحية بنجاح" : "لم يتم إنشاء الصلاحية بنجاح"], $isSaved ? 200 : 400);
+        } else {
+            return response()->json(['message' => $validator->getMessageBag()->first()], 400);
+        }
     }
 
     /**
@@ -83,5 +130,7 @@ class PermissionController extends Controller
     public function destroy($id)
     {
         //
+        $isDeleted = Permission::destroy($id);
+        return response()->json(['message' => $isDeleted ? "تم حذف الصلاحية بنجاح" : "فشل حذف الصلاحية "], $isDeleted ? 200 : 400);
     }
 }

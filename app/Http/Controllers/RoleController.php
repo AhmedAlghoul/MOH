@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use PhpParser\Node\Expr\Cast\String_;
 use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
@@ -15,7 +17,7 @@ class RoleController extends Controller
     public function index()
     {
         //
-        $roles = Role::paginate(10);
+        $roles = Role::withCount('permissions')->paginate(10);
         return view('cms.spatie.roles.index', ['roles' => $roles]);
     }
 
@@ -38,6 +40,25 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator($request->all(), [
+            'name' => 'required|string|max:100',
+            'guard' => 'required|in:web,admin|string',
+        ], [
+            'name.required' => 'الرجاء إدخال اسم الدور الوظيفي',
+            'guard.required' => 'الرجاء إدخال نوع الدور الوظيفي',
+            'guard.in' => 'الرجاء إدخال نوع الدور الوظيفي بشكل صحيح',
+        ]);
+
+        if (!$validator->fails()) {
+            $role = new Role();
+            $role->name = $request->get('name');
+            $role->guard_name = $request->get('guard');
+            $isSaved = $role->save();
+            return response()->json(['message' => $isSaved ? "تم إنشاء الدور الوظيفي بنجاح" : "لم يتم إنشاء الدور الوظيفي بنجاح"], $isSaved ? 200 : 400);
+        } else {
+            return response()->json(['message' => $validator->getMessageBag()->first()], 400);
+        }
+
         //validate data
         // $request->validate(
         //     [
@@ -78,6 +99,8 @@ class RoleController extends Controller
     public function edit($id)
     {
         //
+        $role = Role::findById($id);
+        return response()->view('cms.spatie.roles.edit', ['role' => $role]);
     }
 
     /**
@@ -90,6 +113,24 @@ class RoleController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $validator = Validator($request->all(), [
+            'name' => 'required|string|max:100',
+            'guard' => 'required|in:web,admin|string',
+        ], [
+            'name.required' => 'الرجاء إدخال اسم الدور الوظيفي',
+            'guard.required' => 'الرجاء إدخال نوع الدور الوظيفي',
+            'guard.in' => 'الرجاء إدخال نوع الدور الوظيفي بشكل صحيح',
+        ]);
+
+        if (!$validator->fails()) {
+            $role = Role::findById($id);
+            $role->name = $request->get('name');
+            $role->guard_name = $request->get('guard');
+            $isSaved = $role->save();
+            return response()->json(['message' => $isSaved ? "تم تحديث الدور الوظيفي بنجاح" : "لم يتم تحديث الدور الوظيفي بنجاح"], $isSaved ? 200 : 400);
+        } else {
+            return response()->json(['message' => $validator->getMessageBag()->first()], 400);
+        }
     }
 
     /**
@@ -98,8 +139,9 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Role $role)
     {
-        //
+        $isDeleted = $role->delete();
+        return response()->json(['message' => $isDeleted ? 'تم حذف الدور الوظيفي بنجاح' : 'حدث خطأ أثناء حذف الدور الوظيفي'], $isDeleted ? 200 : 400);
     }
 }
