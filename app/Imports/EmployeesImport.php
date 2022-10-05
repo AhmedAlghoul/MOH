@@ -38,9 +38,10 @@ class EmployeesImport implements ToModel,  SkipsEmptyRows, WithStartRow
             'employee_name' => $row[1],
             // 'date_of_hiring' => $row[4],
             'hospital_id' => $row[2],
-            'department_id' => $row[3],
-            'role_id' => $row[4],
-            'mobile_number' => $row[5],
+            'circle_id'=>$row[3],
+            'department_id' => $row[4],
+            'role_id' => $row[5],
+            'mobile_number' => $row[6],
         ]);
     }
     //to skip heading row

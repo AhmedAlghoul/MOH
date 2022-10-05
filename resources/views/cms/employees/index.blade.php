@@ -86,6 +86,7 @@
                 <th>اسم الموظف</th>
                 {{-- <th>تاريخ التعيين</th> --}}
                 <th>المستشفى</th>
+                <th>الدائرة</th>
                 <th>القسم</th>
                 <th> الدور الوظيفي</th>
                 <th>رقم الجوال</th>
@@ -101,20 +102,22 @@
                 <td>{{$employee->employee_name}}</td>
                 {{-- <td>{{$employee->date_of_hiring}}</td> --}}
                 <td>{{$employee->hospitals->name}}</td>
+                <td>{{$employee->circles->circle_name}}</td>
                 <td>{{$employee->departments->name}}</td>
                 <td>{{$employee->EmployeesRoles->Role_name}}</td>
                 <td>{{$employee->mobile_number}}</td>
                 <td>
-
-                  <button type="button" class="btn btn-info">
+                  <a href="{{route('employee.edit',$employee->id)}}" class="btn btn-info">
                     <i class="fas fa-edit"></i>
-                  </button>
-                  <button type="button" class="btn btn-danger">
+                  </a>
+                  {{-- <a href="{{route('key.edit',$key->id)}}" class="btn btn-info">
+                    <i class="fas fa-edit"></i>
+                  </a> --}}
+                  {{-- using javascript method -axios --}}
+                  <a href="#" class="btn btn-danger" onclick="performDestroy({{$employee->id}},this)">
                     <i class="fas fa-trash-alt"></i>
-                  </button>
-
+                  </a>
                 </td>
-
                 {{-- <td>
                   <a href="{{route('nurses.edit',$nurse->id)}}" class="btn btn-primary btn-sm">تعديل</a>
                   <form action="{{route('nurses.destroy',$nurse->id)}}" method="post" class="d-inline-block">
@@ -129,6 +132,7 @@
               @endforeach
             </tbody>
           </table>
+          {{$employees->links()}}
         </div>
         <!-- /.card-body -->
       </div>
@@ -146,5 +150,65 @@
 
 
 @section('scripts')
+{{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> --}}
+<script>
+  function performDestroy(id,ref){
+confirmDestroy('/cms/admin/employee/'+id,ref);}
+
+</script>
+
+{{-- <script>
+  function confirmDestroy(id){
+Swal.fire({
+title: 'هل أنت متأكد؟',
+text: "لن تستطيع عكس عملية الحذف مرة أخرى!",
+icon: 'warning',
+showCancelButton: true,
+cancelButtonText: 'إلغاء',
+confirmButtonColor: '#3085d6',
+cancelButtonColor: '#d33',
+confirmButtonText: 'نعم, قم بالحذف!',
+}).then((result) => {
+if (result.isConfirmed) {
+destroy(id);
+// showSuccessMessage();
+
+}})
+}
+// implement delete function using axios
+function destroy(id){
+axios.delete('/cms/admin/employee/'+id)
+.then(function (response) {
+// handle success 2xx-3xx
+console.log( response.data);
+Swal.fire(
+'تم الحذف!',
+'تم حذف الموظف بنجاح.',
+'success'
+)
+location.reload();
+
+})
+.catch(function (error) {
+// handle error 4xx-5xx
+console.log(error);
+})
+.then(function () {
+// always executed
+});
+
+}
+
+function showSuccessMessage(){
+Swal.fire({
+position: 'center',
+icon: 'success',
+title: 'تمت العملية بنجاح',
+showConfirmButton: false,
+timer: 1500
+});
+}
+</script> --}}
 
 @endsection

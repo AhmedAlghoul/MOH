@@ -44,6 +44,7 @@ class EmployeesExport implements FromCollection, WithHeadings, WithEvents, Shoul
             'اسم الموظف',
             // 'تاريخ التعيين',
             'اسم المستشفى',
+            'اسم الدائرة',
             'اسم القسم',
             'الدور الوظيفي',
             'رقم الجوال',
@@ -59,11 +60,12 @@ class EmployeesExport implements FromCollection, WithHeadings, WithEvents, Shoul
     public function map($employee): array
     {
         return [
-            
+
             $employee->job_number,
             $employee->employee_name,
             // $employee->date_of_hiring,
             $employee->hospitals->name,
+            $employee->circles->circle_name,
             $employee->departments->name,
             $employee->EmployeesRoles->Role_name,
             $employee->mobile_number,

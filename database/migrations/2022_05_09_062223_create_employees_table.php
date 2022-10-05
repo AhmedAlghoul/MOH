@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('employee_name');
             // $table->date('date_of_hiring');
             $table->foreignId('hospital_id')->constrained('hospitals', 'id')->cascadeOnDelete();
+            $table->foreignId('circle_id')->constrained('circles', 'id')->cascadeOnDelete();
             $table->foreignId('department_id')->constrained('departments', 'id')->cascadeOnDelete();
             $table->foreignId('role_id')->constrained('roles', 'id')->cascadeOnDelete();
             $table->string('mobile_number');
