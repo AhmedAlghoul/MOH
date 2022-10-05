@@ -1,6 +1,6 @@
 @extends('cms.parent')
 
-@section('title','')
+@section('title','حساب مفتاح التمريض')
 
 @section('styles')
 <style>
@@ -42,40 +42,58 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body p-0">
+            @if(isset($flag))
             <table class="table">
                 <thead>
                     <tr>
                         <th style="width: 10px">#</th>
                         <th>القسم</th>
-                        <th style="width: 40px">المفتاح</th>
-                        <th>عدد الأسرة </th>
-                        <th>عدد الممرضين الحالي</th>
                         <th>الكادر المطلوب</th>
                         <th>الاحتياج</th>
 
                     </tr>
                 </thead>
                 <tbody>
-
-
                     <tr>
                         <td>1.</td>
-                        <td>Update software</td>
-                        <td>
-                            10
-                        </td>
-                        <td><input type="number"></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{{$department}}</td>
+                        <td>{{$need}}</td>
+                        <td>{{$result}}</td>
                     </tr>
-
                 </tbody>
-
             </table>
-            <div class="card-footer">
-                <button type="submit" class="btn btn-primary">حساب</button>
-            </div>
+            @else
+            <form method="post" action="{{route('nurseCalculate')}}">
+                @csrf
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>القسم</th>
+                            <th style="width: 40px">المفتاح</th>
+                            <th>عدد الأسرة </th>
+                            <th>عدد الممرضين الحالي</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1.</td>
+                            <td>{{$department}}</td>
+                            <input name="department" hidden value="{{$department}}">
+                            <td>{{$key->key_value}}</td>
+                            <input name="key_value" hidden value="{{$key->key_value}}">
+                            <td><input name="bed_count" type="number"></td>
+                            <td>{{$nurse_count}}</td>
+                            <input name="nurse_count" hidden value="{{$nurse_count}}">
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">حساب</button>
+                </div>
+            </form>
+            @endif
+
         </div>
         <!-- /.card-body -->
     </div>

@@ -32,7 +32,7 @@
     </div>
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">-حساب ناتج مفتاح الأشعة مبدئي-- </h3>
+            <h3 class="card-title">حساب ناتج مفتاح الأشعة </h3>
 
             <div class="card-tools" style="float: left">
                 <ul class="pagination pagination-sm float-left">
@@ -51,28 +51,41 @@
                     <tr>
                         <th style="width: 10px">#</th>
                         <th>القسم</th>
-                        <th>عدد الأجهزة</th>
-                        <th>نوع الأجهزة </th>
                         <th>العدد الحالي</th>
-                        <th>العدد المقترح</th>
-                        <th>الاحتياج</th>
+
+                        <th>الأجهزة المتوفرة وعددها</th>
+
+
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>1.</td>
-                        <td>Update software</td>
-                        <td>
-                            <input type="number">
-                        </td>
-                        <td><select>
-                                <option value="x-ray">أشعة</option>
-                                <option value="color">أشعة ملونة </option>
+                        <td>{{$department}}</td>
+                        <td>{{$ray_technician_count}}</td>
 
-                            </select></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td><input type="checkbox" id="X-rays" name=" أشعة عادية " value="2" onclick="dynInput(this);">
+                            <label for="X-rays">أشعة عادية</label>
+
+
+                            <input type="checkbox" id="Fluoroscopy" name=" فلورو " value="2" onclick="dynInput(this);">
+                            <label for="Fluoroscopy"> فلورو</label>
+
+                            <br>
+                            <input type="checkbox" id="ct-scan" name=" الأشعة المقطعية " value="3"
+                                onclick="dynInput(this);">
+                            <label for="ct-scan"> أشعة مقطعية</label>
+
+                            <input type="checkbox" id="mri" name=" الرنين المغناطيسي " value="3"
+                                onclick="dynInput(this);">
+                            <label for="mri">الرنين المغناطيسي</label>
+
+                        </td>
+                        <td>
+                            <p id="insertinputs"></p>
+                        </td>
+
+
 
                     </tr>
 
@@ -93,5 +106,22 @@
 
 
 @section('scripts')
-
+<script type="text/javascript">
+    function dynInput(cbox) {
+  if (cbox.checked) {
+    var input = document.createElement("input");
+    input.type = "number";
+    $(input).width("20%");
+    var div = document.createElement("div");
+    div.id = cbox.id;
+    div.innerHTML = "عدد أجهزة"+ cbox.name;
+    div.appendChild(input);
+    //give the input a unique id
+    // input.id = cbox.id + "input";
+    document.getElementById("insertinputs").appendChild(div);
+  } else {
+    document.getElementById(cbox.name).remove();
+  }
+}
+</script>
 @endsection

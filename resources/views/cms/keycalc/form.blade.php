@@ -150,7 +150,7 @@
     $('#hospital-choice').change(function () {
         var hospital_id = $(this).val();
         $.ajax({
-            url: "{{route('keycalc.getDepartments')}}",
+            url: "{{route('getDepartments')}}",
             type: "get",
             data: {
                 hospital_id: hospital_id
@@ -167,5 +167,26 @@
             // }
         });
     });
+
+    //write javascript code to show data of the employee in the table
+    // $('#create-form').submit(function (e) {
+    //     e.preventDefault();
+    //     var hospital_id = $('#hospital-choice').val();
+    //     var department_id = $('#department-choice').val();
+    //     var role = $('#role-choice').val();
+    //     $.ajax({
+    //         url: "{{route('keycalc.getEmployeeRole')}}",
+    //         type: "get",
+    //         data: {
+    //             hospital_id: hospital_id,
+    //             department_id: department_id,
+    //             role: role
+    //         },
+    //         success: function (data) {
+    //             $('#employee-table').html(data);
+    //         }
+    //     });
+    // });
+    
 </script>
 @endsection

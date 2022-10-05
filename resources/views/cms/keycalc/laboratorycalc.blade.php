@@ -40,36 +40,73 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body p-0">
+
+
+            @if (isset($flag))
             <table class="table">
                 <thead>
                     <tr>
                         <th style="width: 10px">#</th>
                         <th>القسم</th>
-                        <th>العدد الحالي</th>
-                        <th>عدد الفحوصات</th>
-                        <th>العدد المطلوب حسب المفتاح</th>
-                        <th>فائض/عجز</th>
+                        <th>الكادر المطلوب</th>
+                        <th>الاحتياج/الفائض</th>
 
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>1.</td>
-                        <td>Update software</td>
-                        <td></td>
-                        <td><input type="number"></td>
-                        <td>
-                            10
-                        </td>
-                        <td></td>
+                        <td>{{$department}}</td>
+                        <td>{{$result}}</td>
+                        <td>{{$need}}</td>
+
                     </tr>
 
                 </tbody>
 
             </table>
-            <div class="card-footer">
-                <button type="submit" class="btn btn-primary">حساب</button>
-            </div>
+            @else
+            <form method="post" action="{{route('laboratorytechnicianscalc')}}">
+                @csrf
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>القسم</th>
+                            <th>العدد الحالي</th>
+                            <th>عدد الفحوصات</th>
+                            <th>مدة الفحص</th>
+                            <th>دقائق العمل يوميا</th>
+                            <th>أيام العمل</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1.</td>
+                            <td>{{$department}}</td>
+                            <input name="department" hidden value="{{$department}}">
+                            <td>{{$laboratory_technicians_count}}</td>
+                            <input name="laboratory_technicians_count" hidden value="{{$laboratory_technicians_count}}">
+                            <td><input type="number" style="width: 75%" name="number_of_examinations"></td>
+
+                            <td><input type="number" id="examination_time" style="width: 75%" name="examination_time">
+                            </td>
+                            <td><input type="number" id="working_minutes_per_day" style="width: 75%"
+                                    name="working_minutes_per_day">
+                            </td>
+                            <td><input type="number" id="working_days" style="width: 75%" name="working_days"></td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">حساب</button>
+                </div>
+            </form>
+            @endif
+
         </div>
         <!-- /.card-body -->
     </div>
@@ -80,5 +117,10 @@
 
 
 @section('scripts')
+<script>
+    document.getElementById("examination_time").defaultValue = "20";
+document.getElementById("working_minutes_per_day").defaultValue = "420";
+document.getElementById("working_days").defaultValue = "22";
+</script>
 
 @endsection

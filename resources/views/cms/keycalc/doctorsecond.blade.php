@@ -47,6 +47,7 @@
                         <th></th>
                     </tr>
                     <tr>
+                        <th>#</th>
                         <th>اسم القسم///</th>
                         <th>الأيام</th>
                         <th style="width: 40px">عدد الساعات</th>
@@ -61,7 +62,7 @@
                         <td>1.</td>
                         <td>Update software</td>
                         <td>
-                            10
+                            <input type="number">
                         </td>
                         <td><input type="number"></td>
                         <td><input type="number"></td>

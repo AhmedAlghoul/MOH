@@ -1,6 +1,6 @@
 @extends('cms.parent')
 
-@section('title','')
+@section('title','حساب مفتاح الإداريين')
 
 @section('styles')
 <style>
@@ -24,17 +24,17 @@
     <div class="callout callout-warning">
         <h5>طريقة حساب مفتاح الإداريين</h5>
         <p>يتم حساب المفتاح بناء على التخصص
-           <br> المحاسبين :<br>
+            <br> المحاسبين :<br>
             • النقطة التي تعمل بنظام 24 ساعة يتم تغطيتها على الاقل 6 موظفين.
             • النقطة التي تعمل فترة واحد يتم تغطيتها بموظف واحد على الأقل.
             <br>المراسلين :<br>
             يتم احتساب المفتاح على حسب انشغال الاسرة في القسم اذا كان معدل الانشغال الاسرة في القسم ما يعادل 75% او اكثر
             من الاسرة
             يحتاج القسم الى مراسل اقل من ذلك يتم دمج قسمين سوياً.
-           <br> الامن:<br>
+            <br> الامن:<br>
             • البوابة التي تعمل بنظام 24 ساعة تحتاج الى 6 موظفين لتقديم الخدمة.
             • البوبة التي تعمل بنظام الفترة الواحدة يتم تغطيتها بموظف واحد فقط.
-             </p>
+        </p>
     </div>
     <div class="card">
         <div class="card-header">
@@ -53,31 +53,37 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body p-0">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th style="width: 10px">#</th>
-                        <th>القسم</th>
-                        <th>التخصص</th>
-                        <th>العدد الحالي</th>
-                       
+            <form action="">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>القسم</th>
+                            <th>الدور الوظيفي</th>
+                            <th>العدد الحالي</th>
+                            <th>عدد النقاط</th>
+                            <th>الفترات</th>
 
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                       
-                    </tr>
 
-                </tbody>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>{{$department}}</td>
+                            <td>{{$employee_role}}</td>
+                            <td>{{$administrative_count}}</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
 
-            </table>
-            <div class="card-footer">
-                <button type="submit" class="btn btn-primary">حساب</button>
-            </div>
+                    </tbody>
+
+                </table>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">حساب</button>
+                </div>
+            </form>
         </div>
         <!-- /.card-body -->
     </div>
