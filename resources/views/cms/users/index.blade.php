@@ -1,6 +1,6 @@
 @extends('cms.parent')
 
-@section('title','عرض الصلاحيات')
+@section('title','عرض المستخدمين')
 
 @section('styles')
 <style>
@@ -17,9 +17,9 @@
 @endsection
 
 
-@section('page-name','عرض الصلاحيات ')
+@section('page-name','عرض المستخدمين')
 
-@section('small-page-name','عرض الصلاحيات')
+@section('small-page-name','عرض المستخدمين')
 
 
 
@@ -32,7 +32,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">عرض  الصلاحيات</h3>
+            <h3 class="card-title">عرض المستخدمين </h3>
 
             <div class="card-tools">
               <div class="input-group input-group-sm" style="width: 150px;">
@@ -50,24 +50,26 @@
               <thead>
                 <tr>
                   <th span="1" style="width: 7%">الرقم</th>
-                  <th span="1" style="width: 20%">اسم الصلاحية</th>
-                  <th span="1" style="width: 55%"> القسم</th>
+                  <th span="1" style="width: 20%">الاسم</th>
+                  <th span="1">الايميل</th>
+                  <th>الصلاحيات</th>
                   <th> الأوامر</th>
                 </tr>
               </thead>
               <tbody>
 
-                @foreach ($permissions as $permission)
+                @foreach ($users as $user)
                 <tr>
-                  <td>{{$permission->id}}</td>
-                  <td>{{$permission->name}}</td>
-                  <td>{{$permission->guard_name}}</td>
+                  <td>{{$user->id}}</td>
+                  <td>{{$user->name}}</td>
+                  <td>{{$user->email}}</td>
+                  <td><a href="" class="badge bg-info"> {{$user->permissions_count}} صلاحية/ات</a></td>
                   <td>
-                    <a href="{{route('permissions.edit',$permission->id)}}" class="btn btn-info">
+                    <a href="{{route('users.edit',$user->id)}}" class="btn btn-info">
                       <i class="fas fa-edit"></i>
                     </a>
-                    {{-- we sent id to destroy method ($permission->id)--}}
-                    {{-- <form action="{{route('permission.destroy',$permission->id )}}" method="post">
+                    {{-- we sent id to destroy method ($user->id)--}}
+                    {{-- <form action="{{route('user.destroy',$user->id )}}" method="post">
                       @csrf
                       @method('delete')
                       <button type="submit" class="btn btn-danger">
@@ -76,7 +78,7 @@
                     </form> --}}
 
                     {{-- using javascript method instead of form method --}}
-                    <a href="#" class="btn btn-danger" onclick="performDestroy({{$permission->id}},this)">
+                    <a href="#" class="btn btn-danger" onclick="confirmDestroy({{$user->id}})">
                       <i class="fas fa-trash-alt"></i>
                     </a>
                   </td>
@@ -96,7 +98,7 @@
               </tbody>
 
             </table>
-            {{$permissions->links()}}
+            {{$users->links()}}
           </div>
           <!-- /.card-body -->
 
@@ -116,9 +118,59 @@
 
 
 @section('scripts')
+{{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> --}}
+
 <script>
-  function performDestroy(id,ref){
- confirmDestroy('/cms/admin/permissions/'+id,ref);
+  function confirmDestroy(id){
+  Swal.fire({
+      title: 'هل أنت متأكد؟',
+      text: "لن تستطيع عكس عملية الحذف مرة أخرى!",
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonText: 'إلغاء',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'نعم, قم بالحذف!',
+    }).then((result) => {
+  if (result.isConfirmed) {
+    destroy(id);
+    // showSuccessMessage();
+
+ }})
+}
+//  implement delete function using axios
+function destroy(id){
+  axios.delete('/cms/admin/user/'+id)
+    .then(function (response) {
+  // handle success 2xx-3xx 
+  console.log(response.data);
+  Swal.fire(
+    'تم الحذف!',
+    'تم حذف القسم بنجاح.',
+    'success'
+  )
+  location.reload();
+  
+  })
+  .catch(function (error) {
+  // handle error 4xx-5xx 
+    console.log(error);
+  })
+  .then(function () {
+  // always executed
+  });
+
+}
+
+function showSuccessMessage(){
+Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: 'تمت العملية بنجاح',
+  showConfirmButton: false,
+  timer: 1500
+});
 }
 </script>
 @endsection

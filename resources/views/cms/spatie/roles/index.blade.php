@@ -51,7 +51,8 @@
                 <tr>
                   <th span="1" style="width: 7%">الرقم</th>
                   <th span="1" style="width: 20%">اسم الدور الوظيفي</th>
-                  <th span="1" style="width: 55%"> القسم</th>
+                  <th span="1" style="width: %"> القسم</th>
+                  <th>عدد الصلاحيات</th>
                   <th> الأوامر</th>
                 </tr>
               </thead>
@@ -61,9 +62,13 @@
                 <tr>
                   <td>{{$role->id}}</td>
                   <td>{{$role->name}}</td>
-                  <td>{{$role->guard_name}}</td>
+                  <td><span class="badge bg-success">{{$role->guard_name}}</span></td>
+                  <td><a href="{{route('role.permissions.index',$role->id)}}"
+                      class="btn btn-info">{{$role->permissions_count}}
+                      صلاحية/ات</a></td>
+
                   <td>
-                    <a href="{{route('role.edit',$role->id)}}" class="btn btn-info">
+                    <a href="{{route('roles.edit',$role->id)}}" class="btn btn-info">
                       <i class="fas fa-edit"></i>
                     </a>
                     {{-- we sent id to destroy method ($role->id)--}}
@@ -76,7 +81,7 @@
                     </form> --}}
 
                     {{-- using javascript method instead of form method --}}
-                    <a href="#" class="btn btn-danger" onclick="confirmDestroy({{$role->id}})">
+                    <a href="#" class="btn btn-danger" onclick="performDestroy({{$role->id}},this)">
                       <i class="fas fa-trash-alt"></i>
                     </a>
                   </td>
@@ -116,59 +121,9 @@
 
 
 @section('scripts')
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
 <script>
-  function confirmDestroy(id){
-  Swal.fire({
-      title: 'هل أنت متأكد؟',
-      text: "لن تستطيع عكس عملية الحذف مرة أخرى!",
-      icon: 'warning',
-      showCancelButton: true,
-      cancelButtonText: 'إلغاء',
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'نعم, قم بالحذف!',
-    }).then((result) => {
-  if (result.isConfirmed) {
-    destroy(id);
-    // showSuccessMessage();
-
- }})
-}
-//  implement delete function using axios
-function destroy(id){
-  axios.delete('/cms/admin/role/'+id)
-    .then(function (response) {
-  // handle success 2xx-3xx 
-  console.log( response.data);
-  Swal.fire(
-    'تم الحذف!',
-    'تم حذف القسم بنجاح.',
-    'success'
-  )
-  location.reload();
-  
-  })
-  .catch(function (error) {
-  // handle error 4xx-5xx 
-    console.log(error);
-  })
-  .then(function () {
-  // always executed
-  });
-
-}
-
-function showSuccessMessage(){
-Swal.fire({
-  position: 'center',
-  icon: 'success',
-  title: 'تمت العملية بنجاح',
-  showConfirmButton: false,
-  timer: 1500
-});
+  function performDestroy(id,ref){
+ confirmDestroy('/cms/admin/roles/'+id,ref);
 }
 </script>
 @endsection

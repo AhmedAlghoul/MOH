@@ -3,6 +3,10 @@
 @section('title','إضافة دور وظيفي جديد')
 
 @section('styles')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <style>
   .form-control {
     width: 40%;
@@ -30,42 +34,19 @@
     </div>
     <!-- /.card-header -->
     <!-- form start -->
-    <form id="create-form" role="form" method="POST" action="{{route('roles.store')}}">
+    <form id="create-form">
       {{-- csrf must be in the form tag --}}
       @csrf
       <div class="card-body">
 
-
-        @if ($errors->any())
-        <div class="alert alert-danger alert-dismissible ">
-          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-          <h5><i class="icon fas fa-ban"></i> تنبيه!</h5>
-          <ul>
-            @foreach ($errors->all() as $error)
-            <li> {{ $error }}</li>
-            @endforeach
-          </ul>
-
-        </div>
-        @endif
-        @if (session('success'))
-
-        <div class="alert alert-success alert-dismissible col-md-12">
-          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-          <h5><i class="icon fas fa-check"></i> رسالة تأكيد!</h5>
-          {{ session('success') }}
-        </div>
-        @endif
-
         <div class="form-group ">
           <label>اسم الدور وظيفي</label>
-          <input type="text" name="name" class="form-control" placeholder="ادخل اسم الدور وظيفي">
+          <input type="text" name="name" class="form-control" id="name" placeholder="ادخل اسم الدور وظيفي">
         </div>
 
         <div class="form-group col-md-6">
           <label>القسم</label>
-          <select class="form-control" id="guards" style="width: 82%">
-
+          <select class="form-control guards" id="guards" style="width: 82%">
             <option value="web">مستخدمين</option>
             <option value="admin">مشرفين</option>
           </select>
@@ -75,7 +56,7 @@
       <!-- /.card-body -->
 
       <div class="card-footer">
-        <button type="submit" class="btn btn-primary">إضافة</button>
+        <button onclick="performStore()" class="btn btn-primary">إضافة</b utton>
       </div>
     </form>
   </div>
@@ -89,5 +70,18 @@
 
 
 @section('scripts')
+<script>
+  //Initialize Select2 Elements
+$('.guards').select2({
+theme: 'bootstrap4'
+})
+function performStore(){
+let data = {
+name: document.getElementById('name').value,
+guard: document.getElementById('guards').value
+};
 
+store('/cms/admin/roles',data);
+}
+</script>
 @endsection
