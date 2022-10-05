@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CircleController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DoctorsController;
 use App\Http\Controllers\EmployeeController;
@@ -11,6 +12,10 @@ use App\Http\Controllers\KeyController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\RolePermissionController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserPermissionController;
+use App\Models\circle;
 use App\Models\EmployeeRole;
 use App\Models\KeyCalculate;
 use Database\Factories\DepartmentFactory;
@@ -61,39 +66,74 @@ Route::prefix('cms/admin')->middleware('auth:admin')->group(function () {
     Route::resource('key', KeyController::class);
     Route::resource('employee', EmployeeController::class);
     Route::resource('keycalc', KeyCalculateController::class);
+    Route::resource('circle', CircleController::class);
 
     //get job role route 
     Route::get('getEmployeeRole', [KeyCalculateController::class, 'getEmployeeRole'])->name('keycalc.getEmployeeRole');
 
-    //get departments route 
-    Route::get('getDepartments', [KeyCalculateController::class, 'getDepartments'])->name('keycalc.getDepartments');
-    // Route::get('hospital/{id}', [KeyCalculateController::class, 'getDepartments'])->name('keycalc.getDepartments');
+    //get departments route  
+    Route::get('getDepartments', [KeyCalculateController::class, 'getDepartments'])->name('getDepartments');
+
+    //get employee  departments 
+    Route::get('getEmployeeDepartments', [EmployeeController::class, 'getEmployeeDepartments'])->name('getEmployeeDepartments');
+    //nurse calculate route
+    Route::post('nurseCalculate', [KeyCalculateController::class, 'nurseCalculate'])->name('nurseCalculate');
+    //pharmacist calculate route
+    Route::post('pharmacyCalculate', [KeyCalculateController::class, 'pharmacyCalculate'])->name('pharmacyCalculate');
+    //physical therapists calculate Route 
+    Route::post('physicaltherapistcalc', [KeyCalculateController::class, 'physicaltherapistcalc'])->name('physicaltherapistcalc');
+    //laboratory technicians calculate Route
+    Route::post('laboratorytechnicianscalc', [KeyCalculateController::class, 'laboratorytechnicianscalc'])->name('laboratorytechnicianscalc');
+
+
+    // employee role calculations
     Route::view('nursecalc', 'cms.keycalc.nursecalc')->name('nursecalc');
     Route::view('physicaltherapycalc', 'cms.keycalc.physicaltherapycalc')->name('physicaltherapycalc');
     Route::view('medicalimagingcalc', 'cms.keycalc.medicalimagingcalc')->name('medicalimagingcalc');
     Route::view('pharmacycalc', 'cms.keycalc.pharmacycalc')->name('pharmacycalc');
     Route::view('laboratorycalc', 'cms.keycalc.laboratorycalc')->name('laboratorycalc');
 
-    Route::view('doctorcalc', 'cms.keycalc.doctorcalc')->name('doctorcalc');
+    Route::view('doctorcalc', 'cms.doctorcalc.doctorcalc')->name('doctorcalc');
     // Route::view('')->name('');
     Route::view('doctorsecond', 'cms.keycalc.doctorsecond')->name('doctorsecond');
     Route::view('administrativecalc', 'cms.keycalc.administrativecalc')->name('administrativecalc');
     Route::view('calc', 'cms.nurses.calculate')->name('cms.nurses.calculate');
     Route::view('expand', 'cms.expandabletable')->name('cms.expand');
     Route::get('logout', [UserAuthController::class, 'logout'])->name('cms.logout');
-    //nurses key index and create key views
+    //nurses key index and create key views 
     Route::view('nurseskey', 'cms.nurses.key')->name('cms.nurseskey');
     Route::view('/addnurseskey', 'cms.nurses.addkey')->name('cms.addnurseskey');
 
+    ################start of system users and user permissions Route ############
 
-    //laravel excel
-    Route::get('file-import-export', [EmployeeController::class, 'fileImportExport']);
-    Route::post('file-import', [EmployeeController::class, 'fileImport'])->name('file-import');
-    Route::get('file-export', [EmployeeController::class, 'fileExport'])->name('file-export');
+    Route::resource('users', UserController::class);
+    Route::resource('user.permisions', UserPermissionController::class);
+    Route::resource('role.permissions', RolePermissionController::class);
+    ################End of system users and user permissions Route ############
+
 
     //change password routes
     Route::get('/changepassword', [UserAuthController::class, 'changePassword'])->name('cms.changepassword');
     Route::post('/changepassword', [UserAuthController::class, 'updatePassword'])->name('cms.updatepassword');
+
+
+    ####################beginning of Laravel Excel ####################################
+    //excel fiels imports and exports for employees 
+    Route::get('file-import-export', [EmployeeController::class, 'fileImportExport']);
+    Route::post('file-import', [EmployeeController::class, 'fileImport'])->name('file-import');
+    Route::get('file-export', [EmployeeController::class, 'fileExport'])->name('file-export');
+
+    //export excel file for departments id 
+    Route::get('/departments/export', [DepartmentController::class, 'export'])->name('departmentsexport');
+
+    //export excel file for hospitals id 
+    Route::get('/hospitals/export', [HospitalController::class, 'export'])->name('hospitlasexport');
+
+    //export excel file for employee roles id 
+    Route::get('/employeerole/export', [EmployeeRoleController::class, 'export'])->name('employeerolesexport');
+
+    //export excel file for circles id 
+    Route::get('/circles/export', [CircleController::class, 'export'])->name('circlesexport');
 
 
 
@@ -106,6 +146,7 @@ Route::prefix('cms/admin')->middleware('auth:admin')->group(function () {
         );
         return response()->download($file, "template.xlsx", $headers);
     });
+    ####################End of Laravel Excel ###########################################
 
     //query parameters for department and hospital
 
@@ -119,10 +160,5 @@ Route::prefix('cms/admin')->middleware('auth:admin')->group(function () {
 
 
 //
-
-
-
-
-
 
 ####################End Ajax Routes##############################
