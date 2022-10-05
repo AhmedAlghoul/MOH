@@ -32,6 +32,7 @@
   <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css">
   <!-- Custom style for RTL -->
   <link rel="stylesheet" href="{{asset('cms/dist/css/custom.css')}}">
+  <link rel="stylesheet" href="{{ asset('cms/plugins/toastr/toastr.min.css') }}">
   <style>
     .image {
       padding-right: 18px;
@@ -69,8 +70,10 @@
       </form>
 
       <!-- Right navbar links -->
-      <ul class="navbar-nav mr-auto-navbav">
+      {{-- <ul class="navbar-nav mr-auto-navbav">
+
         <!-- Notifications Dropdown Menu -->
+
         <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" href="#">
             <i class="far fa-bell"></i>
@@ -98,7 +101,7 @@
           </div>
         </li>
 
-      </ul>
+      </ul> --}}
     </nav>
     <!-- /.navbar -->
 
@@ -138,6 +141,9 @@
                 </p>
               </a>
             </li>
+            {{-- @canany(['update', 'view', 'delete'], $post)
+
+            @endcanany --}}
 
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
@@ -148,12 +154,14 @@
                 </p>
               </a>
               <ul class="nav nav-treeview">
+                @can('عرض-الاقسام')
                 <li class="nav-item">
                   <a href="{{route('department.index')}}" class="nav-link">
                     <i class="fas fa-list nav-icon"></i>
                     <p>عرض</p>
                   </a>
                 </li>
+                @endcan
                 <li class="nav-item">
                   <a href="{{route('department.create')}}" class="nav-link">
                     <i class="fas fa-plus-square nav-icon"></i>
@@ -162,6 +170,33 @@
                 </li>
               </ul>
             </li>
+
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-building"></i>
+                <p>
+                  الدوائر
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{route('circle.index')}}" class="nav-link">
+                    <i class="fas fa-list nav-icon"></i>
+                    <p>عرض</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('circle.create')}}" class="nav-link">
+                    <i class="fas fa-plus-square nav-icon"></i>
+                    <p>إنشاء</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+
+
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-hospital"></i>
@@ -245,10 +280,34 @@
               </a>
             </li>
             <li class="nav-item">
+              <a href="{{route('doctorcalc')}}" class="nav-link">
+                <i class="nav-icon fas fa-calculator"></i>
+                <p>
+                  حساب مفتاح الأطباء
+                </p>
+              </a>
+            </li>
+            {{-- <li class="nav-item">
+              <a href="{{route('doctorsecond')}}" class="nav-link">
+                <i class="nav-icon fas fa-calculator"></i>
+                <p>
+                  مخفي- حساب مفتاح الأطباء
+                </p>
+              </a>
+            </li> --}}
+            <li class="nav-item">
               <a href="{{route('nursecalc')}}" class="nav-link">
                 <i class="nav-icon fas fa-calculator"></i>
                 <p>
                   حساب التمريض
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{route('pharmacycalc')}}" class="nav-link">
+                <i class="nav-icon fas fa-calculator"></i>
+                <p>
+                  حساب مفتاح الصيدلة
                 </p>
               </a>
             </li>
@@ -268,14 +327,7 @@
                 </p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="{{route('pharmacycalc')}}" class="nav-link">
-                <i class="nav-icon fas fa-calculator"></i>
-                <p>
-                  حساب مفتاح الصيدلة
-                </p>
-              </a>
-            </li>
+
             <li class="nav-item">
               <a href="{{route('laboratorycalc')}}" class="nav-link">
                 <i class="nav-icon fas fa-calculator"></i>
@@ -284,27 +336,21 @@
                 </p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="{{route('doctorcalc')}}" class="nav-link">
-                <i class="nav-icon fas fa-calculator"></i>
-                <p>
-                  حساب مفتاح الأطباء
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{route('doctorsecond')}}" class="nav-link">
-                <i class="nav-icon fas fa-calculator"></i>
-                <p>
-                  مخفي- حساب مفتاح الأطباء
-                </p>
-              </a>
-            </li>
+
             <li class="nav-item">
               <a href="{{route('administrativecalc')}}" class="nav-link">
                 <i class="nav-icon fas fa-calculator"></i>
                 <p>
                   حساب مفتاح الإداريين
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-list"></i>
+                <p>
+                  عرض نتائج حساب المفتاح
                 </p>
               </a>
             </li>
@@ -379,7 +425,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="{{route('employee.create')}}" class="nav-link">
+                  <a href="{{route('permissions.create')}}" class="nav-link">
                     <i class="fas fa-plus-square nav-icon"></i>
                     <p>إنشاء</p>
                   </a>
@@ -387,6 +433,30 @@
               </ul>
             </li>
 
+            <li class="nav-header">مستخدمي النظام</li>
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-user-alt"></i>
+                <p>
+                  المستخدمين
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{route('users.index')}}" class="nav-link">
+                    <i class="fas fa-list nav-icon"></i>
+                    <p>عرض</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('users.create')}}" class="nav-link">
+                    <i class="fas fa-plus-square nav-icon"></i>
+                    <p>إنشاء</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
             {{-- <li class="nav-header">التخصصات</li> --}}
 
             {{-- <li class="nav-item has-treeview">
@@ -584,7 +654,7 @@
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{route('cms.homepage')}}">الرئيسية</a></li>
                 <li class="breadcrumb-item active">@yield('small-page-name')</li>
               </ol>
             </div><!-- /.col -->
@@ -643,8 +713,7 @@
   <script src="https://cdn.rtlcss.com/bootstrap/v4.2.1/js/bootstrap.min.js"></script>
   <!-- Bootstrap 4 -->
   <script src="{{asset('cms/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-  <!-- ChartJS -->
-  <script src="{{asset('cms/plugins/chart.js/Chart.min.js')}}"></script>
+
   <!-- Sparkline -->
   <script src="{{asset('cms/plugins/sparklines/sparkline.js')}}"></script>
   <!-- JQVMap -->
@@ -655,6 +724,8 @@
   <!-- daterangepicker -->
   <script src="{{asset('cms/plugins/moment/moment.min.js')}}"></script>
   <script src="{{asset('cms/plugins/daterangepicker/daterangepicker.js')}}"></script>
+  <!-- ChartJS -->
+  <script src="{{asset('cms/plugins/chart.js/Chart.min.js')}}"></script>
   <!-- Tempusdominus Bootstrap 4 -->
   <script src="{{asset('cms/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
   <!-- Summernote -->
@@ -667,8 +738,13 @@
   <script src="{{asset('cms/dist/js/pages/dashboard.js')}}"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="{{asset('cms/dist/js/demo.js')}}"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="{{ asset('cms/plugins/toastr/toastr.min.js') }}"></script>
+  <script src="{{asset('js/crud.js')}}"></script>
 
   @yield('scripts')
 
 </body>
+
 </html>
