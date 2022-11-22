@@ -15,6 +15,8 @@ class MedicalimagingcalcController extends Controller
     public function index()
     {
         //
+        $data = Medicalimagingcalc::all();
+        return view('cms.viewkeyCalcResult.medicalimagingCalcResult', ['medicalimaging' => $data]);
     }
 
     /**

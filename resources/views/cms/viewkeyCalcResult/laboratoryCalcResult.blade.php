@@ -1,6 +1,6 @@
 @extends('cms.parent')
 
-@section('title','عرض نتائج العلاج الطبيعي')
+@section('title','عرض نتائج مفتاح الكادر')
 
 @section('styles')
 <style>
@@ -17,7 +17,7 @@
 @endsection
 
 
-@section('page-name','عرض نتائج العلاج الطبيعي')
+@section('page-name','عرض نتائج مفتاح الكادر')
 
 @section('small-page-name','عرض النتائج')
 
@@ -34,7 +34,7 @@
             {{-- downlad Employee names Excel file --}}
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title"> عرض نتائج حساب مفتاح العلاج الطبيعي </h3>
+                    <h3 class="card-title"> عرض نتائج حساب فني المختبرات </h3>
                     {{-- <a class="btn btn-success" href="{{ route('file-export') }}">تحميل
                         الأسماء</a> <a class="btn btn-success" href="{{ route('file-export') }}">تحميل
                         الأسماء</a> --}}
@@ -57,14 +57,31 @@
                                     <th>المستشفى</th>
                                     <th>القسم</th>
                                     <th>العدد الحالي</th>
-                                    <th>عدد الجلسات</th>
-                                    <th>العدد المقترح</th>
+                                    <th>عدد الفحوصات</th>
+                                    <th>المطلوب</th>
                                     <th>الاحتياج</th>
                                     <th> الأوامر</th>
                                 </tr>
                             </thead>
                             <tbody>
+                    @foreach ($lab_technicians as $lab_technician)
+                    <tr>
+                        <td>{{$lab_technician->id}}</td>
+                        <td>{{$lab_technician->hospital_name}}</td>
+                        <td>{{$lab_technician->department}}</td>
+                        <td>{{$lab_technician->laboratory_technicians_count}}</td>
+                        <td>{{$lab_technician->number_of_examinations}}</td>
+                        <td>{{$lab_technician->result}}</td>
+                        <td>{{$lab_technician->need}}</td>
+                        <td>
 
+                            {{-- using javascript method instead of form method --}}
+                            <a href="#" class="btn btn-danger" onclick="confirmDestroy({{$lab_technician->id}})">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    @endforeach
 
                             </tbody>
                         </table>
@@ -89,7 +106,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> --}}
 <script>
     function performDestroy(id,ref){
-confirmDestroy('/cms/admin/employee/'+id,ref);}
+confirmDestroy('/cms/admin/nurses/'+id,ref);}
 
 </script>
 

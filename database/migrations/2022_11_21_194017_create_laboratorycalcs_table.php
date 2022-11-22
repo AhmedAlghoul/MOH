@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('laboratorycalcs', function (Blueprint $table) {
             $table->id();
-            $table->integer('hospital_id');
-            $table->integer('department_id');
+            $table->string('hospital_name');
+            $table->string('department');
             $table->integer('laboratory_technicians_count');
             $table->integer('number_of_examinations');
             $table->integer('result');

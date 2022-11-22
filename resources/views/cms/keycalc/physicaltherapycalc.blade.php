@@ -44,6 +44,8 @@
         <div class="card-body p-0">
 
             @if (isset($flag))
+            <form method="POST" action="{{route('phiscaltherapist.store')}}">
+                        @csrf
             <table class="table">
                 <thead>
                     <tr>
@@ -58,13 +60,18 @@
                     <tr>
                         <td>1.</td>
                         <td>{{$department}}</td>
+                        <input name="hospital_name" hidden value="{{$hospital_name}}">
+                        
                         <th>{{$result}}</th>
                         <th>{{$need}}</th>
 
                     </tr>
                 </tbody>
             </table>
-
+            <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">حفظ النتائج</button>
+                </div>
+    </form>
             @else
             <form method="post" action="{{route('physicaltherapistcalc')}}">
                 @csrf
@@ -85,6 +92,9 @@
                             <td>1.</td>
                             <td>{{$department}}</td>
                             <input name="department" hidden value="{{$department}}">
+                            <input name="hospital_name" hidden value="{{$hospital_name}}">
+
+
                             <td>{{$physical_therapist_count}}</td>
                             <input name="physical_therapist_count" hidden value="{{$physical_therapist_count}}">
                             <td><input type="number" style="width: 75%" name="number_of_sessions"></td>

@@ -10,9 +10,11 @@ use App\Http\Controllers\NurseController;
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\KeyCalculateController;
 use App\Http\Controllers\KeyController;
+use App\Http\Controllers\LaboratorycalcController;
 use App\Http\Controllers\NursecalcController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PharmacycalcController;
+use App\Http\Controllers\PhysicaltherapycalcController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RolePermissionController;
@@ -73,6 +75,8 @@ Route::prefix('cms/admin')->middleware('auth:web')->group(function () {
     Route::resource('keycalc', KeyCalculateController::class);
     Route::resource('circle', CircleController::class);
     Route::resource('pharmacy', PharmacycalcController::class);
+    Route::resource('Laboratry',LaboratorycalcController::class);
+    Route::resource('phiscaltherapist',PhysicaltherapycalcController::class);
 
     //get job role route
     Route::get('getEmployeeRole', [KeyCalculateController::class, 'getEmployeeRole'])->name('keycalc.getEmployeeRole');

@@ -315,8 +315,32 @@
         </li>
         <li class="nav-item">
             <a href="{{route('pharmacy.index')}}" class="nav-link">
-                <i class="fas fa-list nav-icon"></i>
+                <i class=" fa-solid fa-syringe"></i>
                 <p>الصيدلة</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{route('pharmacy.index')}}" class="nav-link">
+                <i class="fas fa-solid fa-x-ray"></i>
+                <p>أخصائي الأشعة</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{route('phiscaltherapist.index')}}" class="nav-link">
+                <i class="fas fa-solid fa-x-ray"></i>
+                <p>أخصائي العلاج الطبيعي</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{route('Laboratry.index')}}" class="nav-link">
+                <i class="fas fa-solid fa-x-ray"></i>
+                <p>فنيين المختبرات</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{route('pharmacy.index')}}" class="nav-link">
+                <i class="fas fa-solid fa-x-ray"></i>
+                <p>الإداريين</p>
             </a>
         </li>
     </ul>

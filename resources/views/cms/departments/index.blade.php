@@ -30,7 +30,7 @@
     <!-- /.row -->
     <div class="row">
       <div class="col-12">
-        <div class="card">
+        <div class="card"> 
           <div class="card-header">
             <h3 class="card-title">عرض الأقسام </h3>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -73,7 +73,7 @@
                     @endif
                   </td>
                   <td>
-                    
+
                     <a href="{{route('department.edit',$department->id)}}" class="btn btn-info">
                       <i class="fas fa-edit"></i>
                     </a>
@@ -152,7 +152,7 @@
 function destroy(id){
   axios.delete('/cms/admin/department/'+id)
     .then(function (response) {
-  // handle success 2xx-3xx 
+  // handle success 2xx-3xx
   console.log(response.data);
   Swal.fire(
     'تم الحذف!',
@@ -160,10 +160,10 @@ function destroy(id){
     'success'
   )
   location.reload();
-  
+
   })
   .catch(function (error) {
-  // handle error 4xx-5xx 
+  // handle error 4xx-5xx
     console.log(error);
   })
   .then(function () {

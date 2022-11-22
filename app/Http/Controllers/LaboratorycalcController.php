@@ -15,6 +15,8 @@ class LaboratorycalcController extends Controller
     public function index()
     {
         //
+        $data = Laboratorycalc::all();
+        return view('cms.viewkeyCalcResult.laboratoryCalcResult', ['lab_technicians' => $data]);
     }
 
     /**
@@ -36,6 +38,15 @@ class LaboratorycalcController extends Controller
     public function store(Request $request)
     {
         //
+        $laboratorycalc = new Laboratorycalc();
+        $laboratorycalc->hospital_name = $request->hospital_name;
+        $laboratorycalc->department = $request->department;
+        $laboratorycalc->laboratory_technicians_count = $request->laboratory_technicians_count;
+        $laboratorycalc->number_of_examinations = $request->number_of_examinations;
+        $laboratorycalc->result = $request->result;
+        $laboratorycalc->need = $request->need;
+        $laboratorycalc->save();
+        return redirect()->route('keycalc.create')->with('success', 'تم حفظ البيانات بنجاح');
     }
 
     /**

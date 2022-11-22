@@ -15,7 +15,8 @@ class PhysicaltherapycalcController extends Controller
     public function index()
     {
         //
-    }
+        $data = Physicaltherapycalc::all();
+        return view('cms.viewkeyCalcResult.physicaltherapyCalcResult', ['physical_therapists' => $data]);    }
 
     /**
      * Show the form for creating a new resource.
@@ -36,6 +37,16 @@ class PhysicaltherapycalcController extends Controller
     public function store(Request $request)
     {
         //
+        $therapistcalc = new Physicaltherapycalc();
+        $therapistcalc->hospital_name = $request->hospital_name;
+        $therapistcalc->department = $request->department;
+        $therapistcalc->physical_therapist_count = $request->physical_therapist_count;
+        $therapistcalc->number_of_sessions = $request->number_of_sessions;
+        $therapistcalc->result = $request->result;
+        $therapistcalc->need = $request->need;
+        $therapistcalc->save();
+
+        return redirect()->route('keycalc.create')->with('success', 'تم حفظ البيانات بنجاح');
     }
 
     /**

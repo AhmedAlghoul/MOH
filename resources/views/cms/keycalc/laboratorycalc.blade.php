@@ -43,6 +43,8 @@
 
 
             @if (isset($flag))
+            <form method="POST" action="{{route('Laboratry.store')}}">
+                            @csrf
             <table class="table">
                 <thead>
                     <tr>
@@ -57,14 +59,24 @@
                     <tr>
                         <td>1.</td>
                         <td>{{$department}}</td>
+                        <input name="department" hidden value="{{$department}}">
+                        <input name="hospital_name" hidden value="{{$hospital_name}}">
                         <td>{{$result}}</td>
+                        <input name="result" hidden value="{{$result}}">
                         <td>{{$need}}</td>
+                        <input name="need" hidden value="{{$need}}">
+                        <input name="laboratory_technicians_count" hidden value="{{$laboratory_technicians_count}}">
+                        <input name="number_of_examinations" hidden value="{{$number_of_examinations}}">
 
                     </tr>
 
                 </tbody>
 
             </table>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">حفظ النتائج</button>
+            </div>
+            </form>
             @else
             <form method="post" action="{{route('laboratorytechnicianscalc')}}">
                 @csrf
@@ -96,6 +108,7 @@
                                     name="working_minutes_per_day">
                             </td>
                             <td><input type="number" id="working_days" style="width: 75%" name="working_days"></td>
+                            <input name="hospital_name" hidden value="{{$hospital_name}}">
                         </tr>
 
                     </tbody>

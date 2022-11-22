@@ -148,8 +148,6 @@ class KeyCalculateController extends Controller
             $department_id = Department::where("name", $department)->pluck('id')->first();
             $key = Key::where("department_id", $department_id)->where('role_id', $role_id)->first('key_value');
             $doctor_count = Employee::where('role_id', $role_id)->where('department_id', $department_id)->count();
-
-
             return response()->view('cms.doctorcalc.doctorcalc', compact(['department', 'key', 'role_id', 'employee_role', 'doctor_count', 'hospital_name']));
             //get department name and show it in view of doctor
 
@@ -161,27 +159,27 @@ class KeyCalculateController extends Controller
             $department_id = Department::where("name", $department)->pluck('id')->first();
             $key = Key::where("department_id", $department_id)->where('role_id', $role_id)->first('key_value');
             $nurse_count = Employee::where('role_id', $role_id)->where('department_id', $department_id)->count();
-            return response()->view('cms.keycalc.nursecalc', compact(['department', 'nurse_count', 'key', 'role_id', 'hospital_id', 'department_id','hospital_name']));
+            return response()->view('cms.keycalc.nursecalc', compact(['department', 'nurse_count', 'key', 'role_id', 'hospital_id', 'department_id', 'hospital_name']));
         } elseif ($employee_role == "صيدلي") {
 
             $role_id = EmployeeRole::where("Role_name", $employee_role)->pluck('id')->first();
             $department_id = Department::where("name", $department)->pluck('id')->first();
             $key = Key::where("department_id", $department_id)->where('role_id', $role_id)->first('key_value');
             $pharmacist_count = Employee::where('role_id', $role_id)->where('department_id', $department_id)->count();
-            return response()->view('cms.keycalc.pharmacycalc', compact(['department', 'pharmacist_count', 'key','hospital_name']));
-        } elseif ($employee_role == "أخصائي علاج طبيعي" || $employee_role == "معالج طبيعي") {
+            return response()->view('cms.keycalc.pharmacycalc', compact(['department', 'pharmacist_count', 'key', 'hospital_name']));
+        } elseif ($employee_role == "فني علاج طبيعي" || $employee_role == "معالج طبيعي" || $employee_role == "أخصائي علاج طبيعي") {
 
             $role_id = EmployeeRole::where("Role_name", $employee_role)->pluck('id')->first();
             $department_id = Department::where("name", $department)->pluck('id')->first();
             $physical_therapist_count = Employee::where('role_id', $role_id)->where('department_id', $department_id)->count();
 
-            return response()->view('cms.keycalc.physicaltherapycalc', compact(['department', 'role_id', 'physical_therapist_count']));
+            return response()->view('cms.keycalc.physicaltherapycalc', compact(['department', 'role_id', 'physical_therapist_count','hospital_name']));
         } elseif ($employee_role == "فني مختبر") {
             $role_id = EmployeeRole::where("Role_name", $employee_role)->pluck('id')->first();
             $department_id = Department::where("name", $department)->pluck('id')->first();
             $laboratory_technicians_count = Employee::where('role_id', $role_id)->where('department_id', $department_id)->count();
 
-            return response()->view('cms.keycalc.laboratorycalc', compact(['role_id', 'department_id', 'laboratory_technicians_count', 'department']));
+            return response()->view('cms.keycalc.laboratorycalc', compact(['role_id', 'department_id', 'laboratory_technicians_count', 'department', 'hospital_name']));
         } elseif ($employee_role == "أمن" || $employee_role == "محاسب") {
 
             $role_id = EmployeeRole::where("Role_name", $employee_role)->pluck('id')->first();
@@ -256,12 +254,13 @@ class KeyCalculateController extends Controller
             $add_amount < 1 ? $result += $add_amount + 2 : $result += $add_amount + 1;
         }
         $flag = 1;
-        $need=($pharmacist_count-$result);
-        return response()->view('cms.keycalc.pharmacycalc', compact(['department', 'flag', 'pharmacist_count', 'number_of_prescriptions', 'number_of_medical_reports', 'result', 'key_value', 'need','hospital_name']));
+        $need = ($pharmacist_count - $result);
+        return response()->view('cms.keycalc.pharmacycalc', compact(['department', 'flag', 'pharmacist_count', 'number_of_prescriptions', 'number_of_medical_reports', 'result', 'key_value', 'need', 'hospital_name']));
     }
 
     public function physicaltherapistcalc(Request $request)
     {
+        $hospital_name = $request->input('hospital_name');
         $number_of_sessions = $request->input('number_of_sessions');
         $department = $request->input('department');
         $physical_therapist_count = $request->input('physical_therapist_count');
@@ -271,12 +270,12 @@ class KeyCalculateController extends Controller
         $result = ($number_of_sessions * $session_duration) / ($working_minutes_per_day * $working_days);
         $need = $result - $physical_therapist_count;
         $flag = 1;
-        return response()->view('cms.keycalc.physicaltherapycalc', compact(['flag',  'department', 'number_of_sessions', 'result', 'need']));
+        return response()->view('cms.keycalc.physicaltherapycalc', compact(['flag',  'department', 'number_of_sessions', 'result', 'need', 'physical_therapist_count','hospital_name']));
     }
     public function laboratorytechnicianscalc(Request $request)
     {
+        $hospital_name = $request->input('hospital_name');
         $number_of_examinations = $request->input('number_of_examinations');
-
         $department = $request->input('department');
         $laboratory_technicians_count = $request->input('laboratory_technicians_count');
         $examination_time = $request->input('examination_time');
@@ -285,7 +284,7 @@ class KeyCalculateController extends Controller
         $result = ($number_of_examinations * $examination_time) / ($working_minutes_per_day * $working_days);
         $need = $result - $laboratory_technicians_count;
         $flag = 1;
-        return response()->view('cms.keycalc.laboratorycalc', compact(['department', 'flag', 'result', 'need']));
+        return response()->view('cms.keycalc.laboratorycalc', compact(['department', 'flag', 'result', 'need', 'laboratory_technicians_count', 'hospital_name', 'laboratory_technicians_count', 'number_of_examinations']));
     }
 
     public function medicalimagingcalc(Request $request)
