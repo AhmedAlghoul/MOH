@@ -12,6 +12,7 @@ use App\Http\Controllers\KeyCalculateController;
 use App\Http\Controllers\KeyController;
 use App\Http\Controllers\NursecalcController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PharmacycalcController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RolePermissionController;
@@ -21,6 +22,7 @@ use App\Models\circle;
 use App\Models\DoctorCalc;
 use App\Models\EmployeeRole;
 use App\Models\KeyCalculate;
+use App\Models\Pharmacycalc;
 use Database\Factories\DepartmentFactory;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\Route;
@@ -70,6 +72,7 @@ Route::prefix('cms/admin')->middleware('auth:web')->group(function () {
     Route::resource('employee', EmployeeController::class);
     Route::resource('keycalc', KeyCalculateController::class);
     Route::resource('circle', CircleController::class);
+    Route::resource('pharmacy', PharmacycalcController::class);
 
     //get job role route
     Route::get('getEmployeeRole', [KeyCalculateController::class, 'getEmployeeRole'])->name('keycalc.getEmployeeRole');

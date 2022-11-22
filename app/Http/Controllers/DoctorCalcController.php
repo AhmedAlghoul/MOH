@@ -7,6 +7,7 @@ use App\Models\DoctorCalc;
 use App\Models\Employee;
 use App\Models\EmployeeRole;
 use App\Models\Key;
+use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
 
 class DoctorCalcController extends Controller
@@ -19,8 +20,8 @@ class DoctorCalcController extends Controller
     public function index()
     {
         //
-
-
+        $data = DoctorCalc::all();
+        return view('cms.viewkeyCalcResult.doctorCalcResult', ['doctors' => $data]);
     }
 
     /**
@@ -42,16 +43,30 @@ class DoctorCalcController extends Controller
      */
     public function store(Request $request)
     {
+        // $doctor_result = $request->get('monthly_hours') / 140;
+        // $doctor_need = $request->get('doctor_count') - $doctor_result;
+        // $doctorcalc = new DoctorCalc();
+        // $doctorcalc->hospital_id = $request->hospital_id;
+        // $doctorcalc->department_id = $request->department_id;
+        // $doctorcalc->monthly_hours = $request->monthly_hours;
+        // $doctorcalc->doctor_count = $request->doctor_count;
+        // $doctorcalc->doctor_result = $doctor_result;
+        // $doctorcalc->doctor_need = $doctor_need;
+        // $doctorcalc->save();
+
+
         $doctor_result = $request->get('monthly_hours') / 140;
         $doctor_need = $request->get('doctor_count') - $doctor_result;
         $doctorcalc = new DoctorCalc();
-        $doctorcalc->hospital_id = $request->hospital_id;
-        $doctorcalc->department_id = $request->department_id;
+        $doctorcalc->hospital_name = $request->hospital_name;
+        $doctorcalc->department = $request->department;
         $doctorcalc->monthly_hours = $request->monthly_hours;
         $doctorcalc->doctor_count = $request->doctor_count;
         $doctorcalc->doctor_result = $doctor_result;
         $doctorcalc->doctor_need = $doctor_need;
         $doctorcalc->save();
+
+
 
         return redirect()->back();
     }

@@ -84,9 +84,9 @@
           <label for="department-choice">اخترالدور الوظيفي </label>
           <select class="form-control" id="department-choice" name="department">
             <option name="circle" id="circle-choice" selected> اختر الدور الوظيفي </option>
-            @foreach ($circles as $circle)
+            @foreach ($employeeroles as $employeerole)
 
-            <option value="{{$circle->id}}">{{$circle->circle_name}}</option>
+            <option value="{{$employeerole->id}}">{{$employeerole->Role_name}}</option>
             @endforeach
           </select>
         </div>

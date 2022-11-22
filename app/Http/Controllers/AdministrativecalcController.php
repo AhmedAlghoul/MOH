@@ -36,6 +36,7 @@ class AdministrativecalcController extends Controller
     public function store(Request $request)
     {
         //
+        
     }
 
     /**

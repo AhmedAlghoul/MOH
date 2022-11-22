@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Administrativecalc;
 use App\Models\circle;
 use App\Models\KeyCalculate;
 use App\Models\Hospital;
 use App\Models\Department;
+use App\Models\DoctorCalc;
 use App\Models\Employee;
 use App\Models\EmployeeRole;
 use App\Models\HospitalDepartment;
 use App\Models\Key;
+use App\Models\Laboratorycalc;
+use App\Models\Medicalimagingcalc;
+use App\Models\Pharmacycalc;
+use App\Models\Physicaltherapycalc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Psy\Readline\Hoa\Console;
@@ -26,10 +32,10 @@ class KeyCalculateController extends Controller
     {
         //
         $hospitals = Hospital::all();
-        $circles = circle::all();
-        $employeeRoles = EmployeeRole::all();
+        // $circles = circle::all();
+        $employeeroles = EmployeeRole::all();
         $key_calculates = KeyCalculate::all();
-        return view('cms.keycalc.index', compact('key_calculates', 'hospitals', 'circles'));
+        return view('cms.keycalc.index', compact('key_calculates', 'hospitals', 'employeeroles'));
     }
 
     /**
@@ -144,7 +150,7 @@ class KeyCalculateController extends Controller
             $doctor_count = Employee::where('role_id', $role_id)->where('department_id', $department_id)->count();
 
 
-            return response()->view('cms.doctorcalc.doctorcalc', compact(['department', 'key', 'role_id', 'employee_role', 'doctor_count', 'hospital_name', 'hospital_id', 'department_id']));
+            return response()->view('cms.doctorcalc.doctorcalc', compact(['department', 'key', 'role_id', 'employee_role', 'doctor_count', 'hospital_name']));
             //get department name and show it in view of doctor
 
         } elseif (
@@ -155,14 +161,14 @@ class KeyCalculateController extends Controller
             $department_id = Department::where("name", $department)->pluck('id')->first();
             $key = Key::where("department_id", $department_id)->where('role_id', $role_id)->first('key_value');
             $nurse_count = Employee::where('role_id', $role_id)->where('department_id', $department_id)->count();
-            return response()->view('cms.keycalc.nursecalc', compact(['department', 'nurse_count', 'key', 'role_id', 'hospital_id', 'department_id']));
+            return response()->view('cms.keycalc.nursecalc', compact(['department', 'nurse_count', 'key', 'role_id', 'hospital_id', 'department_id','hospital_name']));
         } elseif ($employee_role == "صيدلي") {
 
             $role_id = EmployeeRole::where("Role_name", $employee_role)->pluck('id')->first();
             $department_id = Department::where("name", $department)->pluck('id')->first();
             $key = Key::where("department_id", $department_id)->where('role_id', $role_id)->first('key_value');
             $pharmacist_count = Employee::where('role_id', $role_id)->where('department_id', $department_id)->count();
-            return response()->view('cms.keycalc.pharmacycalc', compact(['department', 'pharmacist_count', 'key']));
+            return response()->view('cms.keycalc.pharmacycalc', compact(['department', 'pharmacist_count', 'key','hospital_name']));
         } elseif ($employee_role == "أخصائي علاج طبيعي" || $employee_role == "معالج طبيعي") {
 
             $role_id = EmployeeRole::where("Role_name", $employee_role)->pluck('id')->first();
@@ -196,7 +202,7 @@ class KeyCalculateController extends Controller
     {
 
 
-        $hospital_id = $request->input('hospital_id');
+        $hospital_name = $request->input('hospital_name');
 
         $department = $request->input('department');
 
@@ -208,7 +214,7 @@ class KeyCalculateController extends Controller
         $result = round($nurse_count  - $need);
 
         $flag = 1;
-        return response()->view('cms.keycalc.nursecalc', compact(['result', 'need', 'department', 'flag', 'nurse_count', 'key_value', 'bed_count', 'department_id', 'hospital_id']));
+        return response()->view('cms.keycalc.nursecalc', compact(['result', 'need', 'department', 'flag', 'nurse_count', 'key_value', 'bed_count', 'department_id', 'hospital_name']));
     }
     // public function doctorCalculate(Request $request)
     // {
@@ -222,6 +228,8 @@ class KeyCalculateController extends Controller
 
     public function pharmacyCalculate(Request $request)
     {
+        $hospital_name = $request->input('hospital_name');
+
         $department = $request->input('department');
         $pharmacist_count = $request->input('pharmacist_count');
         $key_value = $request->input('key_value');
@@ -249,7 +257,7 @@ class KeyCalculateController extends Controller
         }
         $flag = 1;
         $need=($pharmacist_count-$result);
-        return response()->view('cms.keycalc.pharmacycalc', compact(['department', 'flag', 'pharmacist_count', 'number_of_prescriptions', 'number_of_medical_reports', 'result', 'key_value', 'need']));
+        return response()->view('cms.keycalc.pharmacycalc', compact(['department', 'flag', 'pharmacist_count', 'number_of_prescriptions', 'number_of_medical_reports', 'result', 'key_value', 'need','hospital_name']));
     }
 
     public function physicaltherapistcalc(Request $request)
@@ -309,4 +317,20 @@ class KeyCalculateController extends Controller
     public function saveDoctors(Request $request)
     {
     }
+    //new function to show data of each employee role and hospital in the same page
+    // public function showData(Request $request)
+    // {
+    //     $hospital_id = $request->input('hospital_id');
+    //     //request employee role id from form
+    //     $employee_role_id = $request->input('employee_role_id');
+    //     $department = $request->input('department');
+    //     $flag = 1;
+    //     $doctors = DoctorCalc::where('hospital_id', $hospital_id)->where('department', $department)->get();
+    //     $pharmacists = Pharmacycalc::where('hospital_id', $hospital_id)->where('department', $department)->get();
+    //     $physical_therapists = Physicaltherapycalc::where('hospital_id', $hospital_id)->where('department', $department)->get();
+    //     $laboratory_technicians = Laboratorycalc::where('hospital_id', $hospital_id)->where('department', $department)->get();
+    //     $ray_technicians = Medicalimagingcalc::where('hospital_id', $hospital_id)->where('department', $department)->get();
+    //     $administratives = Administrativecalc::where('hospital_id', $hospital_id)->where('department', $department)->get();
+    //     return response()->view('cms.keycalc.showdata', compact(['flag', 'doctors', 'pharmacists', 'physical_therapists', 'laboratory_technicians', 'ray_technicians', 'administratives', 'hospital_id', 'department']));
+    // }
 }

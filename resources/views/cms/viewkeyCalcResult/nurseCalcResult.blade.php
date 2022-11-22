@@ -54,9 +54,9 @@
                             <thead>
                                 <tr>
                                     <th>الرقم</th>
+                                    <th>المستشفى</th>
                                     <th>القسم</th>
                                     <th>المفتاح</th>
-                                    {{-- <th>تاريخ التعيين</th> --}}
                                     <th>عدد الأسرة</th>
                                     <th>العدد الحالي</th>
                                     <th>الكادر المطلوب</th>
@@ -65,7 +65,25 @@
                                 </tr>
                             </thead>
                             <tbody>
+@foreach ($nurses as $nurse)
+<tr>
+    <td>{{$nurse->id}}</td>
+    <td>{{$nurse->hospital_name}}</td>
+    <td>{{$nurse->department}}</td>
+    <td>{{$nurse->key_value}}</td>
+    <td>{{$nurse->bed_count}}</td>
+    <td>{{$nurse->nurse_count}}</td>
+    <td>{{$nurse->need}}</td>
+    <td>{{$nurse->result}}</td>
+    <td>
 
+        {{-- using javascript method instead of form method --}}
+        <a href="#" class="btn btn-danger" onclick="confirmDestroy({{$nurse->id}})">
+            <i class="fas fa-trash-alt"></i>
+        </a>
+    </td>
+</tr>
+@endforeach
 
                             </tbody>
                         </table>
@@ -90,7 +108,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> --}}
 <script>
     function performDestroy(id,ref){
-confirmDestroy('/cms/admin/employee/'+id,ref);}
+confirmDestroy('/cms/admin/nurses/'+id,ref);}
 
 </script>
 

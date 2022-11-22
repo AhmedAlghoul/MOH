@@ -48,9 +48,12 @@
     <form method="POST" action="{{route('doctors.store')}}">
         @csrf
         <h2>{{$hospital_name}}</h2>
-        <input type="number" name="hospital_id" hidden value="{{$hospital_id}}">
+        {{-- <input type="number" name="hospital_id" hidden value="{{$hospital_id}}"> --}}
+        <input type="text" name="hospital_name" hidden value="{{$hospital_name}}">
+
         <h2> {{$department}} </h2>
-        <input type="number" name="department_id" hidden value="{{$department_id}}">
+        {{-- <input type="number" name="department_id" hidden value="{{$department_id}}"> --}}
+        <input type="text" name="department" hidden value="{{$department}}">
         <h3>{{$employee_role}} </h3>
         <input type="text" name="employee_role" hidden value="{{$employee_role}}">
         <br>

@@ -65,7 +65,25 @@
                                 </tr>
                             </thead>
                             <tbody>
+@foreach ($doctors as $doctor)
+<tr>
+    <td>{{$doctor->id}}</td>
+    <td>{{$doctor->hospital_name}}</td>
+    <td>{{$doctor->department}}</td>
+    <td>{{$doctor->monthly_hours}}</td>
+    <td>{{$doctor->doctor_count}}</td>
+    <td>{{$doctor->doctor_result}}</td>
+    <td>{{$doctor->doctor_result}}</td>
 
+    <td>
+
+        {{-- using javascript method instead of form method --}}
+        <a href="#" class="btn btn-danger" onclick="confirmDestroy({{$doctor->id}})">
+            <i class="fas fa-trash-alt"></i>
+        </a>
+    </td>
+</tr>
+@endforeach
 
                             </tbody>
                         </table>
@@ -90,7 +108,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> --}}
 <script>
     function performDestroy(id,ref){
-confirmDestroy('/cms/admin/employee/'+id,ref);}
+confirmDestroy('/cms/admin/doctors/'+id,ref);}
 
 </script>
 

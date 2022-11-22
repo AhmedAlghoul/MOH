@@ -15,6 +15,8 @@ class PharmacycalcController extends Controller
     public function index()
     {
         //
+        $data = Pharmacycalc::all();
+        return view('cms.viewkeyCalcResult.pharmacycalcResult', ['pharmacies' => $data]);
     }
 
     /**
@@ -36,6 +38,17 @@ class PharmacycalcController extends Controller
     public function store(Request $request)
     {
         //
+        $pharmacycalc = new Pharmacycalc();
+        $pharmacycalc->hospital_name = $request->hospital_name;
+        $pharmacycalc->department = $request->department;
+        $pharmacycalc->number_of_prescriptions = $request->number_of_prescriptions;
+        $pharmacycalc->number_of_medical_reports = $request->number_of_medical_reports;
+        $pharmacycalc->pharmacist_count = $request->pharmacist_count;
+        $pharmacycalc->pharmacist_count = $request->pharmacist_count;
+        $pharmacycalc->result = $request->result;
+        $pharmacycalc->need = $request->need;
+        $pharmacycalc->save();
+        return redirect()->route('keycalc.create')->with('success', 'تم حفظ البيانات بنجاح');
     }
 
     /**

@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('pharmacycalcs', function (Blueprint $table) {
             $table->id();
-            $table->integer('hospital_id');
-            $table->integer('department_id');
+            $table->string('hospital_name');
+            $table->string('department');
             $table->integer('number_of_prescriptions');
             $table->integer('number_of_medical_reports');
             $table->integer('pharmacist_count');

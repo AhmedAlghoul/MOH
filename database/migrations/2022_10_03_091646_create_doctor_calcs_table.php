@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('doctor_calcs', function (Blueprint $table) {
             $table->id();
-            $table->integer('hospital_id');
-            $table->integer('department_id');
+            $table->string('hospital_name');
+            $table->string('department');
             $table->integer('monthly_hours');
             $table->integer('doctor_count');
             $table->integer('doctor_result');

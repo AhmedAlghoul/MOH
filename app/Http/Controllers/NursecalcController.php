@@ -15,6 +15,8 @@ class NursecalcController extends Controller
     public function index()
     {
         //
+        $data = nursecalc::all();
+        return view('cms.viewkeyCalcResult.nursecalcResult', ['nurses' => $data]);
     }
 
     /**
@@ -37,8 +39,8 @@ class NursecalcController extends Controller
     {
 
         $nursecalc = new nursecalc();
-        $nursecalc->hospital_id = $request->hospital_id;
-        $nursecalc->department_id = $request->department_id;
+        $nursecalc->hospital_name = $request->hospital_name;
+        $nursecalc->department = $request->department;
         $nursecalc->key_value = $request->key_value;
         $nursecalc->bed_count = $request->bed_count;
         $nursecalc->nurse_count = $request->nurse_count;

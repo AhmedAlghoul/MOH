@@ -100,6 +100,8 @@
 
             {{-- //////////////////////////////////////////////////////// --}}
             @if (isset($flag))
+            <form method="POST" action="{{route('pharmacy.store')}}">
+                @csrf
             <table class="table">
                 <thead>
                     <tr>
@@ -114,11 +116,23 @@
                     <tr>
                         <td>1.</td>
                         <td>{{$department}}</td>
+                        <input name="hospital_name" hidden value="{{$hospital_name}}">
+                        <input name="department" hidden value="{{$department}}">
+                        <input name="number_of_prescriptions" hidden value="{{$number_of_prescriptions}}">
+                        <input name="number_of_medical_reports" hidden value="{{$number_of_medical_reports}}">
+                        <input name="pharmacist_count" hidden value="{{$pharmacist_count}}">
+
                         <td>{{$result}}</td>
+                        <input name="result" hidden value="{{$result}}">
                         <td>{{$need}}</td>
+                        <input name="need" hidden value="{{$need}}">
                     </tr>
                 </tbody>
             </table>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">حفظ النتائج</button>
+            </div>
+            </form>
             @else
             <form method="post" action="{{route('pharmacyCalculate')}}">
                 @csrf
@@ -144,6 +158,7 @@
 
                             <td>{{$pharmacist_count}}</td>
                             <input name="pharmacist_count" hidden value="{{$pharmacist_count}}">
+                            <input name="hospital_name" hidden value="{{$hospital_name}}">
                         </tr>
 
                     </tbody>

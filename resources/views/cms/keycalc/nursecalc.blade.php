@@ -68,7 +68,8 @@
                         <input type="number" name="key_value" hidden value="{{$key_value}}">
                         <input type="number" name="bed_count" hidden value="{{$bed_count}}">
                         <input type="number" name="department_id" hidden value="{{$department_id}}">
-                        <input type="number" name="hospital_id" hidden value="{{$hospital_id}}">
+                        <input type="text" name="department" hidden value="{{$department}}">
+                        <input type="text" name="hospital_name" hidden value="{{$hospital_name}}">
                     </tr>
                 </tbody>
             </table>
@@ -97,13 +98,15 @@
                             <td>1.</td>
                             <td>{{$department}}</td>
                             <input name="department_id" hidden  value="{{$department_id}}">
-                            <input name="department" hidden  value="{{$department}}">
+                            <input type="text" name="department" hidden  value="{{$department}}">
                             <td>{{$key->key_value}}</td>
                             <input name="key_value" hidden value="{{$key->key_value}}">
                             <td><input name="bed_count" type="number"></td>
                             <td>{{$nurse_count}}</td>
                             <input name="nurse_count" hidden value="{{$nurse_count}}">
                             <input type="number" name="hospital_id" hidden value="{{$hospital_id}}">
+                            <input type="text" name="hospital_name" hidden value="{{$hospital_name}}">
+
                         </tr>
                     </tbody>
                 </table>

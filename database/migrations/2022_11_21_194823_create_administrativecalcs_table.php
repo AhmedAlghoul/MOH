@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('administrativecalcs', function (Blueprint $table) {
             $table->id();
+            $table->integer('hospital_id');
+            $table->integer('department_id');
+            $table->integer('administrative_count');
+            $table->integer('employee_role');
+            $table->integer('need');
+            $table->integer('result');
             $table->timestamps();
         });
     }

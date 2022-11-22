@@ -283,14 +283,46 @@
               </a>
             </li>
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
               <a href="{{route('keycalc.index')}}" class="nav-link">
                 <i class="nav-icon fas fa-list"></i>
                 <p>
                   عرض نتائج حساب المفتاح
                 </p>
               </a>
-            </li>
+            </li> --}}
+
+<li class="nav-item has-treeview">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-list"></i>
+        <p>
+            عرض نتائج حساب المفتاح
+            <i class="fas fa-angle-left right"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a href="{{route('doctors.index')}}" class="nav-link">
+                <i class="fas fa-user-md"></i>
+                <p>الأطباء</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{route('nurses.index')}}" class="nav-link">
+                <i class="fas fa-user-nurse"></i>
+                <p>التمريض</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{route('pharmacy.index')}}" class="nav-link">
+                <i class="fas fa-list nav-icon"></i>
+                <p>الصيدلة</p>
+            </a>
+        </li>
+    </ul>
+</li>
+
+
             {{-- <li class="nav-item">
               <a href="{{route('doctorcalc')}}" class="nav-link">
                 <i class="nav-icon fas fa-calculator"></i>
