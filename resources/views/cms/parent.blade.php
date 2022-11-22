@@ -54,11 +54,14 @@
         <li class="nav-item d-none d-sm-inline-block">
           <a href="{{route('cms.homepage')}}" class="nav-link">الرئيسية</a>
         </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="{{route('keycalc.create')}}" class="nav-link">حساب مفتاح الكادر البشري</a>
+        </li>
 
       </ul>
 
       <!-- SEARCH FORM -->
-      <form class="form-inline ml-3">
+      {{-- <form class="form-inline ml-3">
         <div class="input-group input-group-sm">
           <input class="form-control form-control-navbar" type="search" placeholder="البحث" aria-label="Search">
           <div class="input-group-append">
@@ -67,7 +70,7 @@
             </button>
           </div>
         </div>
-      </form>
+      </form> --}}
 
       <!-- Right navbar links -->
       {{-- <ul class="navbar-nav mr-auto-navbav">
@@ -122,7 +125,7 @@
             <img src="{{asset('cms/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block">م.أحمد الغول</a>
+            <a href="#" class="d-block">{{Auth::user()->name;}}</a>
           </div>
         </div>
 
@@ -154,14 +157,14 @@
                 </p>
               </a>
               <ul class="nav nav-treeview">
-                @can('عرض-الاقسام')
+                @can('show')
                 <li class="nav-item">
                   <a href="{{route('department.index')}}" class="nav-link">
                     <i class="fas fa-list nav-icon"></i>
                     <p>عرض</p>
                   </a>
                 </li>
-                @endcan
+                 @endcan
                 <li class="nav-item">
                   <a href="{{route('department.create')}}" class="nav-link">
                     <i class="fas fa-plus-square nav-icon"></i>
@@ -279,14 +282,23 @@
                 </p>
               </a>
             </li>
+
             <li class="nav-item">
+              <a href="{{route('keycalc.index')}}" class="nav-link">
+                <i class="nav-icon fas fa-list"></i>
+                <p>
+                  عرض نتائج حساب المفتاح
+                </p>
+              </a>
+            </li>
+            {{-- <li class="nav-item">
               <a href="{{route('doctorcalc')}}" class="nav-link">
                 <i class="nav-icon fas fa-calculator"></i>
                 <p>
                   حساب مفتاح الأطباء
                 </p>
               </a>
-            </li>
+            </li> --}}
             {{-- <li class="nav-item">
               <a href="{{route('doctorsecond')}}" class="nav-link">
                 <i class="nav-icon fas fa-calculator"></i>
@@ -295,7 +307,7 @@
                 </p>
               </a>
             </li> --}}
-            <li class="nav-item">
+            {{-- <li class="nav-item">
               <a href="{{route('nursecalc')}}" class="nav-link">
                 <i class="nav-icon fas fa-calculator"></i>
                 <p>
@@ -344,16 +356,9 @@
                   حساب مفتاح الإداريين
                 </p>
               </a>
-            </li>
+            </li> --}}
 
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-list"></i>
-                <p>
-                  عرض نتائج حساب المفتاح
-                </p>
-              </a>
-            </li>
+
 
 
             <li class="nav-header">الموظفين</li>
@@ -457,161 +462,7 @@
                 </li>
               </ul>
             </li>
-            {{-- <li class="nav-header">التخصصات</li> --}}
 
-            {{-- <li class="nav-item has-treeview">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-user-md"></i>
-                <p>
-                  الأطباء
-                  <i class="fas fa-angle-left right"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="{{route('doctor.index')}}" class="nav-link">
-                    <i class="fas fa-list nav-icon"></i>
-                    <p>عرض</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{route('doctor.create')}}" class="nav-link">
-                    <i class="fas fa-plus-square nav-icon"></i>
-                    <p>إنشاء</p>
-                  </a>
-                </li>
-              </ul>
-            </li> --}}
-
-
-
-            {{-- <li class="nav-item has-treeview">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-user-nurse"></i>
-                <p>
-                  التمريض
-                  <i class="fas fa-angle-left right"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="{{route('nurse.index')}}" class="nav-link">
-                    <i class="fas fa-list nav-icon"></i>
-                    <p>عرض</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{route('nurse.create')}}" class="nav-link">
-                    <i class="fas fa-plus-square nav-icon"></i>
-                    <p>إنشاء</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{route('cms.nurseskey')}}" class="nav-link">
-                    <i class="fas fa-key nav-icon"></i>
-                    <p>مفتاح الكادر</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{route('cms.nurses.calculate')}}" class="nav-link">
-                    <i class="nav-icon fas fa-calculator"></i>
-                    <p>
-                      حساب مفتاح كادر التمريض
-                    </p>
-                  </a>
-                </li>
-              </ul>
-            </li> --}}
-
-
-
-            {{--
-            <li class="nav-item">
-              <a href="pages/gallery.html" class="nav-link">
-                <i class="nav-icon fas fa-prescription"></i>
-                <p>
-                  الصيدلة
-                </p>
-              </a>
-            </li> --}}
-
-            {{-- start of multilevel sidebar menu example in cace i want to use it --}}
-
-            {{-- <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-x-ray"></i>
-                <p>
-                  Level 1
-                  <i class="right fas fa-angle-left"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview" style="display: none;">
-                <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>
-                      Level 2
-                      <i class="right fas fa-angle-left"></i>
-                    </p>
-                  </a>
-                  <ul class="nav nav-treeview" style="display: none;">
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">
-                        <i class="far fa-dot-circle nav-icon"></i>
-                        <p>Level 3</p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">
-                        <i class="far fa-dot-circle nav-icon"></i>
-                        <p>Level 3</p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">
-                        <i class="far fa-dot-circle nav-icon"></i>
-                        <p>Level 3</p>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li> --}}
-
-            {{-- end of multilevel sidebar menu example in cace i want to use it --}}
-
-            {{-- <li class="nav-item">
-              <a href="pages/gallery.html" class="nav-link">
-                <i class="nav-icon fas fa-prescription"></i>
-                <p>
-                  العلاج الطبيعي
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/gallery.html" class="nav-link">
-                <i class="nav-icon fas fa-x-ray"></i>
-                <p>
-                  فني الأشعة
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/gallery.html" class="nav-link">
-                <i class="nav-icon fas fa-flask"></i>
-                <p>
-                  فني المختبرات
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/gallery.html" class="nav-link">
-                <i class="nav-icon fas fa-toolbox"></i>
-                <p>
-                  الإداريين
-                </p>
-              </a>
-            </li> --}}
             {{-- settings --}}
             <li class="nav-header">الإعدادات</li>
             <li class="nav-item">

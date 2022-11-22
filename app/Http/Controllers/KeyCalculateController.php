@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\circle;
 use App\Models\KeyCalculate;
 use App\Models\Hospital;
 use App\Models\Department;
@@ -12,6 +13,7 @@ use App\Models\Key;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Psy\Readline\Hoa\Console;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 
 class KeyCalculateController extends Controller
 {
@@ -23,6 +25,11 @@ class KeyCalculateController extends Controller
     public function index()
     {
         //
+        $hospitals = Hospital::all();
+        $circles = circle::all();
+        $employeeRoles = EmployeeRole::all();
+        $key_calculates = KeyCalculate::all();
+        return view('cms.keycalc.index', compact('key_calculates', 'hospitals', 'circles'));
     }
 
     /**
@@ -113,20 +120,22 @@ class KeyCalculateController extends Controller
         $departments_name = [];
         foreach ($departments as $department) {
             $departments_name[] = $department->departments->name;
-            // $departments_id[] = $department->departments->id;
         }
 
         //return response of departments name
+        // return response()->view('cms.keycalc.form', compact('departments_name'));
         return response()->json($departments_name);
     }
 
 
     public function getEmployeeRole(Request $request)
     {
-        //get employee role name and see if it equal to values  to redirect to view
-        // $hospital = Hospital::where("name", $_REQUEST['name'])->pluck('name')->first();
+        // dd(Request()->all());
+        $hospital_name = Hospital::where("id", '=', $request->hospital)->first()->{'name'};
+        $hospital_id = Hospital::where("id", '=', $request->hospital)->first()->{'id'};
         $employee_role = EmployeeRole::where("Role_name", $_REQUEST['role'])->pluck('Role_name')->first();
         $department = Department::where("name", $_REQUEST['department'])->pluck('name')->first();
+        $department_id = Department::where("name", $_REQUEST['department'])->pluck('id')->first();
         if ($employee_role == "طبيب") {
             // $role_name =EmployeeRole::where("Role_name")->pluck('Role_name')->first();
             $role_id = EmployeeRole::where("Role_name", $employee_role)->pluck('id')->first();
@@ -135,7 +144,7 @@ class KeyCalculateController extends Controller
             $doctor_count = Employee::where('role_id', $role_id)->where('department_id', $department_id)->count();
 
 
-            return response()->view('cms.doctorcalc.doctorcalc', compact(['department', 'key', 'role_id', 'employee_role', 'doctor_count']));
+            return response()->view('cms.doctorcalc.doctorcalc', compact(['department', 'key', 'role_id', 'employee_role', 'doctor_count', 'hospital_name', 'hospital_id', 'department_id']));
             //get department name and show it in view of doctor
 
         } elseif (
@@ -146,7 +155,7 @@ class KeyCalculateController extends Controller
             $department_id = Department::where("name", $department)->pluck('id')->first();
             $key = Key::where("department_id", $department_id)->where('role_id', $role_id)->first('key_value');
             $nurse_count = Employee::where('role_id', $role_id)->where('department_id', $department_id)->count();
-            return response()->view('cms.keycalc.nursecalc', compact(['department', 'nurse_count', 'key']));
+            return response()->view('cms.keycalc.nursecalc', compact(['department', 'nurse_count', 'key', 'role_id', 'hospital_id', 'department_id']));
         } elseif ($employee_role == "صيدلي") {
 
             $role_id = EmployeeRole::where("Role_name", $employee_role)->pluck('id')->first();
@@ -179,14 +188,19 @@ class KeyCalculateController extends Controller
             $role_id = EmployeeRole::where("Role_name", $employee_role)->pluck('id')->first();
             $department_id = Department::where("name", $department)->pluck('id')->first();
             $ray_technician_count = Employee::where('role_id', $role_id)->where('department_id', $department_id)->count();
-            // $calculationOfRayTechnicains = 
+            // $calculationOfRayTechnicains =
             return response()->view('cms.keycalc.medicalimagingcalc', compact(['department', 'ray_technician_count']));
         }
     }
     public function nurseCalculate(Request $request)
     {
 
+
+        $hospital_id = $request->input('hospital_id');
+
         $department = $request->input('department');
+
+        $department_id = $request->input('department_id');
         $nurse_count = $request->input('nurse_count');
         $key_value = $request->input('key_value');
         $bed_count = $request->input('bed_count');
@@ -194,18 +208,17 @@ class KeyCalculateController extends Controller
         $result = round($nurse_count  - $need);
 
         $flag = 1;
-
-        return response()->view('cms.keycalc.nursecalc', compact(['result', 'need', 'department', 'flag']));
+        return response()->view('cms.keycalc.nursecalc', compact(['result', 'need', 'department', 'flag', 'nurse_count', 'key_value', 'bed_count', 'department_id', 'hospital_id']));
     }
-    public function doctorCalculate(Request $request)
-    {
-        $monthly_hours = $request->input('monthly_hours');
-        $key_value = $request->input('key_value');
-        $doctor_count = $request->input('doctor_count');
-        $result = round($monthly_hours / $key_value);
+    // public function doctorCalculate(Request $request)
+    // {
+    //     $monthly_hours = $request->input('monthly_hours');
+    //     $key_value = $request->input('key_value');
+    //     $doctor_count = $request->input('doctor_count');
+    //     $result = round($monthly_hours / $key_value);
 
-        return response()->view('cms.doctorcalc.doctorcalc', compact(['result', 'monthly_hours', 'key_value', 'doctor_count']));
-    }
+    //     return response()->view('doctorcalc.index', compact(['result', 'monthly_hours', 'key_value', 'doctor_count']));
+    // }
 
     public function pharmacyCalculate(Request $request)
     {
@@ -235,7 +248,8 @@ class KeyCalculateController extends Controller
             $add_amount < 1 ? $result += $add_amount + 2 : $result += $add_amount + 1;
         }
         $flag = 1;
-        return response()->view('cms.keycalc.pharmacycalc', compact(['department', 'flag', 'pharmacist_count', 'number_of_prescriptions', 'number_of_medical_reports', 'result', 'key_value']));
+        $need=($pharmacist_count-$result);
+        return response()->view('cms.keycalc.pharmacycalc', compact(['department', 'flag', 'pharmacist_count', 'number_of_prescriptions', 'number_of_medical_reports', 'result', 'key_value', 'need']));
     }
 
     public function physicaltherapistcalc(Request $request)
@@ -265,15 +279,34 @@ class KeyCalculateController extends Controller
         $flag = 1;
         return response()->view('cms.keycalc.laboratorycalc', compact(['department', 'flag', 'result', 'need']));
     }
-    public function raytechnicianscalc(Request $request)
-    {
 
-        
+    public function medicalimagingcalc(Request $request)
+    {
+        $department = $request->input('department');
+        $ray_technician_count = $request->input('ray_technician_count');
+        $xrays = $request->input('X-rays');
+        //request xrays input value from form
+        $Fluoroscopy = $request->input('Fluoroscopy');
+        $ctscan = $request->input('ct-scan');
+        $mri = $request->input('mri');
+        $result = ($xrays * 2) + ($Fluoroscopy * 2) + ($ctscan * 3) + ($mri * 3);
+        $need = $ray_technician_count - $result;
+        $flag = 1;
+        return response()->view('cms.keycalc.medicalimagingcalc', compact(['department', 'ray_technician_count', 'flag', 'xrays', 'Fluoroscopy', 'ctscan', 'mri', 'result', 'need']));
     }
 
-    public function saveDoctors(Request $request){
-
-
-
+    public function administrativecalculation(Request $request)
+    {
+        $department = $request->input('department');
+        $administrative_count = $request->input('administrative_count');
+        $seven_hours = $request->input('seven_hours');
+        $twenty_four_hours = $request->input('twenty_four_hours');
+        $result = ($seven_hours * 1) + ($twenty_four_hours * 6);
+        $need = $administrative_count - $result;
+        $flag = 1;
+        return response()->view('cms.keycalc.administrativecalc', compact(['department', 'administrative_count', 'flag', 'seven_hours', 'twenty_four_hours', 'result', 'need']));
+    }
+    public function saveDoctors(Request $request)
+    {
     }
 }

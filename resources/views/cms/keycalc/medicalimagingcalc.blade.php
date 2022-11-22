@@ -46,16 +46,15 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body p-0">
+            @if (isset($flag))
             <table class="table">
                 <thead>
                     <tr>
                         <th style="width: 10px">#</th>
                         <th>القسم</th>
                         <th>العدد الحالي</th>
-
-                        <th>الأجهزة المتوفرة وعددها</th>
-
-
+                        <th>العدد المطلوب</th>
+                        <th>الاحتياج</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -63,38 +62,68 @@
                         <td>1.</td>
                         <td>{{$department}}</td>
                         <td>{{$ray_technician_count}}</td>
-
-                        <td><input type="checkbox" id="X-rays" name=" أشعة عادية " value="2" onclick="dynInput(this);">
-                            <label for="X-rays">أشعة عادية</label>
-
-
-                            <input type="checkbox" id="Fluoroscopy" name=" فلورو " value="2" onclick="dynInput(this);">
-                            <label for="Fluoroscopy"> فلورو</label>
-
-                            <br>
-                            <input type="checkbox" id="ct-scan" name=" الأشعة المقطعية " value="3"
-                                onclick="dynInput(this);">
-                            <label for="ct-scan"> أشعة مقطعية</label>
-
-                            <input type="checkbox" id="mri" name=" الرنين المغناطيسي " value="3"
-                                onclick="dynInput(this);">
-                            <label for="mri">الرنين المغناطيسي</label>
-
-                        </td>
-                        <td>
-                            <p id="insertinputs"></p>
-                        </td>
-
-
-
+                        <td>{{$result}}</td>
+                        <td>{{$need}}</td>
                     </tr>
-
                 </tbody>
 
             </table>
-            <div class="card-footer">
-                <button type="submit" class="btn btn-primary">حساب</button>
-            </div>
+            @else
+            <form method="post" action="{{route('medicalimagingcalc')}}">
+                @csrf
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>القسم</th>
+                            <th>العدد الحالي</th>
+                            <th>الأجهزة المتوفرة وعددها</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1.</td>
+                            <td>{{$department}}</td>
+                            <input name="department" hidden value="{{$department}}">
+                            <td>{{$ray_technician_count}}</td>
+                            <input name="ray_technician_count" hidden value="{{$ray_technician_count}}">
+
+                            <td><input type="checkbox" id="X-rays" name=" أشعة عادية " value="2"
+                                    onclick="dynInput(this);">
+                                <label for="X-rays">أشعة عادية</label>
+
+
+                                <input type="checkbox" id="Fluoroscopy" name=" فلورو " value="2"
+                                    onclick="dynInput(this);">
+                                <label for="Fluoroscopy"> فلورو</label>
+
+                                <br>
+                                <input type="checkbox" id="ct-scan" name=" الأشعة المقطعية " value="3"
+                                    onclick="dynInput(this);">
+                                <label for="ct-scan"> أشعة مقطعية</label>
+
+                                <input type="checkbox" id="mri" name=" الرنين المغناطيسي " value="3"
+                                    onclick="dynInput(this);">
+                                <label for="mri">الرنين المغناطيسي</label>
+
+                            </td>
+                            <td>
+                                <p id="insertinputs"></p>
+                            </td>
+
+
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">حساب</button>
+                </div>
+            </form>
+            @endif
+
         </div>
         <!-- /.card-body -->
     </div>
@@ -112,8 +141,9 @@
     var input = document.createElement("input");
     input.type = "number";
     $(input).width("20%");
+    input.name=cbox.id;
     var div = document.createElement("div");
-    div.id = cbox.id;
+    div.id = cbox.name;
     div.innerHTML = "عدد أجهزة"+ cbox.name;
     div.appendChild(input);
     //give the input a unique id
@@ -123,5 +153,6 @@
     document.getElementById(cbox.name).remove();
   }
 }
+
 </script>
 @endsection

@@ -77,7 +77,7 @@
                     <select class="form-control" id="hospital-choice" name="hospital">
                         <option name="hospital" id="hospital-choice" selected> اختر المستشفى </option>
                         @foreach ($hospitals as $hospital)
-                        
+
                         <option value="{{$hospital->id}}">{{$hospital->name}}</option>
                         @endforeach
                     </select>
@@ -86,6 +86,7 @@
                 <div class="form-group col-md-6">
                     <label for="department-choice">اختر القسم</label>
                     <select class="form-control" id="department-choice" name="department">
+
 
                     </select>
                 </div>
@@ -146,7 +147,7 @@
 
 
 <script>
-    //write ajax request to get departments choices according to the hospital 
+    //write ajax request to get departments choices according to the hospital
     $('#hospital-choice').change(function () {
         var hospital_id = $(this).val();
         $.ajax({
@@ -168,25 +169,7 @@
         });
     });
 
-    //write javascript code to show data of the employee in the table
-    // $('#create-form').submit(function (e) {
-    //     e.preventDefault();
-    //     var hospital_id = $('#hospital-choice').val();
-    //     var department_id = $('#department-choice').val();
-    //     var role = $('#role-choice').val();
-    //     $.ajax({
-    //         url: "{{route('keycalc.getEmployeeRole')}}",
-    //         type: "get",
-    //         data: {
-    //             hospital_id: hospital_id,
-    //             department_id: department_id,
-    //             role: role
-    //         },
-    //         success: function (data) {
-    //             $('#employee-table').html(data);
-    //         }
-    //     });
-    // });
-    
+
+
 </script>
 @endsection

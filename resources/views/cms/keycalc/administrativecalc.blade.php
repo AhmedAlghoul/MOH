@@ -53,7 +53,32 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body p-0">
-            <form action="">
+            @if(isset($flag))
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="width: 10px">#</th>
+                        <th>القسم</th>
+                        <th>العدد الحالي</th>
+                        <th>الكادر المطلوب</th>
+                        <th>الاحتياج</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1.</td>
+                        <td>{{$department}}</td>
+                        <td>{{$administrative_count}}</td>
+                        <td>{{$result}}</td>
+                        <td>{{$need}}</td>
+                     
+                    </tr>
+                </tbody>
+            </table>
+            @else
+            <form method="post" action="{{route('administrativecalculation')}}">
+                @csrf
                 <table class="table">
                     <thead>
                         <tr>
@@ -61,8 +86,9 @@
                             <th>القسم</th>
                             <th>الدور الوظيفي</th>
                             <th>العدد الحالي</th>
+                            <th>نظام العمل</th>
                             <th>عدد النقاط</th>
-                            <th>الفترات</th>
+
 
 
                         </tr>
@@ -71,10 +97,19 @@
                         <tr>
                             <td>1</td>
                             <td>{{$department}}</td>
+                            <input type="text" name="department" value="{{$department}}" hidden>
                             <td>{{$employee_role}}</td>
+                            <input type="text" name="employeerole" value="{{$employee_role}}" hidden>
                             <td>{{$administrative_count}}</td>
-                            <td></td>
-                            <td></td>
+                            <input type="text" name="administrative_count" value="{{$administrative_count}}" hidden>
+                            <td><label for="12">7 ساعات</label>
+                                <br>
+                                <label for="24">24 ساعة</label>
+                            </td>
+                            <td><input type="number" style="width: 90px" name="seven_hours">
+                                <br>
+                                <input type="number" style="width: 90px" name="twenty_four_hours">
+                            </td>
                         </tr>
 
                     </tbody>
@@ -84,7 +119,9 @@
                     <button type="submit" class="btn btn-primary">حساب</button>
                 </div>
             </form>
+            @endif
         </div>
+
         <!-- /.card-body -->
     </div>
     <!-- /.card -->
@@ -94,5 +131,8 @@
 
 
 @section('scripts')
+<script>
+
+</script>
 
 @endsection

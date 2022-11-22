@@ -19,6 +19,17 @@ class RolePermissionController extends Controller
     {
         //
         $permissions = ModelsPermission::paginate(20);
+        $rolePermissions = Role::find($roleId)->permissions;
+        //to take the permissions that the role has
+        //permessions = Permession::where::('guard_name',$role->guard_name)->get();
+        foreach ($permissions as $permission) {
+            $permission->setAttribute('assigned', false);
+            foreach ($rolePermissions as $rolePermission) {
+                if ($permission->id == $rolePermission->id) {
+                    $permission->assigned = true;
+                }
+            }
+        }
         return response()->view('cms.spatie.roles.role-permissions', ['role_id' => $roleId, 'permissions' => $permissions]);
     }
 
@@ -46,7 +57,15 @@ class RolePermissionController extends Controller
         ]);
 
         if (!$validator->fails()) {
-            $role = Role::findById($roleId);
+            $role = Role::find($roleId);
+            $permission = ModelsPermission::find($request->get('permission_id'));
+            if ($role->hasPermissionTo($permission)) {
+                $role->revokePermissionTo($permission);
+            } else {
+                $role->givePermissionTo($permission);
+            }
+
+            return response()->json(['message' => 'تم تحديث الصلاحية بنجاح '], 200);
         } else {
             return response()->json(['message' => $validator->getMessageBag()->first()], 400);
         }

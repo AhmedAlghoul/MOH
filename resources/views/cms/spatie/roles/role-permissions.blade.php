@@ -68,7 +68,8 @@
                   <td>
                     <div class="icheck-primary d-inline">
                       <input type="checkbox" id="permission_{{$permission->id}}"
-                        onchange="performStore({{$role_id}},$permission->id)">
+                        onchange="performStore({{$role_id}},{{$permission->id}})" @if($permission->assigned) checked @endif>
+
                       <label for="permission_{{$permission->id}}">
                       </label>
                     </div>
@@ -101,13 +102,13 @@
 @section('scripts')
 <script>
   function performStore(roleId, permissionId){
-    let role = request();
-    console.log("Role : ");
+    // let role = request();
+    // console.log("Role : ");
 let data = {
 permission_id: permissionId,
 };
 
-store('/cms/admin/role/'+roleId+'/permissions/create',data);
+store('/cms/admin/role/'+roleId+'/permissions',data);
 }
 </script>
 @endsection

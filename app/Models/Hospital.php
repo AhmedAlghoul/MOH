@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Hospital extends Model
 {
     use HasFactory;
+    
     protected $fillable = [
-        'name'
+        'name',
     ];
     protected $table = 'hospitals';
     //write relation to has many departments
@@ -22,5 +23,6 @@ class Hospital extends Model
     {
         return $this->hasMany(Employee::class,'hospital_id', 'id');
     }
+
  
 }

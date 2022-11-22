@@ -114,6 +114,7 @@ class EmployeeController extends Controller
         //
         $employee = Employee::findOrFail($id);
         $departments = Department::where('is_active', 1)->get();
+        // $hospitals = HospitalDepartment::where('department_id', $employee->department_id)->first();
         $hospitals = Hospital::all();
         $roles = EmployeeRole::where('is_active', 1)->get();
         $circles = circle::where('is_active', 1)->get();
@@ -164,9 +165,10 @@ class EmployeeController extends Controller
         $employee->role_id = $request->role;
         $employee->mobile_number = $request->mobile_number;
         $employee->save();
+        session()->flash('success', 'تم تعديل بيانات الموظف بنجاح');
         return redirect()->back();
     }
- 
+
 
     /**
      * Remove the specified resource from storage.
@@ -208,12 +210,11 @@ class EmployeeController extends Controller
     //
     public function getEmployeeDepartments()
     {
-
         //to get department id 
         $alldepartments = HospitalDepartment::where("hospital_id", $_REQUEST['hospital_id'])->pluck('department_id');
+        // return response()->json($alldepartments);
         //to get department name and all department data
-        $department = Department::where("id", $alldepartments)->get();
-
+        $department = Department::whereIn("id", $alldepartments)->get();
         return response()->json($department);
     }
 }

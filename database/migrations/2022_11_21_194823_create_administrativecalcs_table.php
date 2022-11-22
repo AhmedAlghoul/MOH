@@ -13,14 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('doctor_calcs', function (Blueprint $table) {
+        Schema::create('administrativecalcs', function (Blueprint $table) {
             $table->id();
-            $table->integer('hospital_id');
-            $table->integer('department_id');
-            $table->integer('monthly_hours');
-            $table->integer('doctor_count');
-            $table->integer('doctor_result');
-            $table->integer('doctor_need');
             $table->timestamps();
         });
     }
@@ -32,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('doctor_calcs');
+        Schema::dropIfExists('administrativecalcs');
     }
 };

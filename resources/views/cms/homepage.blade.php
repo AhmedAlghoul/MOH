@@ -6,9 +6,10 @@
 <style>
   #map {
 
-      height: 400px;
-      width: 100%;
+    height: 400px;
+    width: 100%;
   }
+
   .gm-style-iw-d {
     color: black;
   }
@@ -82,6 +83,7 @@
 
     </div>
     <!-- /.row -->
+    {{-- <a href="{{route('test')}}">bitton</a> --}}
     <!-- Main row -->
     <div class="row">
       <!-- Left col -->
@@ -182,23 +184,23 @@
         ['assets/images/avatar-2.png', -33.923036, 151.259052, 5],
         ['assets/images/avatar-3.png', -34.028249, 151.157507, 3],
       ];
-      
+
       var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 10,
         center: new google.maps.LatLng(-33.92, 151.25),
       });
-      
-      
-      
+
+
+
       var marker, i;
-      
-      for (i = 0; i < locations.length; i++) {  
+
+      for (i = 0; i < locations.length; i++) {
         marker = new google.maps.Marker({
           position: new google.maps.LatLng(locations[i][1], locations[i][2]),
           map: map,
           icon:new google.maps.MarkerImage(locations[i][0])
         });
-      
+
         google.maps.event.addListener(marker, 'click', (function(marker, i) {
           return function() {
             var myModal = new bootstrap.Modal(document.getElementById("ModalMap"), {});

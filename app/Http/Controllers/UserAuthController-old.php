@@ -26,19 +26,18 @@ class UserAuthController extends Controller
                 'user_password' => 'required|min:6'
             ],
             [
-                'id_number.required' => ' الرجاء إدخال رقم الهوية المكون من 9 أرقام',
-                'password.required' => 'الرجاء إدخال كلمة المرور',
-                'password.min' => 'كلمة المرور يجب أن تكون أكثر من 6 أحرف'
+                'user_id_number.required' => ' الرجاء إدخال رقم الهوية المكون من 9 أرقام',
+                'user_password.required' => 'الرجاء إدخال كلمة المرور',
+                'user_password.min' => 'كلمة المرور يجب أن تكون أكثر من 6 أحرف'
             ]
 
         );
         $remember_me = $request->has('remember_me') ? true : false;
-        if (auth()->guard('web')->attempt(['id_number' => $request->user_id_number, 'password' => $request->user_password], $remember_me)) {
-            // Auth::guard('admin')->user()->assignRole('مدير');
+
+        if (auth()->guard('admin')->attempt(['user_id_number' => $request->user_id_number, 'password' => $request->user_password], $remember_me)) {
             // notify()->success('تم الدخول بنجاح  ');
             return view('cms.homepage');
-
-            // return redirect()->route('cms.homepage');
+            return redirect()->route('cms.homepage');
         }
         // notify()->error('خطا في البيانات  برجاء المجاولة مجدا ');
         return redirect()->back()->with(['error' => 'هناك خطأ بالبيانات']);
@@ -85,8 +84,8 @@ class UserAuthController extends Controller
 
 
         #Update the new Password
-        User::whereId(auth()->user()->id)->update([
-        'user_password' => Hash::make($request->new_password)
+        Admin::whereId(auth()->user()->id)->update([
+            'user_password' => Hash::make($request->new_password)
         ]);
 
         return back()->with("status", "تم تغيير كلمة المرور بنجاح!");
@@ -120,7 +119,7 @@ class UserAuthController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::guard('web')->logout();
+        Auth::guard('admin')->logout();
         $request->session()->invalidate();
         return redirect()->route('cms.login');
     }

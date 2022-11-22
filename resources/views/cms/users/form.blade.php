@@ -1,6 +1,6 @@
 @extends('cms.parent')
 
-@section('title','إضافة قسم جديد')
+@section('title','إضافة مستخدم جديد')
 
 @section('styles')
 <style>
@@ -16,9 +16,9 @@
 
 @endsection
 
-@section('page-name','إضافة قسم جديد')
+@section('page-name','إضافة مستخدم جديد')
 
-@section('small-page-name','إضافة قسم')
+@section('small-page-name','إضافة مستخدم')
 
 @section('content')
 
@@ -30,7 +30,7 @@
     </div>
     <!-- /.card-header -->
     <!-- form start -->
-    <form id="create-form" role="form" method="POST" action="{{route('department.store')}}">
+    <form id="create-form" role="form" method="POST" action="{{route('users.store')}}">
       {{-- csrf must be in the form tag --}}
       @csrf
       <div class="card-body">
@@ -58,16 +58,32 @@
         @endif
 
         <div class="form-group ">
-          <label>اسم القسم</label>
-          <input type="text" name="name" class="form-control" placeholder="ادخل اسم القسم">
+          <label>اسم المستخدم</label>
+          <input type="text" name="name" class="form-control" placeholder="ادخل اسم المستخدم">
+        </div>
+        <div class="form-group ">
+          <label>رقم الهوية</label>
+          <input type="number" name="idnumber" class="form-control" placeholder="ادخل رقم الهوية">
+        </div>
+
+        <div class="form-group ">
+          <label>رقم الجوال</label>
+          <input type="number" name="mobile" class="form-control" placeholder="ادخل رقم الجوال">
         </div>
 
         <div class="form-group">
-          <label for="department_description">الوصف الوظيفي للقسم:</label>
-          <textarea class="form-control" rows="5" name="department_description" id="department_description"
-            placeholder="الرجاء ادخال الوصف الوظيفي للقسم"></textarea>
+          <label>الدور الوظيفي</label>
+          <select class="form-control" id="role-choice" name="role_id">
+            <option  id="role-choice" selected> اختر الدور الوظيفي </option>
+            @foreach ($roles as $role)
+            <option value="{{$role->id}}">{{$role->name}} </option>
+            @endforeach
+          </select>
         </div>
-
+        <div class="form-group">
+          <label for="password">كلمة السر</label>
+          <input type="password" name="password" class="form-control">
+        </div>
         <div class="form-check ">
           <input type="checkbox" name="is_active" class="form-check-input" id="check">
           <label class="form-check-label" for="check">نشط</label>
@@ -90,5 +106,6 @@
 
 
 @section('scripts')
+
 
 @endsection

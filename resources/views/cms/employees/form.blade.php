@@ -171,6 +171,8 @@ success: function(data) {
 $('select[name="department"]').empty();
 $.each(data, function(key, value ) {
 
+  //view the data in console for easy debugging
+  console.log(value);
 $('select[name="department"]').append('<option value="' +
                                                value.id + '">' + value.name + '</option>');
 

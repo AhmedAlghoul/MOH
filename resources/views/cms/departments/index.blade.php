@@ -73,6 +73,7 @@
                     @endif
                   </td>
                   <td>
+                    
                     <a href="{{route('department.edit',$department->id)}}" class="btn btn-info">
                       <i class="fas fa-edit"></i>
                     </a>

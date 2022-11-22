@@ -93,25 +93,48 @@
         <div class="form-group col-md-6">
           <label for="hospital-choice"> المستشفى</label>
           <select class="form-control" id="hospital-choice" name="hospital">
-            <option name="hospital" id="hospital-choice" selected> اختر المستشفى </option>
+            //get the hospital name in for each 
             @foreach ($hospitals as $hospital)
-            <option value="{{$hospital->id}} ">{{$hospital->name}} </option>
+            <option value="{{$hospital->id}}" @if($employee->hospital_id == $hospital->id) selected @endif>
+              {{$hospital->name}}
+            </option>
             @endforeach
           </select>
         </div>
-
+        <div class="form-group col-md-6">
+          <label for="circle-choice"> الدائرة</label>
+          <select class="form-control" id="circle-choice" name="circle">
+      //get the circle id from the employee
+            @foreach ($circles as $circle)
+            <option value="{{$circle->id}}" @if($circle->id == $employee->circle_id) selected @endif>{{$circle->circle_name}}
+            </option>
+            @endforeach
+          </select>
+        </div>
+ 
         <div class="form-group col-md-6">
           <label for="department-choice">اختر القسم</label>
           <select class="form-control" id="department-choice" name="department">
+            //foreach to get selected departments
+            @foreach ($departments as $department)
+            <option value="{{$department->id}}" @if($department->id == $employee->department_id) selected @endif>
+              {{$department->name}}
+            </option>
+            @endforeach
           </select>
         </div>
 
         <div class="form-group col-md-6">
           <label for="role-choice">الدور الوظيفي</label>
           <select class="form-control" id="role-choice" name="role">
+
             @foreach ($roles as $role)
-            <option value="{{$role->id}}">{{$role->Role_name}}</option>
+            
+            <option value="{{$role->id}}" @if($role->id == $employee->role_id) selected @endif>{{$role->Role_name}}
+            </option>
             @endforeach
+            {{-- <option value="{{$role->id}} ">{{$role->Role_name}}</option>
+            @endforeach --}}
           </select>
         </div>
 
@@ -125,7 +148,7 @@
       <!-- /.card-body -->
 
       <div class="card-footer">
-        <button type="submit" class="btn btn-primary">إضافة</button>
+        <button type="submit" class="btn btn-primary">تعديل</button>
       </div>
     </form>
   </div>
@@ -139,26 +162,4 @@
 
 
 @section('scripts')
-{{--
-<script>
-  $('#hospital-choice').change(function () {
-var hospital_id = $(this).val();
-$.ajax({
-url: "{{route('getEmployeeDepartments')}}",
-type: "get",
-data: {
-hospital_id: hospital_id
-},
-success: function(data) {
-$('select[name="department"]').empty();
-$.each(data, function(key, value ) {
-
-$('select[name="department"]').append('<option value="' +
-                                               value.id + '">' + value.name + '</option>');
-
-});
-},
-});
-});
-</script> --}}
 @endsection

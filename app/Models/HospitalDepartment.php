@@ -18,6 +18,12 @@ class HospitalDepartment extends Model
     {
         return $this->belongsTo(Department::class, 'department_id', 'id');
     }
+    //relation to get hospitals
+    public function hospitals()
+    {
+        return $this->belongsTo(Hospital::class, 'hospital_id', 'id');
+    }
+
 
     // public function departments()
     // {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
@@ -14,7 +15,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        //
+        
         $permissions = Permission::paginate(10);
         return view('cms.spatie.permissions.index', ['permissions' => $permissions]);
     }
@@ -83,7 +84,7 @@ class PermissionController extends Controller
     public function edit($id)
     {
         //
-        $permission = Permission::findById($id);
+        $permission = Permission::find($id);
         return response()->view('cms.spatie.permissions.edit', ['permission' => $permission]);
     }
 

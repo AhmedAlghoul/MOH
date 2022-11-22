@@ -115,7 +115,7 @@
                         <td>1.</td>
                         <td>{{$department}}</td>
                         <td>{{$result}}</td>
-                        <td></td>
+                        <td>{{$need}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -144,8 +144,6 @@
 
                             <td>{{$pharmacist_count}}</td>
                             <input name="pharmacist_count" hidden value="{{$pharmacist_count}}">
-
-
                         </tr>
 
                     </tbody>

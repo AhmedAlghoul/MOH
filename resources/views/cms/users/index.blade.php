@@ -51,8 +51,9 @@
                 <tr>
                   <th span="1" style="width: 7%">الرقم</th>
                   <th span="1" style="width: 20%">الاسم</th>
-                  <th span="1">الايميل</th>
-                  <th>الصلاحيات</th>
+                  <th span="1">رقم الهوية</th>
+                  <td>الدور الوظيفي</td>
+                  {{-- <th>الصلاحيات</th> --}}
                   <th> الأوامر</th>
                 </tr>
               </thead>
@@ -62,9 +63,16 @@
                 <tr>
                   <td>{{$user->id}}</td>
                   <td>{{$user->name}}</td>
-                  <td>{{$user->email}}</td>
-                  <td><a href="" class="badge bg-info"> {{$user->permissions_count}} صلاحية/ات</a></td>
-                  <td>
+                  <td>{{$user->id_number}}</td>
+                    @foreach ($roles as $role)
+                        @if ($role->id == $user->role_id)
+                           <td>{{$role->name}}</td>
+                            {{-- <td><a href="{{route('role.permissions.index',$role->id)}}" class="btn btn-info">{{$role->permissions_count}}
+                                    صلاحية/ات</a>
+                            </td> --}}
+                        @endif
+                    @endforeach
+    <td>
                     <a href="{{route('users.edit',$user->id)}}" class="btn btn-info">
                       <i class="fas fa-edit"></i>
                     </a>
@@ -81,6 +89,7 @@
                     <a href="#" class="btn btn-danger" onclick="confirmDestroy({{$user->id}})">
                       <i class="fas fa-trash-alt"></i>
                     </a>
+
                   </td>
                 </tr>
                 @endforeach
@@ -141,20 +150,20 @@
 }
 //  implement delete function using axios
 function destroy(id){
-  axios.delete('/cms/admin/user/'+id)
+  axios.delete('/cms/admin/users/'+id)
     .then(function (response) {
-  // handle success 2xx-3xx 
+  // handle success 2xx-3xx
   console.log(response.data);
   Swal.fire(
     'تم الحذف!',
-    'تم حذف القسم بنجاح.',
+    'تم حذف المستخدم بنجاح.',
     'success'
   )
   location.reload();
-  
+
   })
   .catch(function (error) {
-  // handle error 4xx-5xx 
+  // handle error 4xx-5xx
     console.log(error);
   })
   .then(function () {

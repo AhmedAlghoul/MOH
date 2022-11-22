@@ -133,13 +133,13 @@
 
 
         <!-- /.social-auth-links -->
-
+        {{--
         <p class="mb-1">
           <a href="forgot-password.html">نسيت كلمة السر</a>
         </p>
         <p class="mb-0">
           <a href="{{route('cms.register')}}" class="text-center">تسجيل حساب جديد</a>
-        </p>
+        </p> --}}
       </div>
       <!-- /.card-body -->
     </div>

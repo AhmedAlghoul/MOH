@@ -99,7 +99,7 @@ class RoleController extends Controller
     public function edit($id)
     {
         //
-        $role = Role::findById($id);
+        $role = Role::find($id);
         return response()->view('cms.spatie.roles.edit', ['role' => $role]);
     }
 
@@ -123,7 +123,7 @@ class RoleController extends Controller
         ]);
 
         if (!$validator->fails()) {
-            $role = Role::findById($id);
+            $role = Role::find($id);
             $role->name = $request->get('name');
             $role->guard_name = $request->get('guard');
             $isSaved = $role->save();

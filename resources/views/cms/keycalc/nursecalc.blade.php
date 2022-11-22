@@ -42,7 +42,10 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body p-0">
+
             @if(isset($flag))
+            <form method="POST" action="{{route('nurses.store')}}">
+                @csrf
             <table class="table">
                 <thead>
                     <tr>
@@ -58,12 +61,25 @@
                         <td>1.</td>
                         <td>{{$department}}</td>
                         <td>{{$need}}</td>
+                        <input type="number" name="need" hidden value="{{$need}}">
                         <td>{{$result}}</td>
+                        <input type="number" name="result" hidden value="{{$result}}">
+                        <input type="number" name="nurse_count" hidden value="{{$nurse_count}}">
+                        <input type="number" name="key_value" hidden value="{{$key_value}}">
+                        <input type="number" name="bed_count" hidden value="{{$bed_count}}">
+                        <input type="number" name="department_id" hidden value="{{$department_id}}">
+                        <input type="number" name="hospital_id" hidden value="{{$hospital_id}}">
                     </tr>
                 </tbody>
             </table>
+            <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">حفظ النتائج</button>
+                </div>
+                </form>
+
             @else
-            <form method="post" action="{{route('nurseCalculate')}}">
+
+            <form method="POST" action="{{route('nurseCalculate')}}">
                 @csrf
                 <table class="table">
                     <thead>
@@ -77,14 +93,17 @@
                     </thead>
                     <tbody>
                         <tr>
+                            {{-- data-url="api/storwe/dv,dv" --}}
                             <td>1.</td>
                             <td>{{$department}}</td>
-                            <input name="department" hidden value="{{$department}}">
+                            <input name="department_id" hidden  value="{{$department_id}}">
+                            <input name="department" hidden  value="{{$department}}">
                             <td>{{$key->key_value}}</td>
                             <input name="key_value" hidden value="{{$key->key_value}}">
                             <td><input name="bed_count" type="number"></td>
                             <td>{{$nurse_count}}</td>
                             <input name="nurse_count" hidden value="{{$nurse_count}}">
+                            <input type="number" name="hospital_id" hidden value="{{$hospital_id}}">
                         </tr>
                     </tbody>
                 </table>
@@ -105,5 +124,6 @@
 
 
 @section('scripts')
+
 
 @endsection
