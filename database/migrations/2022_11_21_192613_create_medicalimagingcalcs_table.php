@@ -15,12 +15,15 @@ return new class extends Migration
     {
         Schema::create('medicalimagingcalcs', function (Blueprint $table) {
             $table->id();
-            // $table->integer('hospital_id');
-            // $table->integer('department_id');
-            // $table->integer('ray_technician_count');
-            // $table->integer('ray_technician_count');
-            // $table->integer('result');
-            // $table->integer('need');
+            $table->string('hospital_name');
+            $table->string('department');
+            $table->integer('ray_technician_count');
+            $table->integer('x_rays')->nullable();
+            $table->integer('Fluoroscopy')->nullable();
+            $table->integer('mri')->nullable();
+            $table->integer('ct_scan')->nullable();
+            $table->integer('result');
+            $table->integer('need');
             $table->timestamps();
         });
     }

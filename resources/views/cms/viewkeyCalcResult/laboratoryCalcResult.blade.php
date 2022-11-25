@@ -76,7 +76,7 @@
                         <td>
 
                             {{-- using javascript method instead of form method --}}
-                            <a href="#" class="btn btn-danger" onclick="confirmDestroy({{$lab_technician->id}})">
+                            <a href="#" class="btn btn-danger" onclick="performDestroy({{$lab_technician->id}},this)">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
                         </td>
@@ -106,7 +106,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> --}}
 <script>
     function performDestroy(id,ref){
-confirmDestroy('/cms/admin/nurses/'+id,ref);}
+confirmDestroy('/cms/admin/Laboratry/'+id,ref);}
 
 </script>
 

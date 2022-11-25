@@ -181,6 +181,23 @@ class EmployeeController extends Controller
         //
         $isDestroyed = Employee::destroy($id);
         return response()->json(['message' => $isDestroyed ? 'تم حذف الموظف بنجاح' : 'حدث خطأ أثناء حذف الموظف '], $isDestroyed ? 200 : 400);
+        //check if employee is deleted and role is doctor then decrease the count of employeed in doctor calc table and check the section
+
+        // if ($isDestroyed) {
+
+
+        //     $employee = Employee::findOrFail($id);
+        //$department = Department::findOrFail($employee->department_id);
+        //     if ($employee->role_id == 1) {
+        //         $doctorCalc = DoctorCalc::where('department_id', $employee->department_id)->first();
+        //         $doctorCalc->number_of_employees = $doctorCalc->number_of_employees - 1;
+        //         $doctorCalc->save();
+        // ======================
+        //         $doctorCalc = DoctorCalc::where('hospital_id', $employee->hospital_id)->first();
+        //         $doctorCalc->number_of_employees = $doctorCalc->number_of_employees - 1;
+        //         $doctorCalc->save();
+        //     }
+
     }
 
 
@@ -210,7 +227,7 @@ class EmployeeController extends Controller
     //
     public function getEmployeeDepartments()
     {
-        //to get department id 
+        //to get department id
         $alldepartments = HospitalDepartment::where("hospital_id", $_REQUEST['hospital_id'])->pluck('department_id');
         // return response()->json($alldepartments);
         //to get department name and all department data

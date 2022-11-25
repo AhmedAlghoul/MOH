@@ -68,14 +68,16 @@
                 <td>{{$doctor->monthly_hours}}</td>
                 <td>{{$doctor->doctor_count}}</td>
                 <td>{{$doctor->doctor_result}}</td>
-                <td>{{$doctor->doctor_result}}</td>
+                <td>{{$doctor->doctor_need}}</td>
 
                 <td>
 
         {{-- using javascript method instead of form method --}}
-        <a href="#" class="btn btn-danger" onclick="confirmDestroy({{$doctor->id}})">
+        <a href="#" class="btn btn-danger" onclick="performDestroy({{$doctor->id}},this)">
             <i class="fas fa-trash-alt"></i>
+
         </a>
+
     </td>
 </tr>
 @endforeach
@@ -106,6 +108,5 @@
 confirmDestroy('/cms/admin/doctors/'+id,ref);}
 
 </script>
-
 
 @endsection

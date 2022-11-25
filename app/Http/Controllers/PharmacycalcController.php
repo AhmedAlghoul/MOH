@@ -91,8 +91,10 @@ class PharmacycalcController extends Controller
      * @param  \App\Models\Pharmacycalc  $pharmacycalc
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pharmacycalc $pharmacycalc)
+    public function destroy($id)
     {
         //
+        $isDestroyed = Pharmacycalc::destroy($id);
+        return response()->json(['message' => $isDestroyed ? 'تم حذف نتيجة القسم بنجاح' : 'حدث خطأ أثناء حذف نتيجة القسم '], $isDestroyed ? 200 : 400);
     }
 }

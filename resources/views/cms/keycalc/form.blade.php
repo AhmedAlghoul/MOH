@@ -85,7 +85,7 @@
 
                 <div class="form-group col-md-6">
                     <label for="department-choice">اختر القسم</label>
-                    <select class="form-control" id="department-choice" name="department">
+                    <select class="form-control js-example-basic-single" id="department-choice" name="department">
 
 
                     </select>
@@ -93,7 +93,7 @@
 
                 <div class="form-group col-md-6">
                     <label for="role-choice">الدور الوظيفي</label>
-                    <select class="form-control" id="role-choice" name="role">
+                    <select class="form-control js-example-basic-single" id="role-choice" name="role" >
                         @foreach ($roles as $role)
                         <option value="{{$role->Role_name}}">{{$role->Role_name}} </option>
                         @endforeach
@@ -173,3 +173,12 @@
 
 </script>
 @endsection
+@push('js')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.js-example-basic-single').select2();
+    });
+    </script>
+@endpush

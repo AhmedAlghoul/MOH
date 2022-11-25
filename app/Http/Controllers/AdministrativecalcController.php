@@ -15,6 +15,8 @@ class AdministrativecalcController extends Controller
     public function index()
     {
         //
+        $data = Administrativecalc::all();
+        return view('cms.viewkeyCalcResult.administrativecalcResult', ['administratives' => $data]);
     }
 
     /**
@@ -36,7 +38,19 @@ class AdministrativecalcController extends Controller
     public function store(Request $request)
     {
         //
-        
+        $nursecalc = new Administrativecalc();
+        $nursecalc->hospital_name = $request->hospital_name;
+        $nursecalc->department = $request->department;
+        $nursecalc->administrative_count = $request->administrative_count;
+        $nursecalc->employee_role = $request->employee_role;
+        $nursecalc->seven_hours = $request->seven_hours;
+        $nursecalc->twenty_four_hours = $request->twenty_four_hours;
+        $nursecalc->need = $request->need;
+        $nursecalc->result = $request->result;
+
+        $nursecalc->save();
+
+        return redirect()->route('keycalc.create')->with('success', 'تم حفظ البيانات بنجاح');
     }
 
     /**
@@ -79,8 +93,10 @@ class AdministrativecalcController extends Controller
      * @param  \App\Models\Administrativecalc  $administrativecalc
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Administrativecalc $administrativecalc)
+    public function destroy($id)
     {
         //
+        $isDestroyed = Administrativecalc::destroy($id);
+        return response()->json(['message' => $isDestroyed ? 'تم حذف نتيجة القسم بنجاح' : 'حدث خطأ أثناء حذف نتيجة القسم '], $isDestroyed ? 200 : 400);
     }
 }

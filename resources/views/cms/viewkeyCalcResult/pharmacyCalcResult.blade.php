@@ -79,7 +79,7 @@
                 <td>
 
         {{-- using javascript method instead of form method --}}
-        <a href="#" class="btn btn-danger" onclick="confirmDestroy({{$pharmacy->id}})">
+        <a href="#" class="btn btn-danger" onclick="performDestroy({{$pharmacy->id}},this)">
             <i class="fas fa-trash-alt"></i>
         </a>
     </td>

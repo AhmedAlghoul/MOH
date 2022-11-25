@@ -40,18 +40,24 @@
     <h5>طريقة حساب مفتاح الأطباء</h5>
     <p>يتم حساب المفتاح بناء على عدد ساعات العمل الشهرية للقسم مقسومة على عدد ساعات عمل الأطباء شهريا وهي 140 ساعة </p>
     <div>المفتاح =(عدد ساعات العمل شهريا /140)</div>
+    <p style="color: red">تنبيه:النتائج المرفقة لا تشمل رئيس القسم </p>
 </div>
 <div class='doccalc'>
 
     {{-- <h2>{{$hospital}}</h2> --}}
 
-    <form method="POST" action="{{route('doctors.store')}}">
+    <form method="POST" id="formID" action="{{route('doctors.store')}}">
         @csrf
         <h2>{{$hospital_name}}</h2>
         {{-- <input type="number" name="hospital_id" hidden value="{{$hospital_id}}"> --}}
         <input type="text" name="hospital_name" hidden value="{{$hospital_name}}">
-
         <h2> {{$department}} </h2>
+        {{-- get the department id from the form the sent departmens attribute
+
+        @foreach ($departments as $departmentt)
+
+        <option value="{{$departmentt->id}}">{{$departmentt->name}} </option>
+        @endforeach --}}
         {{-- <input type="number" name="department_id" hidden value="{{$department_id}}"> --}}
         <input type="text" name="department" hidden value="{{$department}}">
         <h3>{{$employee_role}} </h3>
@@ -67,6 +73,7 @@
         <label>عدد الأطباء في القسم:
             {{$doctor_count}}
         </label>
+
         <input name="doctor_count" hidden value="{{$doctor_count}}">
         <br> <br>
         <label for="doctor_result">الكادر المطلوب حسب المفتاح: <p id="doctor_result" name="doctor_result"> </p> </label>
@@ -97,6 +104,12 @@
         $('#result').on('click', function() {
             //put the result in the input with id doctor_result in number format
             $('#doctor_result').text(result.toFixed(2));
+            // input = jQuery('<input name="myname">');
+            // var addition= input.val();
+//when save add the addition variable to result
+
+            // jQuery('#formID').append(input);
+
             // $('#doctor_result').text(result);
         });
         //get the doctor need when press on the button with id result
@@ -117,9 +130,14 @@
         var doctor_count = $('input[name="doctor_count"]').val();
 
         var doctor_result = $('#doctor_result').text();
-console.log(doctor_result);
+        console.log(doctor_result);
         var doctor_need = $('#doctor_need').text();
-console.log(doctor_need);
+        console.log(doctor_need);
+        // var addition = $('input[name="myname"]').val();
+        // console.log(addition);
+       //add adition value to doctor result
+        // var doctor_result = parseFloat(doctor_result) + parseFloat(addition);
+        // console.log(doctor_result);
         //send axios request to save the result in the database
 
         axios.post('/cms/admin/doctors', {

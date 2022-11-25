@@ -56,9 +56,11 @@
                                     <th>الرقم</th>
                                     <th>المستشفى</th>
                                     <th>القسم</th>
-                                    <th>عدد الأجهزة</th>
-                                    {{-- <th>تاريخ التعيين</th> --}}
-                                    <th>الأجهزة المتوفرة</th>
+                                    <th>العدد الحالي</th>
+                                    <th>عدد أجهزة الأشعة</th>
+                                    <th>عدد أجهزة الفلورو</th>
+                                    <th>عدد أجهزة الرنين </th>
+                                    <th>عدد أجهزة التصوير المقطعي</th>
                                     <th>العدد المقترح</th>
                                     <th>الاحتياج</th>
                                     <th> الأوامر</th>
@@ -66,6 +68,27 @@
                             </thead>
                             <tbody>
 
+                                @foreach ($medicalimaging as $medicalimage)
+                                <tr>
+                                    <td>{{$medicalimage->id}}</td>
+                                    <td>{{$medicalimage->hospital_name}}</td>
+                                    <td>{{$medicalimage->department}}</td>
+                                    <td>{{$medicalimage->ray_technician_count}}</td>
+                                    <td>{{$medicalimage->x_rays}}</td>
+                                    <td>{{$medicalimage->Fluoroscopy}}</td>
+                                    <td>{{$medicalimage->mri}}</td>
+                                    <td>{{$medicalimage->ct_scan}}</td>
+                                    <td>{{$medicalimage->result}}</td>
+                                    <td>{{$medicalimage->need}}</td>
+                                    <td>
+
+                                        {{-- using javascript method instead of form method --}}
+                                        <a href="#" class="btn btn-danger" onclick="performDestroy({{$medicalimage->id}},this)">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                @endforeach
 
                             </tbody>
                         </table>
@@ -90,7 +113,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> --}}
 <script>
     function performDestroy(id,ref){
-confirmDestroy('/cms/admin/employee/'+id,ref);}
+confirmDestroy('/cms/admin/medicalimaging/'+id,ref);}
 
 </script>
 

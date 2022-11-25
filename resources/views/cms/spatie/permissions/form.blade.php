@@ -48,7 +48,6 @@
           <label>القسم</label>
           <select class="form-control guards" id="guards" style="width: 82%">
             <option value="web">مستخدمين</option>
-            <option value="admin">مشرفين</option>
           </select>
         </div>
 

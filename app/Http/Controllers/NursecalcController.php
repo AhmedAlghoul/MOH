@@ -91,8 +91,10 @@ class NursecalcController extends Controller
      * @param  \App\Models\nursecalc  $nursecalc
      * @return \Illuminate\Http\Response
      */
-    public function destroy(nursecalc $nursecalc)
+    public function destroy($id)
     {
         //
+        $isDestroyed = nursecalc::destroy($id);
+        return response()->json(['message' => $isDestroyed ? 'تم حذف نتيجة القسم بنجاح' : 'حدث خطأ أثناء حذف نتيجة القسم '], $isDestroyed ? 200 : 400);
     }
 }

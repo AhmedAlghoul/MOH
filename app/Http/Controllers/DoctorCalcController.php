@@ -114,5 +114,7 @@ class DoctorCalcController extends Controller
     public function destroy($id)
     {
         //
+        $isDestroyed = DoctorCalc::destroy($id);
+        return response()->json(['message' => $isDestroyed ? 'تم حذف نتيجة القسم بنجاح' : 'حدث خطأ أثناء حذف نتيجة القسم '], $isDestroyed ? 200 : 400);
     }
 }

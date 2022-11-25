@@ -157,7 +157,7 @@
                 </p>
               </a>
               <ul class="nav nav-treeview">
-                @can('show')
+                @can('show-department')
                 <li class="nav-item">
                   <a href="{{route('department.index')}}" class="nav-link">
                     <i class="fas fa-list nav-icon"></i>
@@ -165,12 +165,14 @@
                   </a>
                 </li>
                  @endcan
+                 @can('create-department')
                 <li class="nav-item">
                   <a href="{{route('department.create')}}" class="nav-link">
                     <i class="fas fa-plus-square nav-icon"></i>
                     <p>إنشاء</p>
                   </a>
                 </li>
+                @endcan
               </ul>
             </li>
 
@@ -292,9 +294,9 @@
               </a>
             </li> --}}
 
-<li class="nav-item has-treeview">
-    <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-list"></i>
+    <li class="nav-item has-treeview">
+        <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-list"></i>
         <p>
             عرض نتائج حساب المفتاح
             <i class="fas fa-angle-left right"></i>
@@ -315,36 +317,44 @@
         </li>
         <li class="nav-item">
             <a href="{{route('pharmacy.index')}}" class="nav-link">
-                <i class=" fa-solid fa-syringe"></i>
+             <i class="fas fa-prescription"></i>
                 <p>الصيدلة</p>
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{route('pharmacy.index')}}" class="nav-link">
+            <a href="{{route('medicalimaging.index')}}" class="nav-link">
                 <i class="fas fa-solid fa-x-ray"></i>
                 <p>أخصائي الأشعة</p>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{route('phiscaltherapist.index')}}" class="nav-link">
-                <i class="fas fa-solid fa-x-ray"></i>
+            <i class="fab fa-accessible-icon"></i>
                 <p>أخصائي العلاج الطبيعي</p>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{route('Laboratry.index')}}" class="nav-link">
-                <i class="fas fa-solid fa-x-ray"></i>
+            <i class="fas fa-flask"></i>
                 <p>فنيين المختبرات</p>
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{route('pharmacy.index')}}" class="nav-link">
-                <i class="fas fa-solid fa-x-ray"></i>
+            <a href="{{route('administratives.index')}}" class="nav-link">
+                <i class="fas fa-users"></i>
                 <p>الإداريين</p>
             </a>
         </li>
     </ul>
 </li>
+{{-- <li class="nav-item">
+        <a href="{{route('keycalc.create')}}" class="nav-link">
+            <i class="nav-icon fas fa-calculator"></i>
+            <p>
+                حساب مفتاح الكادر البشري
+            </p>
+        </a>
+    </li> --}}
 
 
             {{-- <li class="nav-item">
@@ -413,9 +423,6 @@
                 </p>
               </a>
             </li> --}}
-
-
-
 
             <li class="nav-header">الموظفين</li>
             <li class="nav-item has-treeview">
@@ -651,6 +658,7 @@
   <script src="{{asset('js/crud.js')}}"></script>
 
   @yield('scripts')
+  @stack('js')
 
 </body>
 

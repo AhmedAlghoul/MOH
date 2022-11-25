@@ -38,6 +38,20 @@ class MedicalimagingcalcController extends Controller
     public function store(Request $request)
     {
         //
+        $medicalimagingcalc = new Medicalimagingcalc();
+        $medicalimagingcalc->hospital_name = $request->hospital_name;
+        $medicalimagingcalc->department = $request->department;
+        $medicalimagingcalc->ray_technician_count = $request->ray_technician_count;
+        $medicalimagingcalc->x_rays = $request->x_rays;
+        $medicalimagingcalc->Fluoroscopy = $request->Fluoroscopy;
+        $medicalimagingcalc->mri = $request->mri;
+        $medicalimagingcalc->ct_scan= $request->ct_scan;
+        $medicalimagingcalc->result= $request->result;
+        $medicalimagingcalc->need= $request->need;
+        $medicalimagingcalc->save();
+
+        return redirect()->route('keycalc.create')->with('success', 'تم حفظ البيانات بنجاح');
+
     }
 
     /**
@@ -80,8 +94,10 @@ class MedicalimagingcalcController extends Controller
      * @param  \App\Models\Medicalimagingcalc  $medicalimagingcalc
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Medicalimagingcalc $medicalimagingcalc)
+    public function destroy($id)
     {
         //
+        $isDestroyed = Medicalimagingcalc::destroy($id);
+        return response()->json(['message' => $isDestroyed ? 'تم حذف نتيجة القسم بنجاح' : 'حدث خطأ أثناء حذف نتيجة القسم '], $isDestroyed ? 200 : 400);
     }
 }

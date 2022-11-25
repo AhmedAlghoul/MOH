@@ -1,6 +1,6 @@
 @extends('cms.parent')
 
-@section('title','عرض نتائج العلاج الطبيعي')
+@section('title','عرض نتائج مفتاح الكادر')
 
 @section('styles')
 <style>
@@ -17,7 +17,7 @@
 @endsection
 
 
-@section('page-name','عرض نتائج العلاج الطبيعي')
+@section('page-name','عرض نتائج مفتاح الكادر')
 
 @section('small-page-name','عرض النتائج')
 
@@ -34,7 +34,7 @@
             {{-- downlad Employee names Excel file --}}
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title"> عرض نتائج حساب مفتاح العلاج الطبيعي </h3>
+                    <h3 class="card-title"> عرض نتائج الإداريين </h3>
                     {{-- <a class="btn btn-success" href="{{ route('file-export') }}">تحميل
                         الأسماء</a> <a class="btn btn-success" href="{{ route('file-export') }}">تحميل
                         الأسماء</a> --}}
@@ -57,32 +57,37 @@
                                     <th>المستشفى</th>
                                     <th>القسم</th>
                                     <th>العدد الحالي</th>
-                                    <th>عدد الجلسات</th>
-                                    <th>العدد المقترح</th>
+                                    <th>الدور الوظيفي</th>
+                                    <th>عدد النقاط 7 ساعات </th>
+                                    <th>عدد النقاط 24 ساعة </th>
+                                    <th>الكادر المطلوب</th>
                                     <th>الاحتياج</th>
                                     <th> الأوامر</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($physical_therapists as $physical_therapist)
+                             @foreach ($administratives as $administrative)
                                 <tr>
-                                    <td>{{ $physical_therapist->id }}</td>
-                                    <td>{{ $physical_therapist->hospital_name }}</td>
-                                    <td>{{ $physical_therapist->department }}</td>
-                                    <td>{{ $physical_therapist->physical_therapist_count }}</td>
-                                    <td>{{ $physical_therapist->number_of_sessions }}</td>
-                                    <td>{{ $physical_therapist->result }}</td>
-                                    <td>{{ $physical_therapist->need }}</td>
-                                   <td>
+                                    <td>{{$administrative->id}}</td>
+                                    <td>{{$administrative->hospital_name}}</td>
+                                    <td>{{$administrative->department}}</td>
+                                    <td>{{$administrative->administrative_count}}</td>
+                                    <td>{{$administrative->employee_role}}</td>
+                                    <td>{{$administrative->seven_hours}}</td>
+                                    <td>{{$administrative->twenty_four_hours}}</td>
+                                    <td>{{$administrative->result}}</td>
+                                    <td>{{$administrative->need}}</td>
 
-                                            {{-- using javascript method instead of form method --}}
-                                            <a href="#" class="btn btn-danger" onclick="performDestroy({{$physical_therapist->id}},this)">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </a>
-                                        </td>
+                                    <td>
+
+                                        {{-- using javascript method instead of form method --}}
+                                        <a href="#" class="btn btn-danger"
+                                            onclick="performDestroy({{$administrative->id}},this)">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                                 @endforeach
-
 
                             </tbody>
                         </table>
@@ -107,7 +112,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> --}}
 <script>
     function performDestroy(id,ref){
-confirmDestroy('/cms/admin/phiscaltherapist/'+id,ref);}
+confirmDestroy('/cms/admin/administratives/'+id,ref);}
 
 </script>
 

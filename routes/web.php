@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdministrativecalcController;
 use App\Http\Controllers\CircleController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DoctorCalcController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\KeyCalculateController;
 use App\Http\Controllers\KeyController;
 use App\Http\Controllers\LaboratorycalcController;
+use App\Http\Controllers\MedicalimagingcalcController;
 use App\Http\Controllers\NursecalcController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PharmacycalcController;
@@ -77,6 +79,9 @@ Route::prefix('cms/admin')->middleware('auth:web')->group(function () {
     Route::resource('pharmacy', PharmacycalcController::class);
     Route::resource('Laboratry',LaboratorycalcController::class);
     Route::resource('phiscaltherapist',PhysicaltherapycalcController::class);
+    Route::resource('medicalimaging', MedicalimagingcalcController::class);
+    Route::resource('administratives', AdministrativecalcController::class);
+
 
     //get job role route
     Route::get('getEmployeeRole', [KeyCalculateController::class, 'getEmployeeRole'])->name('keycalc.getEmployeeRole');

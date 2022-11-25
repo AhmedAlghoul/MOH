@@ -61,10 +61,13 @@
                         <td>1.</td>
                         <td>{{$department}}</td>
                         <input name="hospital_name" hidden value="{{$hospital_name}}">
-                        
+                        <input name="department" hidden value="{{$department}}">
+                        <input name="physical_therapist_count" hidden value="{{$physical_therapist_count}}">
+                        <input name="number_of_sessions" hidden value="{{$number_of_sessions}}">
                         <th>{{$result}}</th>
+                        <input name="result" hidden value="{{$result}}">
                         <th>{{$need}}</th>
-
+                        <input name="need" hidden value="{{$need}}">
                     </tr>
                 </tbody>
             </table>

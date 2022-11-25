@@ -19,6 +19,7 @@ use App\Models\Physicaltherapycalc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Psy\Readline\Hoa\Console;
+use Spatie\Permission\Models\Role;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 
 class KeyCalculateController extends Controller
@@ -53,7 +54,7 @@ class KeyCalculateController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     *  a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -143,13 +144,29 @@ class KeyCalculateController extends Controller
         $department = Department::where("name", $_REQUEST['department'])->pluck('name')->first();
         $department_id = Department::where("name", $_REQUEST['department'])->pluck('id')->first();
         if ($employee_role == "طبيب") {
+            $doctors = Employee::where("hospital_id", $hospital_id)->where("department_id", $department_id)->where("role_id", 1)->count();
+            //get the foriegn id of department
+
+            $departments = Department::where('is_active', 1)->get();
+            $hospitals = Hospital::all();
+
+
             // $role_name =EmployeeRole::where("Role_name")->pluck('Role_name')->first();
             $role_id = EmployeeRole::where("Role_name", $employee_role)->pluck('id')->first();
             $department_id = Department::where("name", $department)->pluck('id')->first();
             $key = Key::where("department_id", $department_id)->where('role_id', $role_id)->first('key_value');
             $doctor_count = Employee::where('role_id', $role_id)->where('department_id', $department_id)->count();
-            return response()->view('cms.doctorcalc.doctorcalc', compact(['department', 'key', 'role_id', 'employee_role', 'doctor_count', 'hospital_name']));
+            return response()->view('cms.doctorcalc.doctorcalc', compact(['department', 'key', 'role_id', 'employee_role', 'doctor_count', 'hospital_name', 'hospitals', 'departments']));
             //get department name and show it in view of doctor
+            // $docotr = Doctor::find(1);
+            // if($doctor->delete()){
+            //     $caleck = DoctorCalc::wherre('dept_id',$doctor->depetament->id)->first();
+            //     $caleck->update([
+            //         'count' => $caleck->doctor_count - 1
+            //     ]);
+            // }
+            // $employee_role=$request->role;
+            // $role = Role::where('name', $employee_role)->first();
 
         } elseif (
             $employee_role == "ممرض" || $employee_role == "ممرضة"
@@ -173,27 +190,27 @@ class KeyCalculateController extends Controller
             $department_id = Department::where("name", $department)->pluck('id')->first();
             $physical_therapist_count = Employee::where('role_id', $role_id)->where('department_id', $department_id)->count();
 
-            return response()->view('cms.keycalc.physicaltherapycalc', compact(['department', 'role_id', 'physical_therapist_count','hospital_name']));
+            return response()->view('cms.keycalc.physicaltherapycalc', compact(['department', 'role_id', 'physical_therapist_count', 'hospital_name']));
         } elseif ($employee_role == "فني مختبر") {
             $role_id = EmployeeRole::where("Role_name", $employee_role)->pluck('id')->first();
             $department_id = Department::where("name", $department)->pluck('id')->first();
             $laboratory_technicians_count = Employee::where('role_id', $role_id)->where('department_id', $department_id)->count();
 
             return response()->view('cms.keycalc.laboratorycalc', compact(['role_id', 'department_id', 'laboratory_technicians_count', 'department', 'hospital_name']));
-        } elseif ($employee_role == "أمن" || $employee_role == "محاسب") {
+        } elseif ($employee_role == "أمن" || $employee_role == "محاسب" || $employee_role == "اداري" || $employee_role == "إداري جامعي" || $employee_role == "آذن و مراسل" || $employee_role == "امين مخزن" || $employee_role == "حارس" || $employee_role == "خدمات" || $employee_role == "رئيس قسم اداري" || $employee_role == "رئيس شعبة اداري" || $employee_role == "سكرتاريا طبية" || $employee_role == "سكرتاريا دبلوم" || $employee_role == "عامل" || $employee_role == "علاقات عامة و اعلام" || $employee_role == "فني صيانة" || $employee_role == "فني" || $employee_role == "كاتب" || $employee_role == "كاتب جامعي" || $employee_role == "كاتب ثانوي" || $employee_role == "كاتب دبلوم" || $employee_role == "مدير اداري" || $employee_role == "مساعد اداري") {
 
             $role_id = EmployeeRole::where("Role_name", $employee_role)->pluck('id')->first();
             $department_id = Department::where("name", $department)->pluck('id')->first();
             $administrative_count = Employee::where('role_id', $role_id)->where('department_id', $department_id)->count();
 
-            return response()->view('cms.keycalc.administrativecalc', compact(['department', 'employee_role', 'administrative_count']));
+            return response()->view('cms.keycalc.administrativecalc', compact(['department', 'employee_role', 'administrative_count', 'hospital_name']));
         } elseif ($employee_role == "فني أشعة") {
 
             $role_id = EmployeeRole::where("Role_name", $employee_role)->pluck('id')->first();
             $department_id = Department::where("name", $department)->pluck('id')->first();
             $ray_technician_count = Employee::where('role_id', $role_id)->where('department_id', $department_id)->count();
             // $calculationOfRayTechnicains =
-            return response()->view('cms.keycalc.medicalimagingcalc', compact(['department', 'ray_technician_count']));
+            return response()->view('cms.keycalc.medicalimagingcalc', compact(['department', 'ray_technician_count', 'hospital_name']));
         }
     }
     public function nurseCalculate(Request $request)
@@ -243,7 +260,7 @@ class KeyCalculateController extends Controller
         } elseif ($number_of_prescriptions > 1100) {
             $number_of_prescriptions = $number_of_prescriptions - 1100;
             $add_amount = floor($number_of_prescriptions / 1000);
-            $add_amount < 1 ? $result += $add_amount + 2 : $result += $add_amount + 1;
+            $add_amount  ? $result += $add_amount+1  : $result += $add_amount + 1;
         };
 
         if ($number_of_medical_reports <= 320 && $number_of_medical_reports > 0) {
@@ -251,7 +268,7 @@ class KeyCalculateController extends Controller
         } elseif ($number_of_medical_reports > 320) {
             $number_of_medical_reports = $number_of_medical_reports - 320;
             $add_amount = floor($number_of_medical_reports / 300);
-            $add_amount < 1 ? $result += $add_amount + 2 : $result += $add_amount + 1;
+            $add_amount  ? $result += $add_amount : $result += $add_amount + 1;
         }
         $flag = 1;
         $need = ($pharmacist_count - $result);
@@ -270,7 +287,7 @@ class KeyCalculateController extends Controller
         $result = ($number_of_sessions * $session_duration) / ($working_minutes_per_day * $working_days);
         $need = $result - $physical_therapist_count;
         $flag = 1;
-        return response()->view('cms.keycalc.physicaltherapycalc', compact(['flag',  'department', 'number_of_sessions', 'result', 'need', 'physical_therapist_count','hospital_name']));
+        return response()->view('cms.keycalc.physicaltherapycalc', compact(['flag',  'department', 'number_of_sessions', 'result', 'need', 'physical_therapist_count', 'hospital_name']));
     }
     public function laboratorytechnicianscalc(Request $request)
     {
@@ -289,21 +306,24 @@ class KeyCalculateController extends Controller
 
     public function medicalimagingcalc(Request $request)
     {
+        $hospital_name = $request->input('hospital_name');
         $department = $request->input('department');
         $ray_technician_count = $request->input('ray_technician_count');
-        $xrays = $request->input('X-rays');
+        $x_rays = $request->input('x_rays');
         //request xrays input value from form
         $Fluoroscopy = $request->input('Fluoroscopy');
-        $ctscan = $request->input('ct-scan');
+        $ct_scan = $request->input('ct_scan');
         $mri = $request->input('mri');
-        $result = ($xrays * 2) + ($Fluoroscopy * 2) + ($ctscan * 3) + ($mri * 3);
+        $result = ($x_rays * 2) + ($Fluoroscopy * 2) + ($ct_scan * 3) + ($mri * 3);
         $need = $ray_technician_count - $result;
         $flag = 1;
-        return response()->view('cms.keycalc.medicalimagingcalc', compact(['department', 'ray_technician_count', 'flag', 'xrays', 'Fluoroscopy', 'ctscan', 'mri', 'result', 'need']));
+        return response()->view('cms.keycalc.medicalimagingcalc', compact(['department', 'ray_technician_count', 'flag', 'x_rays', 'Fluoroscopy', 'ct_scan', 'mri', 'result', 'need', 'hospital_name']));
     }
 
     public function administrativecalculation(Request $request)
     {
+        $hospital_name = $request->input('hospital_name');
+        $employee_role = $request->input('employee_role');
         $department = $request->input('department');
         $administrative_count = $request->input('administrative_count');
         $seven_hours = $request->input('seven_hours');
@@ -311,7 +331,7 @@ class KeyCalculateController extends Controller
         $result = ($seven_hours * 1) + ($twenty_four_hours * 6);
         $need = $administrative_count - $result;
         $flag = 1;
-        return response()->view('cms.keycalc.administrativecalc', compact(['department', 'administrative_count', 'flag', 'seven_hours', 'twenty_four_hours', 'result', 'need']));
+        return response()->view('cms.keycalc.administrativecalc', compact(['department', 'administrative_count', 'flag', 'seven_hours', 'twenty_four_hours', 'result', 'need','hospital_name','employee_role']));
     }
     public function saveDoctors(Request $request)
     {
@@ -331,5 +351,23 @@ class KeyCalculateController extends Controller
     //     $ray_technicians = Medicalimagingcalc::where('hospital_id', $hospital_id)->where('department', $department)->get();
     //     $administratives = Administrativecalc::where('hospital_id', $hospital_id)->where('department', $department)->get();
     //     return response()->view('cms.keycalc.showdata', compact(['flag', 'doctors', 'pharmacists', 'physical_therapists', 'laboratory_technicians', 'ray_technicians', 'administratives', 'hospital_id', 'department']));
+    // }
+
+    // public function test()
+    // {
+    //     DB::beginTransaction();
+    //     try{
+    //         $category = Category::create([
+    //             'name' => 'test',
+    //         ]);
+
+    //         $category->image()->create([
+    //             'url' => 'test',
+    //         ]);
+    //         DB::commit();
+    //     }catch(\Exception $e){
+    //         DB::rollback();
+    //         return redirect()->back()->with('error', $e->getMessage());
+    //     }
     // }
 }

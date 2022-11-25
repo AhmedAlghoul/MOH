@@ -30,7 +30,7 @@
     <!-- /.row -->
     <div class="row">
       <div class="col-12">
-        <div class="card"> 
+        <div class="card">
           <div class="card-header">
             <h3 class="card-title">عرض الأقسام </h3>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -73,10 +73,13 @@
                     @endif
                   </td>
                   <td>
+                    @can('edit-department')
+
 
                     <a href="{{route('department.edit',$department->id)}}" class="btn btn-info">
                       <i class="fas fa-edit"></i>
                     </a>
+                    @endcan
                     {{-- we sent id to destroy method ($department->id)--}}
                     {{-- <form action="{{route('department.destroy',$department->id )}}" method="post">
                       @csrf
@@ -87,9 +90,11 @@
                     </form> --}}
 
                     {{-- using javascript method instead of form method --}}
+                    @can('delete-department')
                     <a href="#" class="btn btn-danger" onclick="confirmDestroy({{$department->id}})">
                       <i class="fas fa-trash-alt"></i>
                     </a>
+                    @endcan
                   </td>
                 </tr>
                 @endforeach

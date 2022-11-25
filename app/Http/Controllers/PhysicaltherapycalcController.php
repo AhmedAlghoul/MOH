@@ -89,8 +89,10 @@ class PhysicaltherapycalcController extends Controller
      * @param  \App\Models\Physicaltherapycalc  $physicaltherapycalc
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Physicaltherapycalc $physicaltherapycalc)
+    public function destroy($id)
     {
         //
+        $isDestroyed = Physicaltherapycalc::destroy($id);
+        return response()->json(['message' => $isDestroyed ? 'تم حذف نتيجة القسم بنجاح' : 'حدث خطأ أثناء حذف نتيجة القسم '], $isDestroyed ? 200 : 400);
     }
 }

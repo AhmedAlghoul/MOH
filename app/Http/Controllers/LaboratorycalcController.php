@@ -89,8 +89,10 @@ class LaboratorycalcController extends Controller
      * @param  \App\Models\Laboratorycalc  $laboratorycalc
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Laboratorycalc $laboratorycalc)
+    public function destroy($id)
     {
         //
+        $isDestroyed = Laboratorycalc::destroy($id);
+        return response()->json(['message' => $isDestroyed ? 'تم حذف نتيجة القسم بنجاح' : 'حدث خطأ أثناء حذف نتيجة القسم '], $isDestroyed ? 200 : 400);
     }
 }

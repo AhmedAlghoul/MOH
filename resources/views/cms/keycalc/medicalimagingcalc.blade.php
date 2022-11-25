@@ -47,27 +47,46 @@
         <!-- /.card-header -->
         <div class="card-body p-0">
             @if (isset($flag))
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th style="width: 10px">#</th>
-                        <th>القسم</th>
-                        <th>العدد الحالي</th>
-                        <th>العدد المطلوب</th>
-                        <th>الاحتياج</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1.</td>
-                        <td>{{$department}}</td>
-                        <td>{{$ray_technician_count}}</td>
-                        <td>{{$result}}</td>
-                        <td>{{$need}}</td>
-                    </tr>
-                </tbody>
+<form method="POST" action="{{route('medicalimaging.store')}}">
+    @csrf
 
-            </table>
+<table class="table">
+    <thead>
+        <tr>
+            <th style="width: 10px">#</th>
+            <th>القسم</th>
+            <th>العدد الحالي</th>
+            <th>العدد المطلوب</th>
+            <th>الاحتياج</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1.</td>
+            <td>{{$department}}</td>
+            <td>{{$ray_technician_count}}</td>
+            <td>{{$result}}</td>
+            <td>{{$need}}</td>
+            <input name="hospital_name" hidden value="{{$hospital_name}}">
+            <input name="ray_technician_count" hidden value="{{$ray_technician_count}}">
+            <input name="x_rays" hidden value="{{$x_rays}}">
+            <input name="Fluoroscopy" hidden value="{{$Fluoroscopy}}">
+            <input name="ct_scan" hidden value="{{$ct_scan}}">
+            <input name="mri" hidden value="{{$mri}}">
+            <input type="number" name="result" hidden value="{{$result}}">
+            <input type="number" name="need" hidden value="{{$need}}">
+            <input type="text" name="department" hidden value="{{$department}}">
+
+        </tr>
+    </tbody>
+
+</table>
+
+    <div class="card-footer">
+        <button type="submit" class="btn btn-primary">حفظ النتائج</button>
+    </div>
+</form>
+
             @else
             <form method="post" action="{{route('medicalimagingcalc')}}">
                 @csrf
@@ -87,10 +106,11 @@
                             <input name="department" hidden value="{{$department}}">
                             <td>{{$ray_technician_count}}</td>
                             <input name="ray_technician_count" hidden value="{{$ray_technician_count}}">
+                            <input name="hospital_name" hidden value="{{$hospital_name}}">
 
-                            <td><input type="checkbox" id="X-rays" name=" أشعة عادية " value="2"
+                            <td><input type="checkbox" id="x_rays" name=" أشعة عادية " value="2"
                                     onclick="dynInput(this);">
-                                <label for="X-rays">أشعة عادية</label>
+                                <label for="x_rays">أشعة عادية</label>
 
 
                                 <input type="checkbox" id="Fluoroscopy" name=" فلورو " value="2"
@@ -98,9 +118,9 @@
                                 <label for="Fluoroscopy"> فلورو</label>
 
                                 <br>
-                                <input type="checkbox" id="ct-scan" name=" الأشعة المقطعية " value="3"
+                                <input type="checkbox" id="ct_scan" name=" الأشعة المقطعية " value="3"
                                     onclick="dynInput(this);">
-                                <label for="ct-scan"> أشعة مقطعية</label>
+                                <label for="ct_scan"> أشعة مقطعية</label>
 
                                 <input type="checkbox" id="mri" name=" الرنين المغناطيسي " value="3"
                                     onclick="dynInput(this);">

@@ -50,7 +50,7 @@
     <form id="create-form" role="form" action="{{route('hospital.store')}}" method="POST">
       @csrf
       <div class="card-body ">
-        
+
         @if($errors->any())
         <div class="alert alert-danger">
           <ul>
@@ -59,7 +59,7 @@
             @endforeach
           </ul>
         </div>
-        
+
         @endif
 
         <div class="form-group form-inline" style="padding-bottom: 20px">
@@ -77,7 +77,7 @@
         </div>
         <div class="form-group col-md-12">
           <label for="department-choice">اختر الاقسام</label>
-          <select class="form-control" id="department-choice" multiple name="department[]">
+          <select class="form-control js-example-basic-single multiple" id="department-choice" multiple name="department[]">
             @foreach ($departments as $department)
             <option value="{{$department->id}}">{{$department->name}}</option>
             @endforeach
@@ -115,6 +115,7 @@
 
 @section('scripts')
 <script>
+
   // $(document).ready(function(){
   //   $('#add-btn').click(function(){
   //     var new_section = '<div class="form-inline " style="padding-bottom: 20px">'+
@@ -133,3 +134,12 @@
 </script>
 
 @endsection
+@push('js')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.js-example-basic-single').select2();
+    });
+</script>
+@endpush

@@ -54,6 +54,8 @@
         <!-- /.card-header -->
         <div class="card-body p-0">
             @if(isset($flag))
+<form method="POST" action="{{route('administratives.store')}}">
+    @csrf
             <table class="table">
                 <thead>
                     <tr>
@@ -69,13 +71,25 @@
                     <tr>
                         <td>1.</td>
                         <td>{{$department}}</td>
+                        <input type="text" name="department" value="{{$department}}" hidden>
                         <td>{{$administrative_count}}</td>
+                        <input type="number" name="administrative_count" value="{{$administrative_count}}" hidden>
                         <td>{{$result}}</td>
+                        <input type="number" name="result" value="{{$result}}" hidden>
                         <td>{{$need}}</td>
-                     
+                        <input type="number" name="need" value="{{$need}}" hidden>
+                        <input type="text" name="employee_role" value="{{$employee_role}}" hidden>
+                        <input type="text" name="hospital_name" value="{{$hospital_name}}" hidden>
+                        <input type="text" name="seven_hours" value="{{$seven_hours}}" hidden>
+                        <input type="text" name="twenty_four_hours" value="{{$twenty_four_hours}}" hidden>
                     </tr>
                 </tbody>
             </table>
+
+            <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">حفظ النتائج</button>
+                </div>
+                </form>
             @else
             <form method="post" action="{{route('administrativecalculation')}}">
                 @csrf
@@ -99,9 +113,10 @@
                             <td>{{$department}}</td>
                             <input type="text" name="department" value="{{$department}}" hidden>
                             <td>{{$employee_role}}</td>
-                            <input type="text" name="employeerole" value="{{$employee_role}}" hidden>
+                            <input type="text" name="employee_role" value="{{$employee_role}}" hidden>
                             <td>{{$administrative_count}}</td>
                             <input type="text" name="administrative_count" value="{{$administrative_count}}" hidden>
+                            <input type="text" name="hospital_name" value="{{$hospital_name}}" hidden>
                             <td><label for="12">7 ساعات</label>
                                 <br>
                                 <label for="24">24 ساعة</label>
