@@ -16,12 +16,12 @@ return new class extends Migration
         Schema::create('nurses', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->integer('job_number')->unique();
-            $table->string('name');
+            $table->string('name_nurse');
             // $table->date('date_of_hiring');
             $table->string('Hospital_name');
             $table->string('Section_name');
             $table->string('mobile_number');
-            $table->timestamps(); 
+            $table->timestamps();
         });
     }
 

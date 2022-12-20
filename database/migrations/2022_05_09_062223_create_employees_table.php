@@ -22,7 +22,7 @@ return new class extends Migration
             $table->foreignId('hospital_id')->constrained('hospitals', 'id')->cascadeOnDelete();
             $table->foreignId('circle_id')->constrained('circles', 'id')->cascadeOnDelete();
             $table->foreignId('department_id')->constrained('departments', 'id')->cascadeOnDelete();
-            $table->foreignId('role_id')->constrained('roles', 'id')->cascadeOnDelete();
+        //    $table->foreignId('role_id')->constrained('roles', 'id')->cascadeOnDelete();
             $table->string('mobile_number');
             $table->timestamps();
         });
