@@ -7,6 +7,7 @@ use App\Http\Controllers\DoctorCalcController;
 use App\Http\Controllers\DoctorsController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeRoleController;
+use App\Http\Controllers\FacilityResultController;
 use App\Http\Controllers\NurseController;
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\KeyCalculateController;
@@ -25,6 +26,7 @@ use App\Http\Controllers\UserPermissionController;
 use App\Models\circle;
 use App\Models\DoctorCalc;
 use App\Models\EmployeeRole;
+use App\Models\FacilityResult;
 use App\Models\KeyCalculate;
 use App\Models\Pharmacycalc;
 use Database\Factories\DepartmentFactory;
@@ -41,17 +43,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-// Route::get('/', function () {
-//     return view('cms/parent');
-// });
-
-
-
 
 Route::prefix('cms/admin')->middleware('guest:web')->group(function () {
     Route::get('login', [UserAuthController::class, 'showLogin'])->name('cms.login');
@@ -77,12 +68,14 @@ Route::prefix('cms/admin')->middleware('auth:web')->group(function () {
     Route::resource('keycalc', KeyCalculateController::class);
     Route::resource('circle', CircleController::class);
     Route::resource('pharmacy', PharmacycalcController::class);
-    Route::resource('Laboratry',LaboratorycalcController::class);
-    Route::resource('phiscaltherapist',PhysicaltherapycalcController::class);
+    Route::resource('Laboratry', LaboratorycalcController::class);
+    Route::resource('phiscaltherapist', PhysicaltherapycalcController::class);
     Route::resource('medicalimaging', MedicalimagingcalcController::class);
     Route::resource('administratives', AdministrativecalcController::class);
+    Route::resource('facilityresult',FacilityResultController::class);
 
-
+    //view the facility result page
+    Route::view('facilityresult', 'cms.viewkeyCalcResult.facilityResult')->name('facilityresult');
     //get job role route
     Route::get('getEmployeeRole', [KeyCalculateController::class, 'getEmployeeRole'])->name('keycalc.getEmployeeRole');
 
@@ -124,6 +117,8 @@ Route::prefix('cms/admin')->middleware('auth:web')->group(function () {
     //nurses key index and create key views
     Route::view('nurseskey', 'cms.nurses.key')->name('cms.nurseskey');
     Route::view('/addnurseskey', 'cms.nurses.addkey')->name('cms.addnurseskey');
+    //==================temporary route===============
+    Route::view('/keycalculatemethod', 'cms.keycalculatemethod.form')->name('keycalculatemethod');
 
     ################start of system users and user permissions Route ############
 
@@ -171,11 +166,6 @@ Route::prefix('cms/admin')->middleware('auth:web')->group(function () {
         return response()->download($file, "template.xlsx", $headers);
     });
     ####################End of Laravel Excel ###########################################
-
-    //query parameters for department and hospital
-
-
-
 });
 
 #####################Begin Ajax Routes###########################
