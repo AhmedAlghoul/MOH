@@ -148,34 +148,33 @@
 
             @endcanany --}}
 
-            <li class="nav-item has-treeview">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-building"></i>
-                <p>
-                  الأقسام
-                  <i class="fas fa-angle-left right"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                @can('show-department')
-                <li class="nav-item">
-                  <a href="{{route('department.index')}}" class="nav-link">
-                    <i class="fas fa-list nav-icon"></i>
-                    <p>عرض</p>
-                  </a>
-                </li>
-                 @endcan
-                 @can('create-department')
-                <li class="nav-item">
-                  <a href="{{route('department.create')}}" class="nav-link">
-                    <i class="fas fa-plus-square nav-icon"></i>
-                    <p>إنشاء</p>
-                  </a>
-                </li>
-                @endcan
-              </ul>
-            </li>
 
+
+            {{-- facilliets --}}
+            <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-hospital"></i>
+                    <p>
+                        المرافق
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{route('hospital.index')}}" class="nav-link">
+                            <i class="fas fa-list nav-icon"></i>
+                            <p>عرض</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('hospital.create')}}" class="nav-link">
+                            <i class="fas fa-plus-square nav-icon"></i>
+                            <p>إنشاء</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            {{-- circles --}}
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-building"></i>
@@ -199,32 +198,36 @@
                 </li>
               </ul>
             </li>
-
-
-
+            {{-- departments --}}
             <li class="nav-item has-treeview">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-hospital"></i>
-                <p>
-                  المسستشفيات
-                  <i class="fas fa-angle-left right"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="{{route('hospital.index')}}" class="nav-link">
-                    <i class="fas fa-list nav-icon"></i>
-                    <p>عرض</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{route('hospital.create')}}" class="nav-link">
-                    <i class="fas fa-plus-square nav-icon"></i>
-                    <p>إنشاء</p>
-                  </a>
-                </li>
-              </ul>
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-building"></i>
+                    <p>
+                        الأقسام
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    @can('show-department')
+                    <li class="nav-item">
+                        <a href="{{route('department.index')}}" class="nav-link">
+                            <i class="fas fa-list nav-icon"></i>
+                            <p>عرض</p>
+                        </a>
+                    </li>
+                    @endcan
+                    @can('create-department')
+                    <li class="nav-item">
+                        <a href="{{route('department.create')}}" class="nav-link">
+                            <i class="fas fa-plus-square nav-icon"></i>
+                            <p>إنشاء</p>
+                        </a>
+                    </li>
+                    @endcan
+                </ul>
             </li>
+
+
 
 
 
@@ -251,7 +254,7 @@
                 </li>
               </ul>
             </li>
-
+            {{-- specalities Keys --}}
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-key nav-icon"></i>
@@ -275,7 +278,31 @@
                 </li>
               </ul>
             </li>
-
+            {{--The method of key calculating --}}
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              {{-- <i class="nav-icon fas fa-key nav-icon"></i> --}}
+              <i class="nav-icon fas fa-question-circle"></i>
+              <p>
+                طريقة حساب المفاتيح
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('key.index')}}" class="nav-link">
+                  <i class="fas fa-list nav-icon"></i>
+                  <p>عرض</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('keycalculatemethod')}}" class="nav-link">
+                  <i class="fas fa-plus-square nav-icon"></i>
+                  <p>إنشاء</p>
+                </a>
+              </li>
+            </ul>
+          </li>
             <li class="nav-item">
               <a href="{{route('keycalc.create')}}" class="nav-link">
                 <i class="nav-icon fas fa-calculator"></i>
@@ -347,6 +374,27 @@
         </li>
     </ul>
 </li>
+
+{{-- view results due to work place --}}
+
+<li class="nav-item has-treeview">
+    <a href="{{route('facilityresult.create')}}" class="nav-link">
+      <i class="nav-icon fas fa-map-marked-alt"></i>
+      <p>
+        عرض النتائج حسب المرفق
+      </p>
+    </a>
+
+  </li>
+  <li class="nav-item has-treeview">
+    <a href="{{route('facilityresult')}}" class="nav-link">
+      <i class="nav-icon fas fa-map-marked-alt"></i>
+      <p>
+      صفحة عرض المرفق-مؤقت
+      </p>
+    </a>
+
+  </li>
 {{-- <li class="nav-item">
         <a href="{{route('keycalc.create')}}" class="nav-link">
             <i class="nav-icon fas fa-calculator"></i>
@@ -355,7 +403,6 @@
             </p>
         </a>
     </li> --}}
-
 
             {{-- <li class="nav-item">
               <a href="{{route('doctorcalc')}}" class="nav-link">
