@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Hospital extends Model
 {
     use HasFactory;
-    
+    protected $table = 'wisn_db.hospitals';
+
     protected $fillable = [
         'name',
     ];
-    protected $table = 'hospitals';
     //write relation to has many departments
     public function departments()
     {
@@ -24,5 +24,5 @@ class Hospital extends Model
         return $this->hasMany(Employee::class,'hospital_id', 'id');
     }
 
- 
+
 }

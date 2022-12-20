@@ -13,8 +13,8 @@ class Department extends Model
         'name',
         'is_active'
     ];
-    protected $table = 'departments';
-    
+    protected $table = 'wisn_db.departments';
+
     public function hospital()
     {
         return $this->belongsToMany(Hospital::class, 'hospital_departments', 'department_id', 'hospital_id');

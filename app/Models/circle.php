@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class circle extends Model
 {
     use HasFactory;
+    protected $table = 'wisn_db.circles';
     public function employee()
     {
         return $this->hasMany(Employee::class, 'circle_id', 'id');

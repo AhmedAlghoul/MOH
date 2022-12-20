@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Laboratorycalc extends Model
 {
     use HasFactory;
+    protected $table = 'wisn_db.laboratorycalcs';
 }

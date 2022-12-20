@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class HospitalDepartment extends Model
 {
     use HasFactory;
-    
+    protected $table = 'wisn_db.hospital_departments';
+
     protected $fillable = [
         'hospital_id',
         'department_id',

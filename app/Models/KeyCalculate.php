@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class KeyCalculate extends Model
 {
     use HasFactory;
+    protected $table = 'wisn_db.key_calculates';
     public function hospitals()
     {
         return $this->belongsTo(Hospital::class, 'hospital_id', 'id');

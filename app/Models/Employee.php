@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
     use HasFactory;
+    protected $table = 'wisn_db.employees';
     protected $fillable = [
         'job_number', 'employee_name', 'hospital_id', 'department_id', 'circle_id', 'role_id', 'mobile_number',
     ];

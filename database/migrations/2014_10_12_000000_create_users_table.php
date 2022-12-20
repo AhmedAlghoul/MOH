@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('user_name');
             $table->integer('id_number')->unique();
             $table->integer('mobile_number');
-            //$table->foreignId('role_id')->constrained('roles', 'id')->cascadeOnDelete();
+            $table->foreignId('role_id')->constrained('roles', 'id')->cascadeOnDelete();
             $table->string('password');
             $table->boolean('is_active')->default(true);
             $table->string('remember_token', 100);

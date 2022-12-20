@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('keys', function (Blueprint $table) {
             $table->id();
             $table->foreignId('department_id')->constrained('departments', 'id')->cascadeOnDelete();
-       //     $table->foreignId('role_id')->constrained('roles', 'id')->cascadeOnDelete();
+            $table->foreignId('role_id')->constrained('roles', 'id')->cascadeOnDelete();
             $table->float('key_value');
             $table->timestamps();
         });

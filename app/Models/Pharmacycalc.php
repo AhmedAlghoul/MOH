@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Pharmacycalc extends Model
 {
     use HasFactory;
+    protected $table = 'wisn_db.pharmacycalcs';
 }

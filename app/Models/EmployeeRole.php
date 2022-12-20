@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class EmployeeRole extends Model
 {
     use HasFactory;
-    protected $table = 'employee_roles';
+    protected $table = 'wisn_db.employee_roles';
     protected $fillable = [
         'role_name',
     ];
@@ -18,6 +18,6 @@ class EmployeeRole extends Model
         return $this->hasMany(Employee::class);
     }
 
-     
+
 
 }

@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Administrativecalc extends Model
 {
     use HasFactory;
+    protected $table = 'wisn_db.administrativecalcs';
 }

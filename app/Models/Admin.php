@@ -11,6 +11,7 @@ class Admin extends Authenticatable
 {
     use HasFactory , HasRoles;
     protected $guarded = [];
+    protected $table = 'wisn_db.admins';
     public $timestamps = true;
 
     public function getAuthPassword()
