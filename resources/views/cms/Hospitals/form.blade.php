@@ -63,8 +63,8 @@
         @endif
 
         <div class="form-group form-inline" style="padding-bottom: 20px">
-          <label style="padding-left: 20px ">اسم المستشفى</label>
-          <input style="width: 500px" type="text" class="form-control " placeholder="ادخل اسم المستشفى"
+          <label style="padding-left: 20px ">اسم المرفق</label>
+          <input style="width: 500px" type="text" class="form-control " placeholder="ادخل اسم المرفق"
             name="hospital_name">
         </div>
 

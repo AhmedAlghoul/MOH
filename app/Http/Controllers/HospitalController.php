@@ -172,10 +172,10 @@ class HospitalController extends Controller
         if (count($isDestroyed->departments) > 0) {
             //return error message to user that he can't delete this hospital because it has departments in pop up message'
 
-            return redirect()->back()->with('error', 'لا يمكن حذف هذا المستشفى لأنه يحتوي على أقسام');
+            return redirect()->back()->with('error', 'لا يمكن حذف هذا المرفق لأنه يحتوي على أقسام');
         } else {
             $isDestroyed->delete();
-            session()->flash('success', 'تم حذف المستشفى بنجاح');
+            session()->flash('success', 'تم حذف المرفق بنجاح');
             return redirect()->back();
         }
     }

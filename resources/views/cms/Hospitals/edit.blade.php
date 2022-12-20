@@ -52,7 +52,7 @@
       @method('PUT')
       <div class="card-body ">
         <div class="form-group form-inline" style="padding-bottom: 20px">
-          <label style="padding-left: 20px ">اسم المستشفى</label>
+          <label style="padding-left: 20px ">اسم المرفق</label>
           <input style="width: 500px" type="text" class="form-control " placeholder="ادخل اسم المستشفى"
             name="hospital_name" value="{{$hospital->name}}">
         </div>
@@ -66,7 +66,7 @@
         </div>
         <div class="form-group col-md-12">
           <label for="department-choice">اختر الاقسام</label>
-          <select class="form-control" id="department-choice" multiple name="department[]">
+          <select class="form-control js-example-basic-single multiple" id="department-choice" multiple name="department[]">
 
             {{-- @isset($department) --}}
 
@@ -76,7 +76,7 @@
               ==
               $department_choice->id)
               selected @endif>{{$department_choice->name}}</option>
-              
+
             @endforeach
 
             {{-- @endisset --}}
@@ -132,3 +132,12 @@
 </script>
 
 @endsection
+@push('js')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+  $(document).ready(function() {
+        $('.js-example-basic-single').select2();
+    });
+</script>
+@endpush

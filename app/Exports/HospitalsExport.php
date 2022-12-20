@@ -42,7 +42,7 @@ class HospitalsExport implements FromCollection, WithEvents, ShouldAutoSize, Wit
     {
         return [
             'الرقم التعريفي',
-            'اسم المستشفى',
+            'اسم المرفق',
 
         ];
     }
