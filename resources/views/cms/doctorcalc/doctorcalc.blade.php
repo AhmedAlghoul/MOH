@@ -23,8 +23,14 @@
         background: #242ea0;
         border-radius: 5px;
         font-size: 20px;
-
     }
+    #formID{
+
+        border: 1px solid rgb(13, 11, 11);
+        border-radius: 4px;
+        width: 60%;
+        padding: 12px;
+  }
 </style>
 @endsection
 
@@ -67,6 +73,9 @@
         <h5 for="hoursmonthly" style="display: inline-block">عدد ساعات العمل شهرياً
             <input id="hours" name="monthly_hours" type="number"> <label style="in">/140</label>
         </h5>
+        {{-- <h5 for="hoursmonthly" style="display: inline-block">عدد ساعات العمل شهرياً <input id="hours" name="monthly_hours"
+                    type="number"> <label style="in">/{{$key->key_value}} <input name="key_value" hidden
+                        value="{{$key->key_value}}"></label></h5> --}}
         <br>
         <a id="result" href="#">النتيجة </a>
         <br> <br>
@@ -77,7 +86,7 @@
         <input name="doctor_count" hidden value="{{$doctor_count}}">
         <br> <br>
         <label for="doctor_result">الكادر المطلوب حسب المفتاح: <p id="doctor_result" name="doctor_result"> </p> </label>
-        <br> <br>
+        <br>
         <label>الاحتياج:<p id="doctor_need" name="doctor_need"></p></label>
 
         <br>
