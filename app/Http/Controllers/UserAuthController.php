@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\circle;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,7 +37,8 @@ class UserAuthController extends Controller
         if (auth()->guard('web')->attempt(['id_number' => $request->user_id_number, 'password' => $request->user_password], $remember_me)) {
             // Auth::guard('admin')->user()->assignRole('مدير');
             // notify()->success('تم الدخول بنجاح  ');
-            return view('cms.homepage');
+            $count_circle = circle::count();
+            return view('cms.homepage',compact('count_circle'));
 
             // return redirect()->route('cms.homepage');
         }

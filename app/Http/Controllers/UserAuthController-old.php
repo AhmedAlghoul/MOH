@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\circle;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 
 class UserAuthController extends Controller
 {
@@ -36,7 +36,8 @@ class UserAuthController extends Controller
 
         if (auth()->guard('admin')->attempt(['user_id_number' => $request->user_id_number, 'password' => $request->user_password], $remember_me)) {
             // notify()->success('تم الدخول بنجاح  ');
-            return view('cms.homepage');
+            $count_circle = circle::count();
+            return view('cms.homepage',compact('count_circle'));
             return redirect()->route('cms.homepage');
         }
         // notify()->error('خطا في البيانات  برجاء المجاولة مجدا ');

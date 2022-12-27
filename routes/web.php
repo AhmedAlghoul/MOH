@@ -4,11 +4,9 @@ use App\Http\Controllers\AdministrativecalcController;
 use App\Http\Controllers\CircleController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DoctorCalcController;
-use App\Http\Controllers\DoctorsController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeRoleController;
 use App\Http\Controllers\FacilityResultController;
-use App\Http\Controllers\NurseController;
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\KeyCalculateController;
 use App\Http\Controllers\KeyController;
@@ -23,14 +21,6 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPermissionController;
-use App\Models\circle;
-use App\Models\DoctorCalc;
-use App\Models\EmployeeRole;
-use App\Models\FacilityResult;
-use App\Models\KeyCalculate;
-use App\Models\Pharmacycalc;
-use Database\Factories\DepartmentFactory;
-use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\Route;
 
 /*
