@@ -70,7 +70,7 @@
         <div class="small-box bg-warning">
 
             <div class="inner">
-            <h3>{{$count_circle}}</h3>
+            {{-- <h3>{{$count_circle}}</h3> --}}
 
             <p>عدد الدوائر</p>
             </div>

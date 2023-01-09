@@ -36,8 +36,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/test', function () {
-    //$managment = Managment::whereNull('TB_MANAGMENT_PARENT')->get();
-    $managment = Managment::where('TB_MANAGMENT_PARENT', 1188)->get();
+    $managment = Managment::whereNull('TB_MANAGMENT_PARENT')->get();
+    // $managment = Managment::where('TB_MANAGMENT_PARENT', 12)->get();
 
     dd($managment);
 });
@@ -79,6 +79,11 @@ Route::prefix('cms/admin')->middleware('auth:web')->group(function () {
 
     //get departments route
     Route::get('getDepartments', [KeyCalculateController::class, 'getDepartments'])->name('getDepartments');
+    //check the drop down value
+    Route::get('checkvalue',[KeyCalculateController::class, 'checkvalue'])->name('checkvalue');
+    //populate treeview
+    Route::get('treeview', [KeyCalculateController::class, 'treeview'])->name('treeview');
+
 
     //get employee  departments
     Route::get('getEmployeeDepartments', [EmployeeController::class, 'getEmployeeDepartments'])->name('getEmployeeDepartments');

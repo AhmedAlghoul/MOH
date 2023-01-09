@@ -96,7 +96,6 @@
                 selector: 'textarea.tinymce-editor',
                 height: 300,
                 menubar: false,
-                placeholder: "Ask a question or post an update",
                 plugins: [
                     'advlist autolink lists link image charmap print preview anchor',
                     'searchreplace visualblocks code fullscreen',

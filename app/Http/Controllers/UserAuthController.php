@@ -38,7 +38,8 @@ class UserAuthController extends Controller
             // Auth::guard('admin')->user()->assignRole('مدير');
             // notify()->success('تم الدخول بنجاح  ');
             $count_circle = circle::count();
-            return view('cms.homepage',compact('count_circle'));
+
+            return view('cms.homepage', compact('count_circle'));
 
             // return redirect()->route('cms.homepage');
         }

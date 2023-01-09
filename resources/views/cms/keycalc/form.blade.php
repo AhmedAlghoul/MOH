@@ -13,7 +13,7 @@
         font-size: 25px;
     }
 </style>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 @endsection
 
 @section('page-name','حساب مفتاح الكادر البشري')
@@ -70,9 +70,45 @@
                     </ul>
                 </div> --}}
 
+                {{-- start of the new code-JS tree  --}}
+                <div>kdlcndklndk</div>
+                <div id="jstree">
+
+                {{-- <ul>
+                    <li>Root node 1
+                        <ul>
+                            <li id="child_node_1">Child node 1</li>
+                            <li>Child node 2</li>
+                        </ul>
+                    </li>
+                    <li>Root node 2</li>
+                </ul> --}}
+                </div>
+                <div>kdlcndklndk</div>
+                {{-- <button >demo button</button> --}}
+
+                {{-- End of new code-JS tree --}}
+
+                {{-- start of the old code  --}}
+            {{-- <div class="form-group col-md-6">
+                <label for="managmentCode">اختر </label>
+                <select class="form-control js-example-basic-single" id="managmentCode" name="managmentCode">
+                    <option> اختر  </option>
+                    @foreach ($managments as $managment)
+
+                    <option value="{{$managment->tb_managment_code}}">{{$managment->tb_managment_name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group col-md-6 generalChoice d-none">
+            <label for="generalChoice" >اختر </label>
+            <select class="form-control js-example-basic-single generalSelect" id="generalSelect" name="generalSelect">
+            </select>
+            </div> --}}
+            {{-- end of the old code --}}
 
 
-                <div class="form-group col-md-6">
+                {{-- <div class="form-group col-md-6">
                     <label for="hospital-choice">اختر المستشفى</label>
                     <select class="form-control" id="hospital-choice" name="hospital">
                         <option name="hospital" id="hospital-choice" selected> اختر المستشفى </option>
@@ -99,7 +135,7 @@
                         @endforeach
                     </select>
                 </div>
-
+ --}}
 
             </div>
             <!-- /.card-body -->
@@ -121,59 +157,76 @@
 
 
 @section('scripts')
-{{-- <script>
-    $(document).ready(function() {
-            $('select[name="hospital"]').on('change', function() {
-                var hospital_id = $(this).val();
-                if (hospital_id) {
-                    $.ajax({
-                        url: "{{ URL::to('hospital') }}/" + hospital_id,
-                        type: "GET",
-                        dataType: "json",
-                        success: function(data) {
-                            $('select[name="department"]').empty();
-                            $.each(data, function(key, value) {
-                                $('select[name="department"]').append('<option value="' +
-                                    value + '">' + value + '</option>');
-                            });
-                        },
-                    });
-                } else {
-                    console.log('AJAX load did not work');
-                }
-            });
-        });
-</script> --}}
-
-
+{{-- show new dropdown due to previous dropdown  --}}
 <script>
-    //write ajax request to get departments choices according to the hospital
-    $('#hospital-choice').change(function () {
-        var hospital_id = $(this).val();
-        $.ajax({
-            url: "{{route('getDepartments')}}",
-            type: "get",
-            data: {
-                hospital_id: hospital_id
-            },
-            success: function(data) {
-            $('select[name="department"]').empty();
-            $.each(data, function(key, value) {
-            $('select[name="department"]').append('<option value="' +
-                                                value + '">' + value + '</option>');
-            });
-            },
-            // success: function (data) {
-            //     $('#department-choice').html(data);
-            // }
-        });
+
+
+$(document).ready(function(){
+    let url ="{{route('treeview')}}";
+    console.log(url);
+    $('#jstree').jstree({
+    "core" : {
+    'data' : {
+    'url' : url,
+    'data' : function (node) {
+        console.log(node);
+    return { 'parent' : node.id };
+    }
+    },
+    "themes" : {
+    "theme" : "default",
+    "icons" : false
+    }
+    }
+    // "plugins" : [ "wholerow" ]
     });
 
+});
+
+// $('#jstree').on('changed.jstree' function(e,data){
+//     var i , j ,r = [];
+//     for (i=0, j=data.selected.length; i<j; i++ ){
+//         r.push(data.instance.get_node(data.selected[i]).id);
+//     }
+//     $('.parent_id').val(r.join(','));
+// });
+
+// $('#managmentCode').change ( function () {
+
+//     var managmentCode = $(this).val();
+//     console.log(managmentCode);
+//     if (managmentCode) {
+//     $.ajax({
+//             url: "{{route('checkvalue')}}",
+//             type: "get",
+//             dataType : "json",
+//             data: {
+//             "managmentCode": managmentCode
+//     },
+//             success: function(data) {
+//             if(data.status==true){
+//             if(data.newData!=null){
+//                 $('.generalChoice').removeClass('d-none');
+
+//                 $.each(data.newData, function(key, value) {
+
+//                 $('select[name="generalSelect"]').append('<option value="' + value.tb_managment_code + '">' + value.tb_managment_name +
+//                     '</option>');
+//                     });
+//                 }}}
+
+
+
+// });
+//     }
+// });
 
 
 </script>
+
 @endsection
 @push('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>

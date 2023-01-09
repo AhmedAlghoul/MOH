@@ -13,6 +13,7 @@ use App\Models\EmployeeRole;
 use App\Models\HospitalDepartment;
 use App\Models\Key;
 use App\Models\Laboratorycalc;
+use App\Models\Managment;
 use App\Models\Medicalimagingcalc;
 use App\Models\Pharmacycalc;
 use App\Models\Physicaltherapycalc;
@@ -50,7 +51,9 @@ class KeyCalculateController extends Controller
         $hospital_departments = Department::all();
         $departments = Department::all();
         $roles = EmployeeRole::all();
-        return response()->view('cms.keycalc.form', compact('hospitals', 'departments', 'roles'));
+        $managments = Managment::whereNull('TB_MANAGMENT_PARENT')->get();
+
+        return response()->view('cms.keycalc.form', compact('hospitals', 'departments', 'roles', 'managments'));
     }
 
     /**
@@ -260,7 +263,7 @@ class KeyCalculateController extends Controller
         } elseif ($number_of_prescriptions > 1100) {
             $number_of_prescriptions = $number_of_prescriptions - 1100;
             $add_amount = floor($number_of_prescriptions / 1000);
-            $add_amount  ? $result += $add_amount+1  : $result += $add_amount + 1;
+            $add_amount  ? $result += $add_amount + 1  : $result += $add_amount + 1;
         };
 
         if ($number_of_medical_reports <= 320 && $number_of_medical_reports > 0) {
@@ -331,43 +334,52 @@ class KeyCalculateController extends Controller
         $result = ($seven_hours * 1) + ($twenty_four_hours * 6);
         $need = $administrative_count - $result;
         $flag = 1;
-        return response()->view('cms.keycalc.administrativecalc', compact(['department', 'administrative_count', 'flag', 'seven_hours', 'twenty_four_hours', 'result', 'need','hospital_name','employee_role']));
+        return response()->view('cms.keycalc.administrativecalc', compact(['department', 'administrative_count', 'flag', 'seven_hours', 'twenty_four_hours', 'result', 'need', 'hospital_name', 'employee_role']));
     }
     public function saveDoctors(Request $request)
     {
     }
-    //new function to show data of each employee role and hospital in the same page
-    // public function showData(Request $request)
-    // {
-    //     $hospital_id = $request->input('hospital_id');
-    //     //request employee role id from form
-    //     $employee_role_id = $request->input('employee_role_id');
-    //     $department = $request->input('department');
-    //     $flag = 1;
-    //     $doctors = DoctorCalc::where('hospital_id', $hospital_id)->where('department', $department)->get();
-    //     $pharmacists = Pharmacycalc::where('hospital_id', $hospital_id)->where('department', $department)->get();
-    //     $physical_therapists = Physicaltherapycalc::where('hospital_id', $hospital_id)->where('department', $department)->get();
-    //     $laboratory_technicians = Laboratorycalc::where('hospital_id', $hospital_id)->where('department', $department)->get();
-    //     $ray_technicians = Medicalimagingcalc::where('hospital_id', $hospital_id)->where('department', $department)->get();
-    //     $administratives = Administrativecalc::where('hospital_id', $hospital_id)->where('department', $department)->get();
-    //     return response()->view('cms.keycalc.showdata', compact(['flag', 'doctors', 'pharmacists', 'physical_therapists', 'laboratory_technicians', 'ray_technicians', 'administratives', 'hospital_id', 'department']));
-    // }
 
-    // public function test()
-    // {
-    //     DB::beginTransaction();
-    //     try{
-    //         $category = Category::create([
-    //             'name' => 'test',
-    //         ]);
+    public function checkvalue(Request $request)
+    {
+        // return $request->managmentCode;
+        $NextDropDowns = Managment::where("TB_MANAGMENT_PARENT", $request->managmentCode)->select(['tb_managment_code', 'tb_managment_name'])->get();
 
-    //         $category->image()->create([
-    //             'url' => 'test',
-    //         ]);
-    //         DB::commit();
-    //     }catch(\Exception $e){
-    //         DB::rollback();
-    //         return redirect()->back()->with('error', $e->getMessage());
-    //     }
-    // }
+        return response()->json([
+            'status' => true ,
+            'newData' => $NextDropDowns,
+        ]);
+
+    }
+
+    public function treeview($select = null)
+    {
+
+
+        $trees = Managment::whereNull('TB_MANAGMENT_PARENT')->select(['tb_managment_code', 'tb_managment_name'])->get();
+
+             $arr = [];
+             foreach ($trees as $tree) {
+                $list_arr         = [];
+
+                //     $list_arr['state'] = [
+                //         'opened'   => true,
+                //         'selected' => true,
+                //         'disabled' => false,
+                //     ];
+
+
+
+                 $list_arr['id']     = "node_" . $tree->tb_managment_code;
+                 $list_arr['parent'] = $tree->tb_managment_parent !== null ? $tree->tb_managment_code : '#';
+                 $list_arr['text']= "Node " . $tree->tb_managment_name;
+            $list_arr['children'] = true;
+
+                array_push($arr, $list_arr);
+             }
+            header('Content-type: text/json');
+            header('Content-type: application/json');
+            header('Access-Control-Allow-Origin: *');
+           echo json_encode($arr, JSON_UNESCAPED_UNICODE);
+         }
 }
