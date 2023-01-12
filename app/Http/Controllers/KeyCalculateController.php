@@ -346,40 +346,41 @@ class KeyCalculateController extends Controller
         $NextDropDowns = Managment::where("TB_MANAGMENT_PARENT", $request->managmentCode)->select(['tb_managment_code', 'tb_managment_name'])->get();
 
         return response()->json([
-            'status' => true ,
+            'status' => true,
             'newData' => $NextDropDowns,
         ]);
-
     }
 
     public function treeview($select = null)
     {
-
-
         $trees = Managment::whereNull('TB_MANAGMENT_PARENT')->select(['tb_managment_code', 'tb_managment_name'])->get();
 
-             $arr = [];
-             foreach ($trees as $tree) {
-                $list_arr         = [];
+        $arr = [];
+        foreach ($trees as $tree) {
 
-                //     $list_arr['state'] = [
-                //         'opened'   => true,
-                //         'selected' => true,
-                //         'disabled' => false,
-                //     ];
+            $list_arr         = [];
+            $list_arr['id']     = $tree->tb_managment_code;
+            $list_arr['parent'] = $tree->tb_managment_parent !== null ? $tree->tb_managment_parent : '#';
+            $list_arr['text'] = $tree->tb_managment_name;
+            
+            array_push($arr, $list_arr);
+        }
+
+          $children = Managment::whereNotNull('TB_MANAGMENT_PARENT')->select(['tb_managment_code', 'tb_managment_parent', 'tb_managment_name'])->get();
+            foreach ($children as $child) {
+
+            $list_array         = [];
+            $list_array['id']     = $child->tb_managment_code;
+            $list_array['parent'] = $child->tb_managment_parent;
+            $list_array['text'] = $child->tb_managment_name;
+            array_push($arr, $list_array);
+            }
 
 
+        header('Content-type: text/json');
+        header('Content-type: application/json');
+        header('Access-Control-Allow-Origin: *');
+        echo json_encode($arr);
+    }
 
-                 $list_arr['id']     = "node_" . $tree->tb_managment_code;
-                 $list_arr['parent'] = $tree->tb_managment_parent !== null ? $tree->tb_managment_code : '#';
-                 $list_arr['text']= "Node " . $tree->tb_managment_name;
-            $list_arr['children'] = true;
-
-                array_push($arr, $list_arr);
-             }
-            header('Content-type: text/json');
-            header('Content-type: application/json');
-            header('Access-Control-Allow-Origin: *');
-           echo json_encode($arr, JSON_UNESCAPED_UNICODE);
-         }
 }

@@ -71,20 +71,11 @@
                 </div> --}}
 
                 {{-- start of the new code-JS tree  --}}
-                <div>kdlcndklndk</div>
+
                 <div id="jstree">
 
-                {{-- <ul>
-                    <li>Root node 1
-                        <ul>
-                            <li id="child_node_1">Child node 1</li>
-                            <li>Child node 2</li>
-                        </ul>
-                    </li>
-                    <li>Root node 2</li>
-                </ul> --}}
                 </div>
-                <div>kdlcndklndk</div>
+
                 {{-- <button >demo button</button> --}}
 
                 {{-- End of new code-JS tree --}}
@@ -188,7 +179,7 @@ $(document).ready(function(){
 //     for (i=0, j=data.selected.length; i<j; i++ ){
 //         r.push(data.instance.get_node(data.selected[i]).id);
 //     }
-//     $('.parent_id').val(r.join(','));
+//     // $('.parent_id').val(r.join(','));
 // });
 
 // $('#managmentCode').change ( function () {

@@ -37,7 +37,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/test', function () {
     $managment = Managment::whereNull('TB_MANAGMENT_PARENT')->get();
-    // $managment = Managment::where('TB_MANAGMENT_PARENT', 12)->get();
+    // $managment = Managment::where('TB_MANAGMENT_PARENT',12)->get();
 
     dd($managment);
 });
