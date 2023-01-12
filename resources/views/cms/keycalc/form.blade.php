@@ -173,7 +173,10 @@ $(document).ready(function(){
     });
 
 });
-
+$('#jstree').on('changed.jstree', function(e, data) {
+        var selectedIds = data.selected;
+        console.log(selectedIds);
+});
 // $('#jstree').on('changed.jstree' function(e,data){
 //     var i , j ,r = [];
 //     for (i=0, j=data.selected.length; i<j; i++ ){

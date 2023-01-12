@@ -356,13 +356,18 @@ class KeyCalculateController extends Controller
         $trees = Managment::whereNull('TB_MANAGMENT_PARENT')->select(['tb_managment_code', 'tb_managment_name'])->get();
 
         $arr = [];
+        $listt =[];
+        $listt['id']     = -1;
+        $listt['parent'] = '#';
+        $listt['text'] = 'وزارة الصحة';
+        array_push($arr, $listt);
         foreach ($trees as $tree) {
 
             $list_arr         = [];
             $list_arr['id']     = $tree->tb_managment_code;
-            $list_arr['parent'] = $tree->tb_managment_parent !== null ? $tree->tb_managment_parent : '#';
+            $list_arr['parent'] = $tree->tb_managment_parent !== null ? $tree->tb_managment_parent : '-1';
             $list_arr['text'] = $tree->tb_managment_name;
-            
+
             array_push($arr, $list_arr);
         }
 
