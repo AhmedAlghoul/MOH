@@ -8,10 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class EmployeeRole extends Model
 {
     use HasFactory;
-    protected $table = 'wisn_db.employee_roles';
-    protected $fillable = [
-        'role_name',
-    ];
+    protected $table = 'wisn_db.jobtitle_vw';
 
     public function employee()
     {

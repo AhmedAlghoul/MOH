@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Constant;
 use App\Models\Key;
 use App\Models\Department;
 use App\Models\EmployeeRole;
+use App\Models\Managment;
 use Illuminate\Http\Request;
 
 class KeyController extends Controller
@@ -29,10 +31,10 @@ class KeyController extends Controller
     public function create()
     {
         //
-        $departments = Department::where('is_active', 1)->get();
-        $roles = EmployeeRole::where('is_active', 1)->get();
-        return response()->view('cms.Keys.form', compact('departments', 'roles'));
-        // return response()->view('cms.keys.form', compact('departments','roles'));
+        $constants = Constant::all();
+        $departments = Department::all();
+        $roles = EmployeeRole::all();
+        return response()->view('cms.Keys.form', compact('departments', 'roles', 'constants'));
     }
 
     /**
@@ -46,19 +48,18 @@ class KeyController extends Controller
         //
         $request->validate(
             [
-                'department' => 'required',
                 'role' => 'required',
                 'key_value' => 'required',
             ],
             [
-                'department.required' => 'الرجاء اختيار القسم',
                 'role.required' => 'الرجاء اختيار الدور',
                 'key_value.required' => 'الرجاء إدخال مفتاح الكادر',
             ]
         );
         $key = new Key();
-        $key->department_id = $request->department;
+        // $key->department_id = $request->department;
         $key->role_id = $request->role;
+        $key->calc_type_id=$request->calc_type ;
         $key->key_value = $request->key_value;
         $key->save();
         return redirect()->back();
@@ -77,7 +78,7 @@ class KeyController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     * 
+     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -121,5 +122,41 @@ class KeyController extends Controller
         //
         $isDestroyed = Key::destroy($id);
         return response()->json();
+    }
+    public function treeview($select = null)
+    {
+        $trees = Managment::whereNull('TB_MANAGMENT_PARENT')->select(['tb_managment_code', 'tb_managment_name'])->get();
+
+        $arr = [];
+        $listt = [];
+        $listt['id']     = -1;
+        $listt['parent'] = '#';
+        $listt['text'] = 'وزارة الصحة';
+        array_push($arr, $listt);
+        foreach ($trees as $tree) {
+
+            $list_arr         = [];
+            $list_arr['id']     = $tree->tb_managment_code;
+            $list_arr['parent'] = $tree->tb_managment_parent !== null ? $tree->tb_managment_parent : '-1';
+            $list_arr['text'] = $tree->tb_managment_name;
+
+            array_push($arr, $list_arr);
+        }
+
+        $children = Managment::whereNotNull('TB_MANAGMENT_PARENT')->select(['tb_managment_code', 'tb_managment_parent', 'tb_managment_name'])->get();
+        foreach ($children as $child) {
+
+            $list_array         = [];
+            $list_array['id']     = $child->tb_managment_code;
+            $list_array['parent'] = $child->tb_managment_parent;
+            $list_array['text'] = $child->tb_managment_name;
+            array_push($arr, $list_array);
+        }
+
+
+        header('Content-type: text/json');
+        header('Content-type: application/json');
+        header('Access-Control-Allow-Origin: *');
+        echo json_encode($arr);
     }
 }

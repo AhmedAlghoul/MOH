@@ -1,4 +1,4 @@
-@extends('cms.parent')
+    @extends('cms.parent')
 
 @section('title','إضافة دور وظيفي جديد')')
 

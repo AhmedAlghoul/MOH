@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Administrativecalc;
 use App\Models\circle;
+use App\Models\Constant;
 use App\Models\KeyCalculate;
 use App\Models\Hospital;
 use App\Models\Department;
@@ -247,7 +248,6 @@ class KeyCalculateController extends Controller
     public function pharmacyCalculate(Request $request)
     {
         $hospital_name = $request->input('hospital_name');
-
         $department = $request->input('department');
         $pharmacist_count = $request->input('pharmacist_count');
         $key_value = $request->input('key_value');
@@ -353,7 +353,7 @@ class KeyCalculateController extends Controller
 
     public function treeview($select = null)
     {
-        $trees = Managment::whereNull('TB_MANAGMENT_PARENT')->select(['tb_managment_code', 'tb_managment_name'])->get();
+        $trees = Managment::whereNull('TB_MANAGMENT_PARENT')->where('tb_managment_code', '!=', 0)->select(['tb_managment_code', 'tb_managment_name'])->get();
 
         $arr = [];
         $listt =[];

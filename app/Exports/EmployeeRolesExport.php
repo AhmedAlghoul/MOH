@@ -32,8 +32,8 @@ class EmployeeRolesExport implements FromCollection, WithHeadings, WithEvents, S
     {
         return [
 
-            $employeerole->id,
-            $employeerole->Role_name,
+            $employeerole->jobtitle_code,
+            $employeerole->jobtitle_name_ar,
 
 
         ];
@@ -41,8 +41,8 @@ class EmployeeRolesExport implements FromCollection, WithHeadings, WithEvents, S
     public function headings(): array
     {
         return [
-            'الرقم التعريفي',
-            'اسم الوظيفي',
+            'الرقم ',
+            'المسمى الوظيفي',
 
         ];
     }

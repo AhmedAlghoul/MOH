@@ -51,7 +51,8 @@
                 <tr>
                   <th>الرقم</th>
                   <th>القسم</th>
-                  <th>الدور الوظيفي</th>
+                  <th>المسمى الوظيفي</th>
+                  <th>نوع الاحتساب</th>
                   <th>المفتاح</th>
                   <th> الأوامر</th>
                 </tr>
@@ -61,8 +62,9 @@
                 @foreach ($keys as $key)
                 <tr>
                   <td>{{$key->id}}</td>
-                  <td>{{$key->departments->name}}</td>
-                  <td>{{$key->EmployeesRoles->Role_name}}</td>
+                  {{-- <td>{{$key->departments->name}}</td> --}}
+                  <td>{{$key->EmployeesRoles->jobtitle_name_ar}}</td>
+                  <td>{{$key->Constants->const_name}}</td>
                   <td>{{$key->key_value}}</td>
                   <td>
                     <a href="{{route('key.edit',$key->id)}}" class="btn btn-info">
@@ -76,7 +78,7 @@
                       <i class="fas fa-trash-alt"></i>
                     </a>
                   </td>
- 
+
                   {{-- <td>
                     <a href="{{route('nurses.edit',$nurse->id)}}" class="btn btn-primary btn-sm">تعديل</a>
                     <form action="{{route('nurses.destroy',$nurse->id)}}" method="post" class="d-inline-block">
@@ -136,7 +138,7 @@
 function destroy(id){
   axios.delete('/cms/admin/key/'+id)
     .then(function (response) {
-  // handle success 2xx-3xx 
+  // handle success 2xx-3xx
   console.log( response.data);
   Swal.fire(
     'تم الحذف!',
@@ -144,10 +146,10 @@ function destroy(id){
     'success'
   )
   location.reload();
-  
+
   })
   .catch(function (error) {
-  // handle error 4xx-5xx 
+  // handle error 4xx-5xx
     console.log(error);
   })
   .then(function () {

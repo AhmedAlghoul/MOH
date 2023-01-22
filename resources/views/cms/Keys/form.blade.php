@@ -13,7 +13,7 @@
     font-size: 25px;
   }
 </style>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 @endsection
 
 @section('page-name','إضافة مفتاح كادر جديد')
@@ -67,32 +67,37 @@
             @endforeach
           </ul>
         </div> --}}
+      <div class="col-md-4">
+                <label>القسم</label>
+                <div id="jstree">
 
+                </div>
 
-        <div class="form-group col-md-6">
-          <label for="department-choice">القسم</label>
-          <select class="form-control" id="department-choice" name="department">
-            @foreach ($departments as $department)
-            <option value="{{$department->id}}">{{$department->name}}</option>
-            @endforeach
-          </select>
-        </div>
+            </div>
 
-        <div class="form-group col-md-6">
-          <label>الدور الوظيفي</label>
-          <select class="form-control" id="department-choice" name="role">
-            @foreach ($roles as $role)
-            <option value="{{$role->id}}">{{$role->Role_name}}</option>
-            @endforeach
-          </select>
-        </div>
-
-        <div class="form-group col-md-6">
-          <label>مفتاح الكادر </label>
-          <input type="number" step=any min=0 name="key_value" class="form-control" placeholder="أدخل مفتاح الكادر">
+            <div class="col-md-8 ">
+            <label>المسمى الوظيفي</label>
+            <br>
+            <select class="form-control js-example-basic-single" id="department-choice" name="role">
+                @foreach ($roles as $role)
+                <option value="{{$role->jobtitle_code}}">{{$role->jobtitle_name_ar}}</option>
+                @endforeach
+            </select>
+            <br>
+            <label >نوع الاحتساب</label>
+            <br>
+            <select class="form-control js-example-basic-single " name="calc_type">
+                @foreach ($constants as $constant)
+                <option value="{{$constant->const_id}}">{{$constant->const_name}}</option>
+                @endforeach
+            </select>
+            <br>
+            <label>مفتاح الكادر </label>
+            <input type="number" step=any min=0 name="key_value" class="form-control" placeholder="أدخل مفتاح الكادر">
         </div>
 
       </div>
+
       <!-- /.card-body -->
 
       <div class="card-footer">
@@ -110,5 +115,52 @@
 
 
 @section('scripts')
+<script>
+    $(document).ready(function(){
+    let url ="{{route('treeview')}}";
+    console.log(url);
+    $('#jstree').jstree({
+    "core" : {
+    'data' : {
+    'url' : url,
+    'data' : function (node) {
+    console.log(node);
+    return { 'parent' : node.id };
+    }
+    },
+    "themes" : {
+    "theme" : "default",
+    "icons" : false
+    }
+    }
+    // "plugins" : [ "wholerow" ]
+    });
 
+    });
+
+  $('#jstree').on('changed.jstree', function(e, data) {
+    var selectedIds = data.selected;
+    console.log(selectedIds);
+    $.ajax({
+        type: "POST",
+        url: "{{route('key.store')}}",
+        data: { id: selectedId },
+        success: function(response) {
+        console.log(response);
+        }
+        });
+
+    });
+</script>
 @endsection
+
+@push('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.js-example-basic-single').select2();
+    });
+</script>
+@endpush

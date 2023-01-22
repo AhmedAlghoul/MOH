@@ -18,7 +18,8 @@ class EmployeeRoleController extends Controller
     public function index()
     {
         //
-        $data = EmployeeRole::paginate(10);
+        // $data = EmployeeRole::paginate(15);
+        $data = EmployeeRole::orderBy('jobtitle_code', 'asc')->orderBy('jobtitle_name_ar', 'asc')->paginate(15);
 
         return response()->view('cms.Roles.index', ['roles' => $data]);
     }
@@ -30,8 +31,8 @@ class EmployeeRoleController extends Controller
      */
     public function create()
     {
-        //
-        return response()->view('cms.Roles.form');
+        $jobtitles = EmployeeRole::all();
+        return response()->view('cms.Roles.form', compact('jobtitles'));
     }
 
     /**

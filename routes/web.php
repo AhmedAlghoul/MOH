@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdministrativecalcController;
 use App\Http\Controllers\CircleController;
+use App\Http\Controllers\ConstantController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DoctorCalcController;
 use App\Http\Controllers\EmployeeController;
@@ -21,6 +22,8 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPermissionController;
+use App\Models\Constant;
+use App\Models\EmployeeRole;
 use App\Models\Managment;
 use Illuminate\Support\Facades\Route;
 
@@ -36,10 +39,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/test', function () {
-    $managment = Managment::whereNull('TB_MANAGMENT_PARENT')->get();
+    // $managment = Managment::whereNull('TB_MANAGMENT_PARENT')->get();
     // $managment = Managment::where('TB_MANAGMENT_PARENT',12)->get();
-
-    dd($managment);
+    // $roles = EmployeeRole::all();
+    $constant = Constant::all();
+    dd($constant);
+    // dd($managment);
 });
 
 Route::prefix('cms/admin')->middleware('guest:web')->group(function () {
@@ -71,7 +76,7 @@ Route::prefix('cms/admin')->middleware('auth:web')->group(function () {
     Route::resource('medicalimaging', MedicalimagingcalcController::class);
     Route::resource('administratives', AdministrativecalcController::class);
     Route::resource('facilityresult', FacilityResultController::class);
-
+    Route::resource('constant',ConstantController::class);
     //view the facility result page
     Route::view('facilityresult', 'cms.viewkeyCalcResult.facilityResult')->name('facilityresult');
     //get job role route
