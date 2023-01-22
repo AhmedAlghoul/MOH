@@ -10,10 +10,10 @@ class Key extends Model
     use HasFactory;
     protected $table = 'wisn_db.keys';
 
-    // public function departments()
-    // {
-    //     return $this->belongsTo(Department::class, 'department_id', 'id');
-    // }
+    public function departments()
+    {
+        return $this->belongsTo(Department::class, 'department_id', 'tb_managment_code');
+    }
     public function EmployeesRoles()
     {
         return $this->belongsTo(EmployeeRole::class, 'role_id', 'jobtitle_code');

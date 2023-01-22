@@ -67,6 +67,7 @@
             @endforeach
           </ul>
         </div> --}}
+        <input type="hidden" class="department_id" name="department" >
       <div class="col-md-4">
                 <label>القسم</label>
                 <div id="jstree">
@@ -141,14 +142,16 @@
   $('#jstree').on('changed.jstree', function(e, data) {
     var selectedIds = data.selected;
     console.log(selectedIds);
-    $.ajax({
-        type: "POST",
-        url: "{{route('key.store')}}",
-        data: { id: selectedId },
-        success: function(response) {
-        console.log(response);
-        }
-        });
+    $('.department_id').val(selectedIds);
+    // $.ajax({
+    //     type: "POST",
+    //     url: "{{route('key.store')}}",
+    //     data: { id: selectedId },
+    //     success: function(response) {
+    //     // console.log(response);
+
+    //     }
+    //     });
 
     });
 </script>

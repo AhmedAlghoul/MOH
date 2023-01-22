@@ -57,7 +57,7 @@ class KeyController extends Controller
             ]
         );
         $key = new Key();
-        // $key->department_id = $request->department;
+        $key->department_id = $request->department;
         $key->role_id = $request->role;
         $key->calc_type_id=$request->calc_type ;
         $key->key_value = $request->key_value;
