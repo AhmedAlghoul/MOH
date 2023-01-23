@@ -70,7 +70,12 @@
                                         @endif
                                     </td>
                                     <td>{{$key->EmployeesRoles->jobtitle_name_ar}}</td>
-                                    <td>{{$key->Constants->const_name}}</td>
+                                    <td>
+                                        @if (!empty($key->Constants))
+                                        {{$key->Constants->const_name}}
+                                        @endif
+                                        {{-- {{$key->Constants->const_name}} --}}
+                                    </td>
                                     <td>{{$key->key_value}}</td>
                                     <td>
                                         <a href="{{route('key.edit',$key->id)}}" class="btn btn-info">

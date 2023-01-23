@@ -20,6 +20,7 @@ class KeyController extends Controller
     {
         //
         $data = Key::all();
+        // dd($data);
         return response()->view('cms.Keys.index', ['keys' => $data]);
 
     }
