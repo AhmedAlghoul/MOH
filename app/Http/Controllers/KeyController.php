@@ -20,7 +20,9 @@ class KeyController extends Controller
     {
         //
         $data = Key::all();
+        dd($data);
         return response()->view('cms.Keys.index', ['keys' => $data]);
+
     }
 
     /**
@@ -62,6 +64,7 @@ class KeyController extends Controller
         $key->calc_type_id=$request->calc_type ;
         $key->key_value = $request->key_value;
         $key->save();
+
         return redirect()->back();
     }
 

@@ -62,7 +62,7 @@
                 @foreach ($keys as $key)
                 <tr>
                   <td>{{$key->id}}</td>
-                  <td>{{$key->departments->tb_managment_name}}</td>
+                  <td>{{$key->departments->department_id}}</td>
                   <td>{{$key->EmployeesRoles->jobtitle_name_ar}}</td>
                   <td>{{$key->Constants->const_name}}</td>
                   <td>{{$key->key_value}}</td>

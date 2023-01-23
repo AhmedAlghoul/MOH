@@ -12,7 +12,7 @@ class Key extends Model
 
     public function departments()
     {
-        return $this->belongsTo(Department::class, 'department_id', 'tb_managment_code');
+        return $this->belongsTo(Managment::class, 'department_id','tb_managment_code');
     }
     public function EmployeesRoles()
     {
