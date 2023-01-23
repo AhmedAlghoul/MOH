@@ -75,20 +75,29 @@
           <select class="form-control" id="department-choice" name="department">
 
             @foreach ($departments as $department)
-            <option value="{{$department->id}}" @if ($department->id == $key->department_id)
-              selected @endif>{{$department->name}}</option>
+            <option value="{{$department->tb_managment_code}}" @if ($department->tb_managment_code == $key->department_id)
+              selected @endif>{{$department->tb_managment_name}}</option>
             @endforeach
           </select>
         </div>
 
         <div class="form-group col-md-6">
-          <label>الدور الوظيفي</label>
+          <label>المسمى الوظيفي</label>
           <select class="form-control" id="department-choice" name="role">
             @foreach ($roles as $role)
-            <option value="{{$role->id}}" @if ($role->id == $key->role_id)
-              selected @endif>{{$role->Role_name}}</option>
+            <option value="{{$role->jobtitle_code}}" @if ($role->jobtitle_code == $key->role_id)
+              selected @endif>{{$role->jobtitle_name_ar}}</option>
             @endforeach
           </select>
+        </div>
+        <div class="form-group col-md-6">
+            <label>نوع الاحتساب</label>
+            <select class="form-control" id="department-choice" name="role">
+                @foreach ($constants as $constant)
+                <option value="{{$constant->const_id}}" @if ($constant->const_id == $key->calc_type_id  )
+                    selected @endif>{{$constant->const_name}}</option>
+                @endforeach
+            </select>
         </div>
 
         <div class="form-group col-md-6">

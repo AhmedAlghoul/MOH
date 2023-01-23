@@ -20,7 +20,6 @@ class KeyController extends Controller
     {
         //
         $data = Key::all();
-        dd($data);
         return response()->view('cms.Keys.index', ['keys' => $data]);
 
     }
@@ -87,12 +86,13 @@ class KeyController extends Controller
      */
     public function edit($id)
     {
-        //
+
         $key = Key::findOrFail($id);
-        $departments = Department::where('is_active', 1)->get();
-        $roles = EmployeeRole::where('is_active', 1)->get();
+        $departments = Managment::all();
+        $roles = EmployeeRole::all();
+        $constants=Constant::all();
         $key_value = $key->key_value;
-        return response()->view('cms.Keys.edit', ['key' => $key, 'departments' => $departments, 'roles' => $roles, 'key_value' => $key_value]);
+        return response()->view('cms.Keys.edit', ['key' => $key, 'departments' => $departments, 'roles' => $roles, 'key_value' =>$key_value, 'constants' => $constants]);
     }
 
     /**
@@ -108,6 +108,7 @@ class KeyController extends Controller
         $key = Key::findOrFail($id);
         $key->department_id = $request->department;
         $key->role_id = $request->role;
+        $key->calc_type_id = $request->calc_type;
         $key->key_value = $request->key_value;
         $key->save();
         //redirect to the index page
