@@ -340,15 +340,22 @@ class KeyCalculateController extends Controller
     {
     }
 
+    // public function checkvalue(Request $request)
+    // {
+    //     // return $request->managmentCode;
+    //     $NextDropDowns = Managment::where("TB_MANAGMENT_PARENT", $request->managmentCode)->select(['tb_managment_code', 'tb_managment_name'])->get();
+
+    //     return response()->json([
+    //         'status' => true,
+    //         'newData' => $NextDropDowns,
+    //     ]);
+    // }
+
     public function checkvalue(Request $request)
     {
-        // return $request->managmentCode;
-        $NextDropDowns = Managment::where("TB_MANAGMENT_PARENT", $request->managmentCode)->select(['tb_managment_code', 'tb_managment_name'])->get();
-
-        return response()->json([
-            'status' => true,
-            'newData' => $NextDropDowns,
-        ]);
+        // $resultLabels = Key::where($request->departmentChoice,'=','department_id')->select('key_value', 'calc_type_id')->get();
+        $Labelsresult = Key::where('department_id', '=', $request->departmentChoice)->select('department_id', 'key_value', 'calc_type_id')->get();
+        return response()->json($Labelsresult);
     }
 
     public function treeview($select = null)
@@ -356,7 +363,7 @@ class KeyCalculateController extends Controller
         $trees = Managment::whereNull('TB_MANAGMENT_PARENT')->where('tb_managment_code', '!=', 0)->select(['tb_managment_code', 'tb_managment_name'])->get();
 
         $arr = [];
-        $listt =[];
+        $listt = [];
         $listt['id']     = -1;
         $listt['parent'] = '#';
         $listt['text'] = 'وزارة الصحة';
@@ -371,15 +378,15 @@ class KeyCalculateController extends Controller
             array_push($arr, $list_arr);
         }
 
-          $children = Managment::whereNotNull('TB_MANAGMENT_PARENT')->select(['tb_managment_code', 'tb_managment_parent', 'tb_managment_name'])->get();
-            foreach ($children as $child) {
+        $children = Managment::whereNotNull('TB_MANAGMENT_PARENT')->select(['tb_managment_code', 'tb_managment_parent', 'tb_managment_name'])->get();
+        foreach ($children as $child) {
 
             $list_array         = [];
             $list_array['id']     = $child->tb_managment_code;
             $list_array['parent'] = $child->tb_managment_parent;
             $list_array['text'] = $child->tb_managment_name;
             array_push($arr, $list_array);
-            }
+        }
 
 
         header('Content-type: text/json');
@@ -387,5 +394,4 @@ class KeyCalculateController extends Controller
         header('Access-Control-Allow-Origin: *');
         echo json_encode($arr);
     }
-
 }

@@ -69,34 +69,44 @@
                         @endforeach
                     </ul>
                 </div> --}}
-
-                {{-- start of the new code-JS tree  --}}
+                <div class="col-md-6">
+                    <label>المسمى الوظيفي</label>
+                    <br>
+                    <select class="form-control js-example-basic-single" id="departmentChoice" name="role">
+                        @foreach ($roles as $role)
+                        <option value="{{$role->jobtitle_code}}">{{$role->jobtitle_name_ar}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div id="data-container"></div>
+                {{-- start of the new code-JS tree --}}
 
                 <div id="jstree">
 
                 </div>
 
-                {{-- <button >demo button</button> --}}
+                {{-- <button>demo button</button> --}}
 
                 {{-- End of new code-JS tree --}}
 
-                {{-- start of the old code  --}}
-            {{-- <div class="form-group col-md-6">
-                <label for="managmentCode">اختر </label>
-                <select class="form-control js-example-basic-single" id="managmentCode" name="managmentCode">
-                    <option> اختر  </option>
-                    @foreach ($managments as $managment)
+                {{-- start of the old code --}}
+                {{-- <div class="form-group col-md-6">
+                    <label for="managmentCode">اختر </label>
+                    <select class="form-control js-example-basic-single" id="managmentCode" name="managmentCode">
+                        <option> اختر </option>
+                        @foreach ($managments as $managment)
 
-                    <option value="{{$managment->tb_managment_code}}">{{$managment->tb_managment_name}}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group col-md-6 generalChoice d-none">
-            <label for="generalChoice" >اختر </label>
-            <select class="form-control js-example-basic-single generalSelect" id="generalSelect" name="generalSelect">
-            </select>
-            </div> --}}
-            {{-- end of the old code --}}
+                        <option value="{{$managment->tb_managment_code}}">{{$managment->tb_managment_name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-md-6 generalChoice d-none">
+                    <label for="generalChoice">اختر </label>
+                    <select class="form-control js-example-basic-single generalSelect" id="generalSelect"
+                        name="generalSelect">
+                    </select>
+                </div> --}}
+                {{-- end of the old code --}}
 
 
                 {{-- <div class="form-group col-md-6">
@@ -120,13 +130,13 @@
 
                 <div class="form-group col-md-6">
                     <label for="role-choice">الدور الوظيفي</label>
-                    <select class="form-control js-example-basic-single" id="role-choice" name="role" >
+                    <select class="form-control js-example-basic-single" id="role-choice" name="role">
                         @foreach ($roles as $role)
                         <option value="{{$role->Role_name}}">{{$role->Role_name}} </option>
                         @endforeach
                     </select>
                 </div>
- --}}
+                --}}
 
             </div>
             <!-- /.card-body -->
@@ -143,16 +153,12 @@
 <!-- /.card -->
 
 
-
 @endsection
 
-
 @section('scripts')
-{{-- show new dropdown due to previous dropdown  --}}
+{{-- show new dropdown due to previous dropdown --}}
 <script>
-
-
-$(document).ready(function(){
+    $(document).ready(function(){
     let url ="{{route('treeview')}}";
     console.log(url);
     $('#jstree').jstree({
@@ -216,6 +222,34 @@ $('#jstree').on('changed.jstree', function(e, data) {
 // });
 
 
+$('#departmentChoice').change(function () {
+
+var departmentChoice = $(this).val();
+console.log(departmentChoice);
+if (departmentChoice) {
+$.ajax({
+url: "{{route('checkvalue')}}",
+type: "get",
+dataType : "json",
+data: {
+"departmentChoice": departmentChoice
+},
+success: function(data) {
+console.log(data);
+// $.each(data, function(index, value) {
+// $('#data-container').append('<p>'+value.name + ': ' + value.age+'</p>');
+// });
+// for (let item of data) {
+// console.log(item.key_value + ": " + item.calc_type_id);
+// }
+}
+
+});
+// }}}
+
+// });
+}
+});
 </script>
 
 @endsection
@@ -227,5 +261,5 @@ $('#jstree').on('changed.jstree', function(e, data) {
     $(document).ready(function() {
         $('.js-example-basic-single').select2();
     });
-    </script>
+</script>
 @endpush
