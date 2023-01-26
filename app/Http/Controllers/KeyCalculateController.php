@@ -353,9 +353,10 @@ class KeyCalculateController extends Controller
 
     public function checkvalue(Request $request)
     {
-        // $resultLabels = Key::where($request->departmentChoice,'=','department_id')->select('key_value', 'calc_type_id')->get();
-        $Labelsresult = Key::where('department_id', '=', $request->departmentChoice)->select('department_id', 'key_value', 'calc_type_id')->get();
+        $Labelsresult = Key::where('role_id', '=', $request->roleChoice)->select('department_id', 'key_value', 'calc_type_id')->get();
         return response()->json($Labelsresult);
+        
+
     }
 
     public function treeview($select = null)

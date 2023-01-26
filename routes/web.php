@@ -40,11 +40,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/test', function () {
     // $managment = Managment::whereNull('TB_MANAGMENT_PARENT')->get();
-    // $managment = Managment::where('TB_MANAGMENT_PARENT',12)->get();
+    $managment = Managment::where('TB_MANAGMENT_PARENT', 1395)->get();
     // $roles = EmployeeRole::all();
-    $constant = Constant::all();
-    dd($constant);
-    // dd($managment);
+    // $constant = Constant::all();
+    // dd($constant);
+    dd($managment);
 });
 
 Route::prefix('cms/admin')->middleware('guest:web')->group(function () {

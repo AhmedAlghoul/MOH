@@ -72,18 +72,24 @@
                 <div class="col-md-6">
                     <label>المسمى الوظيفي</label>
                     <br>
-                    <select class="form-control js-example-basic-single" id="departmentChoice" name="role">
+                    <select class="form-control js-example-basic-single" id="roleChoice" name="role">
                         @foreach ($roles as $role)
                         <option value="{{$role->jobtitle_code}}">{{$role->jobtitle_name_ar}}</option>
                         @endforeach
                     </select>
+                    <div id="data-container"></div>
+                    <div id="data-input"></div>
                 </div>
-                <div id="data-container"></div>
+
                 {{-- start of the new code-JS tree --}}
 
-                <div id="jstree">
+<div class="tree-menu">
 
-                </div>
+<div id="jstree">
+
+    </div>
+</div>
+
 
                 {{-- <button>demo button</button> --}}
 
@@ -183,13 +189,7 @@ $('#jstree').on('changed.jstree', function(e, data) {
         var selectedIds = data.selected;
         console.log(selectedIds);
 });
-// $('#jstree').on('changed.jstree' function(e,data){
-//     var i , j ,r = [];
-//     for (i=0, j=data.selected.length; i<j; i++ ){
-//         r.push(data.instance.get_node(data.selected[i]).id);
-//     }
-//     // $('.parent_id').val(r.join(','));
-// });
+
 
 // $('#managmentCode').change ( function () {
 
@@ -222,36 +222,52 @@ $('#jstree').on('changed.jstree', function(e, data) {
 // });
 
 
-$('#departmentChoice').change(function () {
+$('#roleChoice').change(function () {
 
-var departmentChoice = $(this).val();
-console.log(departmentChoice);
-if (departmentChoice) {
+var roleChoice = $(this).val();
+console.log(roleChoice);
+if (roleChoice) {
 $.ajax({
 url: "{{route('checkvalue')}}",
 type: "get",
 dataType : "json",
 data: {
-"departmentChoice": departmentChoice
+"roleChoice": roleChoice
 },
 success: function(data) {
 console.log(data);
-// $.each(data, function(index, value) {
-// $('#data-container').append('<p>'+value.name + ': ' + value.age+'</p>');
-// });
-// for (let item of data) {
-// console.log(item.key_value + ": " + item.calc_type_id);
-// }
+$.each(data, function(index, value) {
+$('#data-container').empty();
+$('#data-container').append('<br><p>  <label>قيمة المفتاح: </label>'+value.key_value + '<br><label>نوع الحساب:</label> ' + value.calc_type_id + '<br> <label>القسم:</label> '+ value.department_id+'</p>');
+if (value.calc_type_id ==1) {
+$('#data-container').append('<input type="text" name="newInput" id="newInput">');
+}
+});
+$('#jstree')
+.jstree(true)
+.select_node("id "+ department_id);
+// $('#jsTree').jstree('select_node', 'id' + department_id);
 }
 
 });
-// }}}
-
-// });
 }
 });
 </script>
+{{-- <script>
+    $('#hours').on('change', function() {
+    var hours = $(this).val();
+    var result = hours / 140;
 
+    $('#result').on('click', function() {
+    $('#doctor_result').text(result.toFixed(2));
+
+    });
+    $('#result').on('click', function() {
+    var doctor_count = $('input[name="doctor_count"]').val();
+    var doctor_need = doctor_count - result ;
+    $('#doctor_need').text(doctor_need);  });
+    });
+</script> --}}
 @endsection
 @push('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
