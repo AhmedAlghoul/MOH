@@ -69,7 +69,7 @@
                         @endforeach
                     </ul>
                 </div> --}}
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label>المسمى الوظيفي</label>
                     <br>
                     <select class="form-control js-example-basic-single" id="roleChoice" name="role">
@@ -83,12 +83,12 @@
 
                 {{-- start of the new code-JS tree --}}
 
-<div class="tree-menu">
+                <div class="tree-menu" >
 
-<div id="jstree">
+                    <div id="jstree" class="col-md-8">
 
-    </div>
-</div>
+                    </div>
+                </div>
 
 
                 {{-- <button>demo button</button> --}}
@@ -225,8 +225,9 @@ $('#jstree').on('changed.jstree', function(e, data) {
 $('#roleChoice').change(function () {
 
 var roleChoice = $(this).val();
-console.log(roleChoice);
+// console.log(roleChoice);
 if (roleChoice) {
+$("#jstree").jstree().deselect_all(true);
 $.ajax({
 url: "{{route('checkvalue')}}",
 type: "get",
@@ -236,16 +237,33 @@ data: {
 },
 success: function(data) {
 console.log(data);
-$.each(data, function(index, value) {
+if(data){
 $('#data-container').empty();
-$('#data-container').append('<br><p>  <label>قيمة المفتاح: </label>'+value.key_value + '<br><label>نوع الحساب:</label> ' + value.calc_type_id + '<br> <label>القسم:</label> '+ value.department_id+'</p>');
-if (value.calc_type_id ==1) {
-$('#data-container').append('<input type="text" name="newInput" id="newInput">');
-}
+$('#data-container').append('<br><p><label>قيمة المفتاح: </label>'+data[0]['key_value'] + '<br><label>نوع الحساب:</label> ' + data[0]['calc_type_id'] + '</p>');
+if (data[0]['calc_type_id'] == 1) {
+$('#data-container').append('<input type="text" name="newInput" id="newInput" placeholder="عدد ساعات العمل شهريا">'+'/'+data[0]['key_value']);
+var keyValue = data[0]['key_value'];
+$('#newInput').on('change', function() {
+var inputValue = $(this).val();
+var result = inputValue / keyValue;
+$('#data-container').append('<br> <br>'+'النتيجة: '+'<input type="text" name="resultInput" id="resultInput">');
+$('#resultInput').val(result);
 });
+}else if(data[0]['calc_type_id'] == 2){
+$('#data-container').append('<input type="text" name="newInput" id="newInput" placeholder="عددالأسرة">'+'*'+data[0]['key_value']);
+var keyValue = data[0]['key_value'];
+$('#newInput').on('change', function() {
+var inputValue = $(this).val();
+var result = inputValue * keyValue;
+$('#data-container').append('<br> <br>'+'النتيجة: '+'<input type="text" name="resultInput" id="resultInput">');
+$('#resultInput').val(result);
+});
+}
 $('#jstree')
 .jstree(true)
-.select_node("id "+ department_id);
+.select_node( data[0]['department_id']);
+}
+
 // $('#jsTree').jstree('select_node', 'id' + department_id);
 }
 
