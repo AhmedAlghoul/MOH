@@ -151,7 +151,7 @@
 
 
             {{-- facilliets --}}
-            <li class="nav-item has-treeview">
+            {{-- <li class="nav-item has-treeview">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-hospital"></i>
                     <p>
@@ -173,9 +173,9 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li> --}}
             {{-- circles --}}
-            <li class="nav-item has-treeview">
+            {{-- <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-building"></i>
                 <p>
@@ -197,9 +197,9 @@
                   </a>
                 </li>
               </ul>
-            </li>
+            </li> --}}
             {{-- departments --}}
-            <li class="nav-item has-treeview">
+            {{-- <li class="nav-item has-treeview">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-building"></i>
                     <p>
@@ -225,7 +225,7 @@
                     </li>
                     @endcan
                 </ul>
-            </li>
+            </li> --}}
 
 
 
@@ -279,10 +279,10 @@
               </ul>
             </li>
             {{--The method of key calculating --}}
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+          {{-- <li class="nav-item has-treeview">
+            <a href="#" class="nav-link"> --}}
               {{-- <i class="nav-icon fas fa-key nav-icon"></i> --}}
-              <i class="nav-icon fas fa-question-circle"></i>
+              {{-- <i class="nav-icon fas fa-question-circle"></i>
               <p>
                 طريقة حساب المفاتيح
                 <i class="fas fa-angle-left right"></i>
@@ -302,7 +302,7 @@
                 </a>
               </li>
             </ul>
-          </li>
+          </li>--}}
             <li class="nav-item">
               <a href="{{route('keycalc.create')}}" class="nav-link">
                 <i class="nav-icon fas fa-calculator"></i>
@@ -470,7 +470,7 @@
                 </p>
               </a>
             </li> --}}
-
+{{--
             <li class="nav-header">الموظفين</li>
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
@@ -494,7 +494,7 @@
                   </a>
                 </li>
               </ul>
-            </li>
+            </li> --}}
 
             {{-- spatie roles for users --}}
 

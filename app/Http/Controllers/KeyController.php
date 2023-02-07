@@ -22,7 +22,6 @@ class KeyController extends Controller
         $data = Key::all();
         // dd($data);
         return response()->view('cms.Keys.index', ['keys' => $data]);
-
     }
 
     /**
@@ -61,8 +60,11 @@ class KeyController extends Controller
         $key = new Key();
         $key->department_id = $request->department;
         $key->role_id = $request->role;
-        $key->calc_type_id=$request->calc_type ;
+        $key->calc_type_id = $request->calc_type;
         $key->key_value = $request->key_value;
+        $key->value_col1 = $request->key_value2;
+        $key->value_col2 = $request->key_value3;
+        $key->calc_method = $request->calc_method;
         $key->save();
 
         return redirect()->back();
@@ -91,9 +93,12 @@ class KeyController extends Controller
         $key = Key::findOrFail($id);
         $departments = Managment::all();
         $roles = EmployeeRole::all();
-        $constants=Constant::all();
+        $constants = Constant::all();
         $key_value = $key->key_value;
-        return response()->view('cms.Keys.edit', ['key' => $key, 'departments' => $departments, 'roles' => $roles, 'key_value' =>$key_value, 'constants' => $constants]);
+        $value_col1 = $key->key_value2;
+        $value_col2 = $key->key_value3;
+        $calc_method = $key->calc_method;
+        return response()->view('cms.Keys.edit', ['key' => $key, 'departments' => $departments, 'roles' => $roles, 'key_value' => $key_value, 'value_col1' => $value_col1, 'value_col2' => $value_col2, 'constants' => $constants, 'calc_method' => $calc_method]);
     }
 
     /**
@@ -111,6 +116,9 @@ class KeyController extends Controller
         $key->role_id = $request->role;
         $key->calc_type_id = $request->calc_type;
         $key->key_value = $request->key_value;
+        $key->value_col1 = $request->key_value2;
+        $key->value_col2 = $request->key_value3;
+        $key->calc_method = $request->calc_method;
         $key->save();
         //redirect to the index page
         return redirect()->route('key.index');

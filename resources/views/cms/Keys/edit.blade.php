@@ -13,7 +13,7 @@
         font-size: 25px;
     }
 </style>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 @endsection
 
 @section('page-name','تعديل مفتاح الكادر')
@@ -68,9 +68,15 @@
                         @endforeach
                     </ul>
                 </div> --}}
+                <input type="hidden" class="department_id" name="department">
+                <div class="col-md-6">
+                    <label>القسم</label>
+                    <div id="jstree">
 
+                    </div>
 
-                <div class="form-group col-md-6">
+                </div>
+                {{-- <div class="form-group col-md-6">
                     <label for="department-choice">القسم</label>
                     <br>
                     <select class="form-control js-example-basic-single" id="department-choice" name="department">
@@ -81,44 +87,73 @@
                             selected @endif>{{$department->tb_managment_name}}</option>
                         @endforeach
                     </select>
+                </div> --}}
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>المسمى الوظيفي</label>
+                        <br>
+                        <select class="form-control js-example-basic-single" name="role">
+                            @foreach ($roles as $role)
+                            <option value="{{$role->jobtitle_code}}" @if ($role->jobtitle_code == $key->role_id)
+                                selected @endif>{{$role->jobtitle_name_ar}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group ">
+                        <label>نوع الاحتساب</label>
+                        <br>
+                        <select class="form-control js-example-basic-single" name="calc_type">
+                            @foreach ($constants as $constant)
+                            <option value="{{$constant->const_id}}" @if ($constant->const_id == $key->calc_type_id )
+                                selected @endif>{{$constant->const_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>مفتاح الكادر </label>
+                        <input type="number" step=any min=0 name="key_value" class="form-control"
+                            placeholder="أدخل مفتاح الكادر" value="{{$key->key_value}}">
+                    </div>
+                    <div class="form-group">
+                        <label>مفتاح الكادر 2</label>
+                        <input type="number" step=any min=0 name="key_value2" class="form-control"
+                            placeholder="أدخل مفتاح الكادر" value="{{$key->value_col1}}">
+                    </div>
+                    <div class="form-group">
+                        <label>مفتاح الكادر 3</label>
+                        <input type="number" step=any min=0 name="key_value3" class="form-control"
+                            placeholder="أدخل مفتاح الكادر" value="{{$key->value_col2}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="body">طريقة حساب المفتاح</label>
+                        <textarea class="form-control tinymce-editor" rows="7" cols=" 8" name="calc_method"
+                            placeholder="الرجاء إدخال طريقة حساب المفتاح">{!!$key->calc_method!!}</textarea>
+                    </div>
                 </div>
 
-                <div class="form-group col-md-6">
-                    <label>المسمى الوظيفي</label>
-                    <br>
-                    <select class="form-control js-example-basic-single" name="role">
-                        @foreach ($roles as $role)
-                        <option value="{{$role->jobtitle_code}}" @if ($role->jobtitle_code == $key->role_id)
-                            selected @endif>{{$role->jobtitle_name_ar}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group col-md-6">
-                    <label>نوع الاحتساب</label>
-                    <br>
-                    <select class="form-control js-example-basic-single" name="calc_type">
-                        @foreach ($constants as $constant)
-                        <option value="{{$constant->const_id}}" @if ($constant->const_id == $key->calc_type_id )
-                            selected @endif>{{$constant->const_name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="form-group col-md-6">
+                {{-- <div class="form-group">
                     <label>مفتاح الكادر </label>
-                    <input type="number" step=any min=0 name="key_value" class="form-control"
-                        placeholder="أدخل مفتاح الكادر" value="{{$key->key_value}}">
-                </div>
+                    <input type="number" step=any min=0 name="key_value2" class="form-control"
+                        placeholder="أدخل مفتاح الكادر" value="{{$key->value_col1}}">
+                </div> --}}
+                {{-- <div class="form-group">
+                    <label>مفتاح الكادر </label>
+                    <input type="number" step=any min=0 name="key_value3" class="form-control"
+                        placeholder="أدخل مفتاح الكادر" value="{{$key->value_col2}}">
+                </div> --}}
 
             </div>
-            <!-- /.card-body -->
-
-            <div class="card-footer">
-                <button type="submit" class="btn btn-primary">تعديل</button>
-            </div>
-        </form>
     </div>
-    <!-- /.card -->
+    <!-- /.card-body -->
+
+    <div class="card-footer">
+        <button type="submit" class="btn btn-primary">تعديل</button>
+    </div>
+    </form>
+</div>
+<!-- /.card -->
 </div>
 <!-- /.card -->
 
@@ -128,9 +163,65 @@
 
 
 @section('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.3.1/tinymce.min.js"
+    integrity="sha512-eV68QXP3t5Jbsf18jfqT8xclEJSGvSK5uClUuqayUbF5IRK8e2/VSXIFHzEoBnNcvLBkHngnnd3CY7AFpUhF7w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+<script type="text/javascript">
+    tinymce.init({
+                selector: 'textarea.tinymce-editor',
+                height: 300,
+                menubar: false,
+                plugins: [
+                    'advlist autolink lists link image charmap print preview anchor',
+                    'searchreplace visualblocks code fullscreen',
+                    'insertdatetime media table paste code help wordcount', 'image'
+                ],
+                toolbar: 'undo redo | formatselect | ' +
+                'bold italic backcolor | alignright aligncenter ' +
+                'alignleft alignjustify | bullist numlist outdent indent | ' +
+                'removeformat | help',
+                content_css: '//www.tiny.cloud/css/codepen.min.css'
+            });
+</script>
+
+<script>
+    $(document).ready(function(){
+    let url ="{{route('treeview')}}";
+    console.log(url);
+    $('#jstree').jstree({
+    "core" : {
+    'data' : {
+    'url' : url,
+    'data' : function (node) {
+    console.log(node);
+    return { 'parent' : node.id };
+    }
+    },
+    "themes" : {
+    "theme" : "default",
+    "icons" : false
+    }
+    }
+    // "plugins" : [ "wholerow" ]
+    });
+
+    });
+
+    $('#jstree').on('changed.jstree', function(e, data) {
+    var selectedIds = data.selected;
+    console.log(selectedIds);
+    $('.department_id').val(selectedIds);
+    });
+</script>
+<script>
+    $( '#jstree' ).bind('loaded.jstree', function(e, data) {
+    $('#jstree').jstree(true).select_node( {{$key->department_id}} );
+    });
+</script>
 @endsection
 @push('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>

@@ -55,6 +55,9 @@
                                     <th>المسمى الوظيفي</th>
                                     <th>نوع الاحتساب</th>
                                     <th>المفتاح</th>
+                                    <th>المفتاح 2</th>
+                                    <th>المفتاح 3</th>
+                                    <th>طريقة الحساب</th>
                                     <th> الأوامر</th>
                                 </tr>
                             </thead>
@@ -77,6 +80,9 @@
                                         {{-- {{$key->Constants->const_name}} --}}
                                     </td>
                                     <td>{{$key->key_value}}</td>
+                                    <td>{{$key->value_col1}}</td>
+                                    <td>{{$key->value_col2}}</td>
+                                    <td>{!!$key->calc_method !!}</td>
                                     <td>
                                         <a href="{{route('key.edit',$key->id)}}" class="btn btn-info">
                                             <i class="fas fa-edit"></i>

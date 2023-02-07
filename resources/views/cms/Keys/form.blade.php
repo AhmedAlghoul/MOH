@@ -68,7 +68,7 @@
           </ul>
         </div> --}}
         <input type="hidden" class="department_id" name="department" >
-      <div class="col-md-4">
+      <div class="col-md-6">
                 <label>القسم</label>
                 <div id="jstree">
 
@@ -76,7 +76,7 @@
 
             </div>
 
-            <div class="col-md-8 ">
+            <div class="col-md-6 ">
             <label>المسمى الوظيفي</label>
             <br>
             <select class="form-control js-example-basic-single" id="department-choice" name="role">
@@ -95,6 +95,18 @@
             <br>
             <label>مفتاح الكادر </label>
             <input type="number" step=any min=0 name="key_value" class="form-control" placeholder="أدخل مفتاح الكادر">
+
+            <label>مفتاح الكادر </label>
+            <input type="number" step=any min=0 name="key_value2" class="form-control" placeholder="مفتاح الكادر إذا وجد">
+
+            <label>مفتاح الكادر </label>
+            <input type="number" step=any min=0 name="key_value3" class="form-control" placeholder="مفتاح الكادر إذا وجد">
+
+            <div class="form-group">
+                <label for="body">طريقة حساب المفتاح</label>
+                <textarea class="form-control tinymce-editor" rows="7" name="calc_method"
+                    placeholder="الرجاء إدخال طريقة حساب المفتاح"></textarea>
+            </div>
         </div>
 
       </div>
@@ -154,6 +166,27 @@
     //     });
 
     });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.3.1/tinymce.min.js"
+    integrity="sha512-eV68QXP3t5Jbsf18jfqT8xclEJSGvSK5uClUuqayUbF5IRK8e2/VSXIFHzEoBnNcvLBkHngnnd3CY7AFpUhF7w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script type="text/javascript">
+    tinymce.init({
+                selector: 'textarea.tinymce-editor',
+                height: 300,
+                menubar: false,
+                plugins: [
+                    'advlist autolink lists link image charmap print preview anchor',
+                    'searchreplace visualblocks code fullscreen',
+                    'insertdatetime media table paste code help wordcount', 'image'
+                ],
+                toolbar: 'undo redo | formatselect | ' +
+                    'bold italic backcolor | alignright aligncenter ' +
+                    'alignleft alignjustify | bullist numlist outdent indent | ' +
+                    'removeformat | help',
+                content_css: '//www.tiny.cloud/css/codepen.min.css'
+            });
 </script>
 @endsection
 
