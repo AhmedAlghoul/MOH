@@ -206,7 +206,8 @@
 });
 $('#jstree').on('changed.jstree', function(e, data) {
         var selectedIds = data.selected;
-        console.log(selectedIds);
+        // console.log(selectedIds);
+    // .select_node(data.selected);
         $('.department_id').val(selectedIds);
         checkTwoValues();
 });
@@ -246,112 +247,6 @@ $('#jstree').on('changed.jstree', function(e, data) {
 
 $('#roleChoice').change(function () {
     checkTwoValues();
-
-// var roleChoice = $(this).val();
-// // console.log(roleChoice);
-// if (roleChoice ) {
-// $("#jstree").jstree().deselect_all(true);
-// $.ajax({
-// url: "{{route('checkvalue')}}",
-// type: "get",
-// dataType : "json",
-// data: {
-// "roleChoice": roleChoice
-// },
-// success: function(data) {
-// console.log(data);
-// if(data){
-
-//     $('#data-container').empty();
-//     $('#data-container').append('<br><p><label>قيمة المفتاح: </label>'+data[0]['key_value'] + '<br><label>نوع الحساب:</label> ' + data[0]['calc_type_id'] + '</p>');
-//     if (data[0]['calc_type_id'] == 1) {
-    //doctor calculation
-//     $('#data-container').append('<input type="text" name="newInput" id="newInput" placeholder="عدد ساعات العمل شهريا">'+'/'+data[0]['key_value']);
-//     var keyValue = data[0]['key_value'];
-// $('#data-container').append('<br> <br>'+'النتيجة: '+'<input type="text" name="resultInput" id="resultInput">');
-// $('#newInput').on('change', function() {
-
-//     var inputValue = $(this).val();
-//     var result = inputValue / keyValue;
-//     $('#resultInput').val(result);
-//         });
-// }else if(data[0]['calc_type_id'] == 2)
-// {   //nurse calcularion
-//     $('#data-container').append('<input type="text" name="newInput" id="newInput" placeholder="عددالأسرة">'+'*'+data[0]['key_value']);
-//     var keyValue = data[0]['key_value'];
-//     $('#data-container').append('<br> <br>'+'النتيجة: '+'<input type="text" name="resultInput" id="resultInput">');
-//     $('#newInput').on('change', function() {
-//     var inputValue = $(this).val();
-//     var result = inputValue * keyValue;
-//     $('#resultInput').val(result);
-//         });
-// }else if(data[0]['calc_type_id'] == 3)
-//  {
-//     $('#data-container').append('<input type="number"  style="width: 35%" name="number_of_sessions" placeholder="عدد الجلسات شهريا">'+
-//     '*'+'<input type="number" id="session_duration" style="width: 35%" name="session_duration" placeholder="مدة الجلسة"><br>'+'/'+
-//     '<input type="number" id="working_minutes_per_day" style="width: 35%" name="working_minutes_per_day" placeholder="دقائق العمل يوميا">'+ '*'+
-//     '<input type="number" id="working_days" style="width: 35%" name="working_days" placeholder="أيام العمل">');
-//     $('#session_duration').val(40);
-//     $('#working_minutes_per_day').val(318);
-//     $('#working_days').val(22);
-//     var keyValue = data[0]['key_value'];
-
-// $('#number_of_sessions').on('change', function() {
-
-//     var number_of_sessions = $(this).val();
-//     var session_duration = $('#session_duration').val();
-//     var number_of_sessions = $('#number_of_sessions').val();
-//     var working_days = $('#working_days').val();
-//     var result = (number_of_sessions * session_duration) / (number_of_sessions*working_days);
-//     $('#data-container').append('<br> <br>'+'النتيجة: '+'<input type="text" name="resultInput" id="resultInput">');
-//     $('#resultInput').val(result);
-//         });
-// }else if(data[0]['calc_type_id'] == 4)
-// {
-//     $('#data-container').append('<input type="number" style="width: 35%" name="number_of_examinations" placeholder="متوسط عدد الفحوصات شهريا">'+
-//     '*'+'<input type="number" id="examination_time" style="width: 35%" name="examination_time" placeholder="مدة الفحص"><br>'+'/'+
-//     '<input type="number" id="working_minutes_per_day" style="width: 35%" name="working_minutes_per_day" placeholder="دقائق العمل يوميا">'+ '*'+
-//     '<input type="number" id="working_days" style="width: 35%" name="working_days" placeholder="أيام العمل">');
-//     $('#examination_time').val(20);
-//     $('#working_minutes_per_day').val(420);
-//     $('#working_days').val(22);
-//     var keyValue = data[0]['key_value'];
-
-//     $('#number_of_examinations').on('change', function() {
-
-//     var number_of_examinations = $(this).val();
-//     var examination_time = $('#examination_time').val();
-//     var number_of_examinations = $('#number_of_examinations').val();
-//     var working_days = $('#working_days').val();
-//     var result = (number_of_examinations * examination_time) / (number_of_examinations*working_days);
-//     $('#data-container').append('<br> <br>'+'النتيجة: '+'<input type="text" name="resultInput" id="resultInput">');
-//     $('#resultInput').val(result);
-//     });
-// }
-
-// $('#jstree')
-// .jstree(true)
-// .select_node( data[0]['department_id']);
-//  }
-
-// // $('#jsTree').jstree('select_node', 'id' + department_id);
-// }
-//         });
-// }
-// $('#jstree').on('changed.jstree', function(e, data) {
-//     var selectedIds = data.selected;
-//     console.log(selectedIds);
-//     if (selectedIds) {
-//     $.ajax({
-//     url: "{{route('checkvalue')}}",
-//     type: "get",
-//     dataType : "json",
-//     data: {
-//     "selectedIds": selectedIds
-//     },
-
-//     })
-//     }});
         });
 
 
@@ -379,6 +274,7 @@ var departmentid =$('.department_id').val();
 var roleChoice =$('#roleChoice').val();
 // var roleChoice = $(this).val();
 console.log(roleChoice);
+console.log(departmentid);
 if (roleChoice & departmentid ) {
 $("#jstree").jstree().deselect_all(true);
 $.ajax({
@@ -386,7 +282,7 @@ url: "{{route('checkvalue')}}",
 type: "get",
 dataType : "json",
 data: {
-"roleChoice": roleChoice
+"roleChoice": roleChoice,
 "departmentid": departmentid
 },
 success: function(data) {

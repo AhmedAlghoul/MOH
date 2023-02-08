@@ -50,7 +50,7 @@ Route::get('/test', function () {
     // dd($constant);
     // dd($managment);
     // dd($keys);
-    dd($managment);
+    dd($keys);
 });
 
 Route::prefix('cms/admin')->middleware('guest:web')->group(function () {
