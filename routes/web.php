@@ -23,6 +23,7 @@ use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPermissionController;
 use App\Models\Constant;
+use App\Models\Department;
 use App\Models\EmployeeRole;
 use App\Models\Key;
 use App\Models\Managment;
@@ -40,14 +41,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/test', function () {
-    // $managment = Managment::whereNull('TB_MANAGMENT_PARENT')->get();
+    $managment = Managment::whereNull('TB_MANAGMENT_PARENT')->get();
     // $managment = Managment::where('TB_MANAGMENT_PARENT', 1395)->get();
     $keys= Key::all();
+    $selectedIds = Managment::all();
      // $roles = EmployeeRole::all();
     // $constant = Constant::all();
     // dd($constant);
     // dd($managment);
-    dd($keys);
+    // dd($keys);
+    dd($managment);
 });
 
 Route::prefix('cms/admin')->middleware('guest:web')->group(function () {
