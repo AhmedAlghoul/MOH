@@ -218,6 +218,10 @@
     $( '#jstree' ).bind('loaded.jstree', function(e, data) {
     $('#jstree').jstree(true).select_node( {{$key->department_id}} );
     });
+    //dselect_node
+    // $('#jstree').('click', '.jstree-clicked', function () {
+    // $('#jstree').(true).deselect_node({{$key->department_id}});
+    // });
 </script>
 @endsection
 @push('js')

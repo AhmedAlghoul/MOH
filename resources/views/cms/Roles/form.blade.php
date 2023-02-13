@@ -1,6 +1,6 @@
     @extends('cms.parent')
 
-@section('title','إضافة دور وظيفي جديد')')
+@section('title','إضافة دور وظيفي جديد')
 
 @section('styles')
 <style>

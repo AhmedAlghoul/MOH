@@ -27,6 +27,8 @@ use App\Models\Department;
 use App\Models\EmployeeRole;
 use App\Models\Key;
 use App\Models\Managment;
+use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,17 +42,31 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//api route
+// Route::get('getCount', function (Request $request) {
+//     $countResponse = Http::withHeaders(['Authorization' => 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZV9pZCI6IjExMDAxMjAwMTMwMFxuIiwiYXBpX3NlY3JldCI6IjExNTUxMjU1MTM1NSIsIkFQSV9USU1FIjoxNjc1ODQyNTEwfQ.SFURpK8IreG8HKlmdifkuLgOQbTuEwbPZ-ekn5lvpzo'])
+//         ->post(
+//             'http://apps.moh.gov.ps/newwebemp/hr/v1/api/emp_count',
+//             [
+//                 'MANAGMENT_CODE' => '',
+//                 'JOB_TITLE' => ''
+
+//             ]
+//         );
+//     $countResponse = json_decode($countResponse->json());
+//     return view('slknslkc', compact($countResponse));
+// });
 Route::get('/test', function () {
-    $managment = Managment::whereNull('TB_MANAGMENT_PARENT')->get();
-    // $managment = Managment::where('TB_MANAGMENT_PARENT', 1395)->get();
-    $keys= Key::all();
+    // $managment = Managment::whereNull('TB_MANAGMENT_PARENT')->get();
+    $managment = Managment::where('TB_MANAGMENT_PARENT', 1398)->get();
+    $keys = Key::all();
     $selectedIds = Managment::all();
-     // $roles = EmployeeRole::all();
+    // $roles = EmployeeRole::all();
     // $constant = Constant::all();
     // dd($constant);
     // dd($managment);
     // dd($keys);
-    dd($keys);
+    dd($managment);
 });
 
 Route::prefix('cms/admin')->middleware('guest:web')->group(function () {
@@ -82,7 +98,7 @@ Route::prefix('cms/admin')->middleware('auth:web')->group(function () {
     Route::resource('medicalimaging', MedicalimagingcalcController::class);
     Route::resource('administratives', AdministrativecalcController::class);
     Route::resource('facilityresult', FacilityResultController::class);
-    Route::resource('constant',ConstantController::class);
+    Route::resource('constant', ConstantController::class);
     //view the facility result page
     Route::view('facilityresult', 'cms.viewkeyCalcResult.facilityResult')->name('facilityresult');
     //get job role route
@@ -91,7 +107,7 @@ Route::prefix('cms/admin')->middleware('auth:web')->group(function () {
     //get departments route
     Route::get('getDepartments', [KeyCalculateController::class, 'getDepartments'])->name('getDepartments');
     //check the drop down value
-    Route::get('checkvalue',[KeyCalculateController::class, 'checkvalue'])->name('checkvalue');
+    Route::get('checkvalue', [KeyCalculateController::class, 'checkvalue'])->name('checkvalue');
     //populate treeview
     Route::get('treeview', [KeyCalculateController::class, 'treeview'])->name('treeview');
 

@@ -82,7 +82,9 @@
                                     <td>{{$key->key_value}}</td>
                                     <td>{{$key->value_col1}}</td>
                                     <td>{{$key->value_col2}}</td>
-                                    <td>{!!$key->calc_method !!}</td>
+                                    {{-- <td>{!!$key->calc_method !!}</td> --}}
+                                    {{-- Str::words(strip_tags($key->calc_method), 8, ' readmore >>>') --}}
+                                    <td>{!! Str::words(strip_tags($key->calc_method), 8, ' ........') !!}</td>
                                     <td>
                                         <a href="{{route('key.edit',$key->id)}}" class="btn btn-info">
                                             <i class="fas fa-edit"></i>

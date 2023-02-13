@@ -269,38 +269,45 @@ $('#roleChoice').change(function () {
 // }});
 </script>
 <script>
- function checkTwoValues() {
+    function checkTwoValues() {
 var departmentid =$('.department_id').val();
 var roleChoice =$('#roleChoice').val();
 // var roleChoice = $(this).val();
 console.log(roleChoice);
 console.log(departmentid);
-if (roleChoice & departmentid ) {
-$("#jstree").jstree().deselect_all(true);
+$('#data-container').html('');
+if (roleChoice && departmentid ) {
+// $("#jstree").jstree().deselect_all(true);
 $.ajax({
-url: "{{route('checkvalue')}}",
-type: "get",
-dataType : "json",
-data: {
-"roleChoice": roleChoice,
-"departmentid": departmentid
+    url: "{{route('checkvalue')}}",
+    type: "get",
+    dataType : "json",
+    data: {
+    "roleChoice": roleChoice,
+    "departmentid": departmentid
 },
 success: function(data) {
 console.log(data);
-if(data){
 
-$('#data-container').empty();
-$('#data-container').append('<br> <p><label>قيمة المفتاح: </label>'+data[0]['key_value'] + '<br><label>نوع الحساب:</label> ' + data[0]['calc_type_id'] + ' </p>');
+if(data.length>0){
+
+
+$('#data-container').append('<br> <p><label>قيمة المفتاح: </label>'+data[0]['key_value'] + '<br><label>نوع الحساب:</label> ' + data[0]['const_name'] + ' </p>');
 if (data[0]['calc_type_id'] == 1) {
 //doctor calculation
 $('#data-container').append('<input type="text" name="newInput" id="newInput" placeholder="عدد ساعات العمل شهريا">'+'/'+data[0]['key_value']);
 var keyValue = data[0]['key_value'];
-$('#data-container').append('<br> <br>'+'النتيجة: '+'<input type="text" name="resultInput" id="resultInput">');
+var doctor = 50 ;
+$('#data-container').append('<p><label>عدد الأطباء الموجود: </label>'+doctor);
+$('#data-container').append('العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
+$('#data-container').append('<br> <br>'+'الفائض/الاحتياج: '+'<input type="text" name="needInput" id="needInput">');
 $('#newInput').on('change', function() {
 
 var inputValue = $(this).val();
 var result = inputValue / keyValue;
+var need = doctor-result;
 $('#resultInput').val(result);
+$('#needInput').val(need);
 });
 }else if(data[0]['calc_type_id'] == 2)
 { //nurse calcularion
@@ -313,49 +320,136 @@ var result = inputValue * keyValue;
 $('#resultInput').val(result);
 });
 }else if(data[0]['calc_type_id'] == 3)
-{
-$('#data-container').append('<input type="number" style="width: 35%" name="number_of_sessions" placeholder="عدد الجلسات شهريا">'+ '*'+'<input type="number" id="session_duration" style="width: 35%" name="session_duration" placeholder="مدة الجلسة"><br>'+'/'+
-'<input type="number" id="working_minutes_per_day" style="width: 35%" name="working_minutes_per_day" placeholder="دقائق العمل يوميا">'+ '*'+
-'<input type="number" id="working_days" style="width: 35%" name="working_days" placeholder="أيام العمل">');
-$('#session_duration').val(40);
-$('#working_minutes_per_day').val(318);
-$('#working_days').val(22);
-var keyValue = data[0]['key_value'];
+ {// علاج طبيعي
+    $('#data-container').append(' <form class="form-horizontal">\
+        <div class="card-body">\
+            <div class="form-group row">\
+                <label for="inputEmail3" class="col-sm-6 col-form-label"> عدد الجلسات</label>\
+                <div class="col-sm-6">\
+                    <input type="number" class="form-control" id="inputEmail3" name="number_of_sessions">\
+                </div>\
+            </div>\
+            <div class="form-group row">\
+                <label for="inputPassword3" class="col-sm-6 col-form-label">مدة الجلسة الافتراضية</label>\
+                <div class="col-sm-6">\
+                    <input type="number" class="form-control" id="inputPassword3" name="session_duration" value="'+data[0]['key_value']+'" >\
+                </div>\
+            </div>\
+            <div class="form-group row">\
+                <label for="inputEmail3" class="col-sm-6 col-form-label"> دقائق العمل يوميا</label>\
+                <div class="col-sm-6">\
+                    <input type="number" class="form-control" id="inputEmail3" name="working_minutes_per_day" value="'+data[0]['value_col1']+'">\
+                </div>\
+            </div>\
+            <div class="form-group row">\
+                <label for="inputPassword3" class="col-sm-6 col-form-label">أيام العمل</label>\
+                <div class="col-sm-6">\
+                    <input type="number" class="form-control" id="inputPassword3" name="working_days" value="'+data[0]['value_col2']+'">\
+                </div>\
+            </div>\
+        </div>\
+    </form>');
+    $('#data-container').append('<button class="btn btn-primary calculate-btn" type="submit">حساب</button>');
+    $('.calculate-btn').click(function() {
+    var number_of_sessions = parseInt($('#number_of_sessions').val());
+    var session_duration = parseInt($('#session_duration').val());
+    var working_minutes_per_day = parseInt($('#working_minutes_per_day').val());
+    var working_days = parseInt($('#working_days').val());
+    var result = (number_of_sessions * session_duration) / (working_minutes_per_day * working_days);
+    console.log(result);
+    // $('#result').text(result);
+    });
 
-$('#number_of_sessions').on('change', function() {
+// $('#data-container').append('<input type="number" style="width: 35%" name="number_of_sessions" placeholder="عدد الجلسات شهريا">'+ '*'+'<input type="number" id="session_duration" style="width: 35%" name="session_duration" placeholder="مدة الجلسة"><br>'+'/'+
+// '<input type="number" id="working_minutes_per_day" style="width: 35%" name="working_minutes_per_day" placeholder="دقائق العمل يوميا">'+ '*'+
+// '<input type="number" id="working_days" style="width: 35%" name="working_days" placeholder="أيام العمل">');
+// $('#session_duration').val(40);
+// $('#working_minutes_per_day').val(318);
+// $('#working_days').val(22);
+// var keyValue = data[0]['key_value'];
 
-var number_of_sessions = $(this).val();
-var session_duration = $('#session_duration').val();
-var number_of_sessions = $('#number_of_sessions').val();
-var working_days = $('#working_days').val();
-var result = (number_of_sessions * session_duration) / (number_of_sessions*working_days);
-$('#data-container').append('<br> <br>'+'النتيجة: '+'<input type="text" name="resultInput" id="resultInput">');
-$('#resultInput').val(result);
-});
+// $('#number_of_sessions').on('change', function() {
+
+// var number_of_sessions = $(this).val();
+// var session_duration = $('#session_duration').val();
+// var number_of_sessions = $('#number_of_sessions').val();
+// var working_days = $('#working_days').val();
+// var result = (number_of_sessions * session_duration) / (number_of_sessions*working_days);
+// $('#data-container').append('<br> <br>'+'النتيجة: '+'<input type="text" name="resultInput" id="resultInput">');
+// $('#resultInput').val(result);
+// });
 }else if(data[0]['calc_type_id'] == 4)
-{
-$('#data-container').append('<input type="number" style="width: 35%" name="number_of_examinations" placeholder="متوسط عدد الفحوصات شهريا">'+ '*'+'<input type="number" id="examination_time" style="width: 35%" name="examination_time" placeholder="مدة الفحص"><br>'+'/'+
-'<input type="number" id="working_minutes_per_day" style="width: 35%" name="working_minutes_per_day" placeholder="دقائق العمل يوميا">'+ '*'+ '<input type="number" id="working_days" style="width: 35%" name="working_days" placeholder="أيام العمل">');
-$('#examination_time').val(20);
-$('#working_minutes_per_day').val(420);
-$('#working_days').val(22);
-var keyValue = data[0]['key_value'];
+{//مختبرات
+    $('#data-container').append(' <form class="form-horizontal">\
+        <div class="card-body">\
+            <div class="form-group row">\
+                <label for="inputEmail3" class="col-sm-4 col-form-label"> متوسط عدد الفحوصات شهريا</label>\
+                <div class="col-sm-8">\
+                    <input type="number" class="form-control" id="inputEmail3">\
+                </div>\
+            </div>\
+            <div class="form-group row">\
+                <label for="inputPassword3" class="col-sm-4 col-form-label">مدة الفحص الافتراضية</label>\
+                <div class="col-sm-8">\
+                    <input type="number" class="form-control" id="inputPassword3" value="'+data[0]['key_value']+'" >\
+                </div>\
+            </div>\
+            <div class="form-group row">\
+                <label for="inputEmail3" class="col-sm-4 col-form-label"> دقائق العمل يوميا</label>\
+                <div class="col-sm-8">\
+                    <input type="number" class="form-control" id="inputEmail3" value="'+data[0]['value_col1']+'">\
+                </div>\
+            </div>\
+            <div class="form-group row">\
+                <label for="inputPassword3" class="col-sm-4 col-form-label">أيام العمل</label>\
+                <div class="col-sm-8">\
+                    <input type="number" class="form-control" id="inputPassword3" value="'+data[0]['value_col2']+'">\
+                </div>\
+            </div>\
+        </div>\
+    </form>');
+// $('#data-container').append('<input type="number" style="width: 35%" name="number_of_examinations" placeholder="متوسط عدد الفحوصات شهريا">'+ '*'+'<input type="number" id="examination_time" style="width: 35%" name="examination_time" placeholder="مدة الفحص"><br>'+'/'+
+// '<input type="number" id="working_minutes_per_day" style="width: 35%" name="working_minutes_per_day" placeholder="دقائق العمل يوميا">'+ '*'+ '<input type="number" id="working_days" style="width: 35%" name="working_days" placeholder="أيام العمل">');
+// $('#examination_time').val(20);
+// $('#working_minutes_per_day').val(420);
+// $('#working_days').val(22);
+// var keyValue = data[0]['key_value'];
 
-$('#number_of_examinations').on('change', function() {
+// $('#number_of_examinations').on('change', function() {
 
-var number_of_examinations = $(this).val();
-var examination_time = $('#examination_time').val();
-var number_of_examinations = $('#number_of_examinations').val();
-var working_days = $('#working_days').val();
-var result = (number_of_examinations * examination_time) / (number_of_examinations*working_days);
-$('#data-container').append('<br> <br>'+'النتيجة: '+'<input type="text" name="resultInput" id="resultInput">');
-$('#resultInput').val(result);
-});
+// var number_of_examinations = $(this).val();
+// var examination_time = $('#examination_time').val();
+// var number_of_examinations = $('#number_of_examinations').val();
+// var working_days = $('#working_days').val();
+// var result = (number_of_examinations * examination_time) / (number_of_examinations*working_days);
+// $('#data-container').append('<br> <br>'+'النتيجة: '+'<input type="text" name="resultInput" id="resultInput">');
+// $('#resultInput').val(result);
+// });
+}else if(data[0]['calc_type_id'] == 6)
+{//صيدلة
+    $('#data-container').append(' <form class="form-horizontal">\
+    <div class="card-body">\
+        <div class="form-group row">\
+            <label for="inputEmail3" class="col-sm-4 col-form-label"> عدد الروشتات</label>\
+            <div class="col-sm-8">\
+                <input type="number" class="form-control" id="inputEmail3">\
+            </div>\
+        </div>\
+        <div class="form-group row">\
+            <label for="inputPassword3" class="col-sm-4 col-form-label">مدة الفحص الافتراضية</label>\
+            <div class="col-sm-8">\
+                <input type="number" class="form-control" id="inputPassword3">\
+            </div>\
+        </div>\
+    </div>\
+</form>');
+
 }
+// else if (){}
 
-$('#jstree')
-.jstree(true)
-.select_node( data[0]['department_id']);
+// $('#jstree')
+// .jstree(true)
+// .select_node( data[0]['department_id']);
 }
 }
 });
@@ -374,7 +468,7 @@ $('#jstree')
         $('.js-example-basic-single').select2();
         //to make the size of select2 as the div to be col-md-4 whatever the screen size
         $(".js-example-basic-single").select2({
-        width: 'resolve' // need to override the changed default
+        width: '100%' // need to override the changed default
         });
     });
 </script>
