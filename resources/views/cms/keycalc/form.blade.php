@@ -283,6 +283,7 @@ $('#roleChoice').change(function () {
         url: "{{route('getCount')}}",
         type: "get",
         dataType : "json",
+        async:false,
         data: {
         "roleChoice": roleChoice,
         "departmentid": departmentid
