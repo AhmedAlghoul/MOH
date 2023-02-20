@@ -269,7 +269,32 @@ $('#roleChoice').change(function () {
 //         })
 // }});
 </script>
+
+
+
 <script>
+    let globalCount; // define a global variable
+        function getEmpCount() {
+        var departmentid = $('.department_id').val();
+        var roleChoice = $('#roleChoice').val();
+        $('#data-container').html('');
+        if (roleChoice && departmentid ) {
+        $.ajax({
+        url: "{{route('getCount')}}",
+        type: "get",
+        dataType : "json",
+        data: {
+        "roleChoice": roleChoice,
+        "departmentid": departmentid
+        },
+        success: function(data) {
+        let count = data;
+        console.log(count );
+        globalCount = count;
+        }
+        });
+        }}
+
     function checkTwoValues() {
 var departmentid =$('.department_id').val();
 var roleChoice =$('#roleChoice').val();
@@ -291,14 +316,14 @@ success: function(data) {
 console.log(data);
 
 if(data.length>0){
-
+getEmpCount();
 
 $('#data-container').append('<br> <p><label>قيمة المفتاح: </label>'+data[0]['key_value'] + '<br><label>نوع الحساب:</label> ' + data[0]['const_name'] + ' </p>');
 if (data[0]['calc_type_id'] == 1) {
 //doctor and medical imaginig calculation
 $('#data-container').append('<input type="text" name="newInput" id="newInput" placeholder="عدد ساعات العمل شهريا">'+'/'+data[0]['key_value']);
 var keyValue = data[0]['key_value'];
-var doctor = 50;
+let doctor = globalCount;
 $('#data-container').append('<p><label>العدد الموجود: </label>'+doctor);
 $('#data-container').append('العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
 $('#data-container').append('<br> <br>'+'الفائض/الاحتياج: '+'<input type="text" name="needInput" id="needInput">');
@@ -315,7 +340,7 @@ else if(data[0]['calc_type_id'] == 2)
 { //nurse calcularion
 $('#data-container').append('<input type="text" name="newInput" id="newInput" placeholder="عددالأسرة">'+'*'+data[0]['key_value']);
 var keyValue = data[0]['key_value'];
-var nurse = 50;
+var nurse = globalCount;
 $('#data-container').append('<p><label>العدد الموجود: </label>'+nurse);
 $('#data-container').append('العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
 $('#data-container').append('<br> <br>'+'الفائض/الاحتياج: '+'<input type="text" name="needInput" id="needInput">');
@@ -467,27 +492,7 @@ $('#needInput').val(need);
 
 
 </script>
-<script>
-    function getEmpCount() {
-var departmentid = $('.department_id').val();
-var roleChoice = $('#roleChoice').val();
-if (roleChoice && departmentid ) {
-$.ajax({
-url: "{{route('getCount')}}",
-type: "get",
-dataType : "json",
-data: {
-"roleChoice": roleChoice,
-"departmentid": departmentid
-},
 
-success: function(data) {
-console.log(data);
-}
-});
-}}
-
-</script>
 @endsection
 @push('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
