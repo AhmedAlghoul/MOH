@@ -8,6 +8,7 @@ use App\Http\Controllers\DoctorCalcController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeRoleController;
 use App\Http\Controllers\FacilityResultController;
+use App\Http\Controllers\GetCountController;
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\KeyCalculateController;
 use App\Http\Controllers\KeyController;
@@ -27,7 +28,7 @@ use App\Models\Department;
 use App\Models\EmployeeRole;
 use App\Models\Key;
 use App\Models\Managment;
-use GuzzleHttp\Psr7\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -42,20 +43,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//api route
-// Route::get('getCount', function (Request $request) {
-//     $countResponse = Http::withHeaders(['Authorization' => 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZV9pZCI6IjExMDAxMjAwMTMwMFxuIiwiYXBpX3NlY3JldCI6IjExNTUxMjU1MTM1NSIsIkFQSV9USU1FIjoxNjc1ODQyNTEwfQ.SFURpK8IreG8HKlmdifkuLgOQbTuEwbPZ-ekn5lvpzo'])
-//         ->post(
-//             'http://apps.moh.gov.ps/newwebemp/hr/v1/api/emp_count',
-//             [
-//                 'MANAGMENT_CODE' => '',
-//                 'JOB_TITLE' => ''
 
-//             ]
-//         );
-//     $countResponse = json_decode($countResponse->json());
-//     return view('slknslkc', compact($countResponse));
-// });
+Route::get('getToken', [GetCountController::class, 'getToken'])->name('getToken');
+Route::get('getCount', [GetCountController::class, 'getCount'])->name('getCount');
+
 Route::get('/test', function () {
     // $managment = Managment::whereNull('TB_MANAGMENT_PARENT')->get();
     $managment = Managment::where('TB_MANAGMENT_PARENT', 1398)->get();
@@ -101,6 +92,8 @@ Route::prefix('cms/admin')->middleware('auth:web')->group(function () {
     Route::resource('constant', ConstantController::class);
     //view the facility result page
     Route::view('facilityresult', 'cms.viewkeyCalcResult.facilityResult')->name('facilityresult');
+    //view the results page
+    Route::view('results', 'cms.Results')->name('Results');
     //get job role route
     Route::get('getEmployeeRole', [KeyCalculateController::class, 'getEmployeeRole'])->name('keycalc.getEmployeeRole');
 

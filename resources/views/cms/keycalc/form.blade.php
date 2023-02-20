@@ -167,7 +167,7 @@
 
             <div class="card-footer">
                 {{-- //when press on submit button it should go to page due to the action in the form tag --}}
-                <button type="submit" class="btn btn-primary">اختيار</button>
+                <button type="submit" class="btn btn-primary">حفظ النتائج</button>
             </div>
 
         </form>
@@ -210,6 +210,7 @@ $('#jstree').on('changed.jstree', function(e, data) {
     // .select_node(data.selected);
         $('.department_id').val(selectedIds);
         checkTwoValues();
+
 });
 
 
@@ -294,11 +295,11 @@ if(data.length>0){
 
 $('#data-container').append('<br> <p><label>قيمة المفتاح: </label>'+data[0]['key_value'] + '<br><label>نوع الحساب:</label> ' + data[0]['const_name'] + ' </p>');
 if (data[0]['calc_type_id'] == 1) {
-//doctor calculation
+//doctor and medical imaginig calculation
 $('#data-container').append('<input type="text" name="newInput" id="newInput" placeholder="عدد ساعات العمل شهريا">'+'/'+data[0]['key_value']);
 var keyValue = data[0]['key_value'];
-var doctor = 50 ;
-$('#data-container').append('<p><label>عدد الأطباء الموجود: </label>'+doctor);
+var doctor = 50;
+$('#data-container').append('<p><label>العدد الموجود: </label>'+doctor);
 $('#data-container').append('العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
 $('#data-container').append('<br> <br>'+'الفائض/الاحتياج: '+'<input type="text" name="needInput" id="needInput">');
 $('#newInput').on('change', function() {
@@ -309,16 +310,24 @@ var need = doctor-result;
 $('#resultInput').val(result);
 $('#needInput').val(need);
 });
-}else if(data[0]['calc_type_id'] == 2)
+}
+else if(data[0]['calc_type_id'] == 2)
 { //nurse calcularion
 $('#data-container').append('<input type="text" name="newInput" id="newInput" placeholder="عددالأسرة">'+'*'+data[0]['key_value']);
 var keyValue = data[0]['key_value'];
-$('#data-container').append('<br> <br>'+'النتيجة: '+'<input type="text" name="resultInput" id="resultInput">');
+var nurse = 50;
+$('#data-container').append('<p><label>العدد الموجود: </label>'+nurse);
+$('#data-container').append('العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
+$('#data-container').append('<br> <br>'+'الفائض/الاحتياج: '+'<input type="text" name="needInput" id="needInput">');
+
 $('#newInput').on('change', function() {
 var inputValue = $(this).val();
 var result = inputValue * keyValue;
+var need = nurse-result;
 $('#resultInput').val(result);
+$('#needInput').val(need);
 });
+
 }else if(data[0]['calc_type_id'] == 3)
  {// علاج طبيعي
     $('#data-container').append(' <form class="form-horizontal">\
@@ -456,6 +465,27 @@ $('#resultInput').val(result);
 }
 }
 
+
+</script>
+<script>
+    function getEmpCount() {
+var departmentid = $('.department_id').val();
+var roleChoice = $('#roleChoice').val();
+if (roleChoice && departmentid ) {
+$.ajax({
+url: "{{route('getCount')}}",
+type: "get",
+dataType : "json",
+data: {
+"roleChoice": roleChoice,
+"departmentid": departmentid
+},
+
+success: function(data) {
+console.log(data);
+}
+});
+}}
 
 </script>
 @endsection
