@@ -217,6 +217,18 @@ class KeyCalculateController extends Controller
             return response()->view('cms.keycalc.medicalimagingcalc', compact(['department', 'ray_technician_count', 'hospital_name']));
         }
     }
+    // public function doctorCalculate(Request $request)
+    // {
+    //     $hospital_name = $request->input('hospital_name');
+    //     $department = $request->input('department');
+    //     $department_id = $request->input('department_id');
+    //     $nurse_count = $request->input('nurse_count');
+    //     $key_value = $request->input('key_value');
+    //     $bed_count = $request->input('bed_count');
+    //     $need = round($key_value * $bed_count);
+    //     $result = round($nurse_count  - $need);
+    //     return response()->view('cms.keycalc.nursecalc', compact(['result', 'need', 'department', 'flag', 'nurse_count', 'key_value', 'bed_count', 'department_id', 'hospital_name']));
+    // }
     public function nurseCalculate(Request $request)
     {
 

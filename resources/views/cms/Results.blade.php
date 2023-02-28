@@ -63,18 +63,18 @@
               </thead>
               <tbody>
 
-                {{-- @foreach ($circles as $circle)
+                {{-- @foreach ($calcResults as $calcResult)
                 <tr>
-                  <td>{{$circle->id}}</td>
-                  <td>{{$circle->circle_name}}</td>
-                  <td>@if ($circle->is_active)
+                  <td>{{$calcResult->id}}</td>
+                  <td>{{$calcResult->circle_name}}</td>
+                  <td>@if ($calcResult->is_active)
                     <span class="badge badge-success">نشط</span>
                     @else
                     <span class="badge badge-danger">غير نشط</span>
                     @endif
                   </td>
                   <td>
-                    <a href="{{route('circle.edit',$circle->id)}}" class="btn btn-info">
+                    <a href="{{route('calcResult.edit',$calcResult->id)}}" class="btn btn-info">
                       <i class="fas fa-edit"></i>
                     </a> --}}
                     {{-- we sent id to destroy method ($department->id)--}}
@@ -87,7 +87,7 @@
                     </form> --}}
 
                     {{-- using javascript method instead of form method --}}
-                    {{-- <a href="#" class="btn btn-danger" onclick="confirmDestroy({{$circle->id}})">
+                    {{-- <a href="#" class="btn btn-danger" onclick="confirmDestroy({{$calcResult->id}})">
                       <i class="fas fa-trash-alt"></i>
                     </a>
                   </td>
@@ -107,7 +107,7 @@
               </tbody>
 
             </table>
-            {{-- {{$circles->links()}} --}}
+            {{-- {{$calcResult->links()}} --}}
           </div>
           <!-- /.card-body -->
 
@@ -150,7 +150,7 @@
 }
 //  implement delete function using axios
 function destroy(id){
-  axios.delete('/cms/admin/circle/'+id)
+  axios.delete('/cms/admin/calcResult/'+id)
     .then(function (response) {
   // handle success 2xx-3xx
   console.log(response.data);

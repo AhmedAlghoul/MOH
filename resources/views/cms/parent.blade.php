@@ -315,10 +315,10 @@
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a href="{{route('Results')}}" class="nav-link">
-                                <i class="nav-icon fas fa-map-marked-alt"></i>
+                            <a href="{{route('results.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-list"></i>
                                 <p>
-                                    عرض النتائج
+                                    عرض نتائج حساب المفتاح
                                 </p>
                             </a>
                         </li>
@@ -332,7 +332,7 @@
                             </a>
                         </li> --}}
 
-                        <li class="nav-item has-treeview">
+                        {{-- <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-list"></i>
                                 <p>
@@ -384,11 +384,11 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> --}}
 
                         {{-- view results due to work place --}}
 
-                        <li class="nav-item has-treeview">
+                        {{-- <li class="nav-item has-treeview">
                             <a href="{{route('facilityresult.create')}}" class="nav-link">
                                 <i class="nav-icon fas fa-map-marked-alt"></i>
                                 <p>
@@ -405,7 +405,7 @@
                                 </p>
                             </a>
 
-                        </li>
+                        </li> --}}
 
                         {{-- <li class="nav-item">
                             <a href="{{route('keycalc.create')}}" class="nav-link">

@@ -21,6 +21,7 @@ use App\Http\Controllers\PhysicaltherapycalcController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RolePermissionController;
+use App\Http\Controllers\SaveResultController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPermissionController;
 use App\Models\Constant;
@@ -93,7 +94,11 @@ Route::prefix('cms/admin')->middleware('auth:web')->group(function () {
     //view the facility result page
     Route::view('facilityresult', 'cms.viewkeyCalcResult.facilityResult')->name('facilityresult');
     //view the results page
-    Route::view('results', 'cms.Results')->name('Results');
+    //Result Final Resource Route
+    Route::resource('results',SaveResultController::class);
+    // Route::post('/results', [SaveResultController::class, 'store']);
+    // Route::view('results', 'cms.Results')->name('Results');
+
     //get job role route
     Route::get('getEmployeeRole', [KeyCalculateController::class, 'getEmployeeRole'])->name('keycalc.getEmployeeRole');
 
