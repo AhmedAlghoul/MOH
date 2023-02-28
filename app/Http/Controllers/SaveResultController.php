@@ -67,9 +67,9 @@ class SaveResultController extends Controller
         $saveresult->DEPARTMENT_ID = $request->department_id;
         $saveresult->KEY_VALUE = $request->key_value;
         $saveresult->CALC_TYPE_ID = $request->calc_type_id;
-        $saveresult->EMP_COUNT = $request->doctor_count;
-        $saveresult->RESULT_CALC = $request->doctor_result;
-        $saveresult->NEED_EMP = $request->doctor_need;
+        $saveresult->EMP_COUNT = $request->emp_count;
+        $saveresult->RESULT_CALC = $request->result;
+        $saveresult->NEED_EMP = $request->need;
         // $saveresult->DTL_REUSLT = $request->mobile_number;
         $saveresult->save();
         return redirect()->back();

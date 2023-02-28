@@ -155,11 +155,11 @@
 
             </div>
             <!-- /.card-body -->
-{{-- 
+            {{--
             <div class="card-footer"> --}}
                 {{-- //when press on submit button it should go to page due to the action in the form tag --}}
                 {{-- <button type="submit" class="btn btn-primary" id="save">حفظ النتائج</button> --}}
-            {{-- </div> --}}
+                {{-- </div> --}}
 
         </form>
     </div>
@@ -174,6 +174,37 @@
 
 {{-- show new dropdown due to previous dropdown --}}
 <script>
+    // $(document).ready(function() {
+     function SaveData(key_value,calc_type_id) {
+        var jobtitle_id =$('#roleChoice').val();
+        var department_id =$('.department_id').val();
+        // var key_value = data[0]['key_value'];
+        // var calc_type_id = data[0]['calc_type_id'];
+        var emp_count = globalCount;
+        var result = $('#resultInput').text();
+        var need = $('#needInput').text();
+    $.ajax({
+        url: "{{route('results.store')}}",
+        type: "post",
+        dataType : "json",
+        async:false,
+        data: {
+            "jobtitle_id" : jobtitle_id,
+            "department_id" : department_id,
+            "key_value" : key_value,
+            "calc_type_id": calc_type_id,
+            "emp_count":emp_count,
+            "result": result,
+            "need": need
+    },
+    success: function(data) {
+    console.log("hello there" );
+    }
+    });
+    }
+//     window.SaveData = SaveData;
+// });
+
     $(document).ready(function(){
     let url ="{{route('treeview')}}";
     console.log(url);
@@ -210,9 +241,6 @@ $('#roleChoice').change(function () {
     checkTwoValues();
         });
 
-</script>
-
-<script>
     let globalCount; // define a global variable
         function getEmpCount() {
         var departmentid = $('.department_id').val();
@@ -229,9 +257,9 @@ $('#roleChoice').change(function () {
         "departmentid": departmentid
         },
         success: function(data) {
-        let count = data;
-        console.log(count );
-        globalCount = count;
+            let count = data;
+            console.log(count );
+            globalCount = count;
         }
         });
         }}
@@ -268,7 +296,7 @@ if (data[0]['calc_type_id'] == 1) {
     $('#data-container').append('<p><label>العدد الموجود: </label>'+doctor);
     $('#data-container').append('العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
     $('#data-container').append('<br> <br>'+'الفائض/الاحتياج: '+'<input type="text" name="needInput" id="needInput">');
-    $('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="submit">حفظ النتائج</a>');
+    $('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="submit" onclick="SaveData(' + data[0]["key_value"] + ',' + data[0]["calc_type_id"] + ')"  >حفظ النتائج</a>');
     $('#newInput').on('change', function() {
 
     var inputValue = $(this).val();
@@ -278,35 +306,36 @@ if (data[0]['calc_type_id'] == 1) {
     $('#needInput').val(need.toFixed(1));
     });
 
-    $('.save-btn').click(function(event) {
-            event.preventDefault();
-            var jobtitle_id =$('#roleChoice').val();
-            var department_id =$('.department_id').val();
-            var key_value = data[0]['key_value'];
-            var calc_type_id = data[0]['calc_type_id'];
-            var doctor_count = globalCount;
-            var doctor_result = $('#resultInput').text();
-            var doctor_need = $('#needInput').text();
+    // $('.save-btn').click(function(event) {
+    // event.preventDefault();
+    // var jobtitle_id =$('#roleChoice').val();
+    // var department_id =$('.department_id').val();
+    // var key_value = data[0]['key_value'];
+    // var calc_type_id = data[0]['calc_type_id'];
+    // var doctor_count = globalCount;
+    // var doctor_result = $('#resultInput').text();
+    // var doctor_need = $('#needInput').text();
 
-            axios.post('/cms/admin/results/store', {
-            jobtitle_id : jobtitle_id,
-            department_id : department_id,
-            key_value : key_value,
-            calc_type_id: calc_type_id,
-            doctor_count:doctor_count,
-            doctor_result: doctor_result,
-            doctor_need:  doctor_need
-            })
+    // axios.post('/cms/admin/results/store', {
+    // jobtitle_id : jobtitle_id,
+    // department_id : department_id,
+    // key_value : key_value,
+    // calc_type_id: calc_type_id,
+    // doctor_count:doctor_count,
+    // doctor_result: doctor_result,
+    // doctor_need: doctor_need
+    // })
 
 
-            .then(function (response) {
-            console.log(response);
-            })
-            .catch(function (error) {
+    // .then(function (response) {
+    // console.log(response);
+    // })
+    // .catch(function (error) {
 
-            console.log(error);
-            });
-    });
+    // console.log(error);
+    // });
+    // });
+
 }
 else if(data[0]['calc_type_id'] == 2)
 { //nurse calcularion
@@ -460,9 +489,11 @@ else if(data[0]['calc_type_id'] == 2)
 
 @endsection
 @push('js')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js">
+</script>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js">
+</script>
 <script>
     $(document).ready(function() {
         $('.js-example-basic-single').select2();
