@@ -33,6 +33,7 @@
     <!-- Custom style for RTL -->
     <link rel="stylesheet" href="{{asset('cms/dist/css/custom.css')}}">
     <link rel="stylesheet" href="{{ asset('cms/plugins/toastr/toastr.min.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <style>
         .image {
             padding-right: 18px;
@@ -715,6 +716,13 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="{{ asset('cms/plugins/toastr/toastr.min.js') }}"></script>
     <script src="{{asset('js/crud.js')}}"></script>
+    <script type="text/javascript">
+        $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+    </script>
 
     @yield('scripts')
     @stack('js')

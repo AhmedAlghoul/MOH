@@ -61,7 +61,6 @@ class SaveResultController extends Controller
         //     ]
         // );
 
-
         $saveresult= new SaveResult();
         $saveresult->JOBTITLE_ID= $request->jobtitle_id;
         $saveresult->DEPARTMENT_ID = $request->department_id;
@@ -70,6 +69,8 @@ class SaveResultController extends Controller
         $saveresult->EMP_COUNT = $request->emp_count;
         $saveresult->RESULT_CALC = $request->result;
         $saveresult->NEED_EMP = $request->need;
+        dd($request->all());
+
         // $saveresult->DTL_REUSLT = $request->mobile_number;
         $saveresult->save();
         return redirect()->back();

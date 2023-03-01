@@ -181,13 +181,12 @@
         // var key_value = data[0]['key_value'];
         // var calc_type_id = data[0]['calc_type_id'];
         var emp_count = globalCount;
-        var result = $('#resultInput').text();
-        var need = $('#needInput').text();
+        var result = $('#resultInput').val();
+        var need = $('#needInput').val();
     $.ajax({
         url: "{{route('results.store')}}",
         type: "post",
         dataType : "json",
-        async:false,
         data: {
             "jobtitle_id" : jobtitle_id,
             "department_id" : department_id,
