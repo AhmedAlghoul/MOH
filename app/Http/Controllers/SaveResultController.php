@@ -69,11 +69,15 @@ class SaveResultController extends Controller
         $saveresult->EMP_COUNT = $request->emp_count;
         $saveresult->RESULT_CALC = $request->result;
         $saveresult->NEED_EMP = $request->need;
-        dd($request->all());
-
-        // $saveresult->DTL_REUSLT = $request->mobile_number;
+        $saveresult->DTL_REUSLT = $request->dtl;
+        dd($saveresult);
         $saveresult->save();
-        return redirect()->back();
+
+        // session()->flash('success', 'تم حفظ البيانات بنجاح');
+        // return back()->with('success', 'تم حفظ البيانات بنجاح');
+            return true;
+
+        // return redirect()->back()->with('success', 'تم حفظ البيانات بنجاح');
 
     }
 
@@ -97,6 +101,8 @@ class SaveResultController extends Controller
     public function edit($id)
     {
         //
+        // $department = SaveResult::findOrFail($id);
+        // return response()->view('cms.departments.edit', ['department' => $department]);
     }
 
     /**
@@ -120,5 +126,7 @@ class SaveResultController extends Controller
     public function destroy($id)
     {
         //
+        $isDestroyed = SaveResult::destroy($id);
+        return response()->json(['message' => $isDestroyed ? 'تم حذف نتيجة الحساب بنجاح' : 'حدث خطأ أثناء حذف النتيجة '], $isDestroyed ? 200 : 400);
     }
 }

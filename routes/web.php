@@ -29,6 +29,7 @@ use App\Models\Department;
 use App\Models\EmployeeRole;
 use App\Models\Key;
 use App\Models\Managment;
+use App\Models\SaveResult;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
@@ -52,13 +53,17 @@ Route::get('/test', function () {
     // $managment = Managment::whereNull('TB_MANAGMENT_PARENT')->get();
     $managment = Managment::where('TB_MANAGMENT_PARENT', 1398)->get();
     $keys = Key::all();
+    $constans = Constant::all();
     $selectedIds = Managment::all();
+    $results_show = SaveResult::all();
+
     // $roles = EmployeeRole::all();
     // $constant = Constant::all();
-    // dd($constant);
+    // dd($constans);
     // dd($managment);
     // dd($keys);
-    dd($managment);
+    // dd($managment);
+    dd($results_show);
 });
 
 Route::prefix('cms/admin')->middleware('guest:web')->group(function () {
@@ -95,7 +100,7 @@ Route::prefix('cms/admin')->middleware('auth:web')->group(function () {
     Route::view('facilityresult', 'cms.viewkeyCalcResult.facilityResult')->name('facilityresult');
     //view the results page
     //Result Final Resource Route
-    Route::resource('results',SaveResultController::class);
+    Route::resource('results', SaveResultController::class);
     // Route::post('/results', [SaveResultController::class, 'store']);
     // Route::view('results', 'cms.Results')->name('Results');
 

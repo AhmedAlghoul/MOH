@@ -45,6 +45,11 @@
         <form id="create-form" role="form" method="GET" action="{{route('keycalc.getEmployeeRole')}}">
             {{-- csrf must be in the form tag --}}
             @csrf
+            <div id="alert_success" class="d-none">
+                <div class="alert alert-success" role="alert">
+                    تم حفظ النتيجة بنجاح!
+                </div>
+            </div>
 
             <div class="card-body form-row">
 
@@ -62,14 +67,8 @@
                 </div>
                 @endif
 
-                @if (session('success'))
+                {{-- {{ dd('Success message found!') }} --}}
 
-                <div class="alert alert-success alert-dismissible col-md-12">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <h5><i class="icon fas fa-check"></i> رسالة تأكيد!</h5>
-                    {{ session('success') }}
-                </div>
-                @endif
 
 
                 {{-- display all errors --}}
@@ -88,8 +87,53 @@
                         <option value="{{$role->jobtitle_code}}">{{$role->jobtitle_name_ar}}</option>
                         @endforeach
                     </select>
+                    <div id="info-container"></div>
+
+                    {{-- start of administrative calculaction form --}}
+                    <div id="administrativecalc" style="display: none;">
+                        <form class="form-horizontal">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <label for="twenty_four_hours" class="col-sm-4 col-form-label"> عدد النقاط بنظام
+                                        24 ساعة</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control" id="twenty_four_hours"
+                                            name="twenty_four_hours">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="seven_hours" class="col-sm-4 col-form-label">عدد النقاط بنظام 7
+                                        ساعات</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control" id="seven_hours" name="seven_hours">
+                                    </div>
+                                </div>
+                                <a class="btn btn-primary calculate-btn" type="submit">حساب</a>
+                            </div>
+                        </form>
+                    </div>
+                    {{-- End of administrative calculaction form --}}
+
+                    {{-- start of administrative calculaction busyness rate form --}}
+                    <div id="administrative_calc_busyness_rate" style="display: none;">
+                        <form class="form-horizontal">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <label for="busyness_rate" class="col-sm-4 col-form-label"> نسبة انشغال
+                                        الاسرة</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control" id="busyness_rate"
+                                            name="busyness_rate">
+                                    </div>
+                                </div>
+                                <a class="btn btn-primary calculate-btn" type="submit">حساب</a>
+                            </div>
+                        </form>
+                    </div>
+                    {{-- End of administrative calculaction form --}}
                     <div id="data-container"></div>
                     <div id="data-input"></div>
+
                 </div>
 
 
@@ -175,7 +219,7 @@
 {{-- show new dropdown due to previous dropdown --}}
 <script>
     // $(document).ready(function() {
-     function SaveData(key_value,calc_type_id) {
+     function SaveData(key_value,calc_type_id,dtl) {
         var jobtitle_id =$('#roleChoice').val();
         var department_id =$('.department_id').val();
         // var key_value = data[0]['key_value'];
@@ -194,11 +238,16 @@
             "calc_type_id": calc_type_id,
             "emp_count":emp_count,
             "result": result,
-            "need": need
-    },
+            "need": need,
+            "dtl": dtl
+            },
     success: function(data) {
-    console.log("hello there" );
-    }
+            $('#alert_success').removeClass('d-none');
+            setTimeout(function() {
+            $('#alert_success').addClass('d-none');
+            }, 2500); // hide the alert after 5 seconds (5000 milliseconds)
+
+             }
     });
     }
 //     window.SaveData = SaveData;
@@ -227,8 +276,6 @@
 });
 $('#jstree').on('changed.jstree', function(e, data) {
         var selectedIds = data.selected;
-        // console.log(selectedIds);
-    // .select_node(data.selected);
         $('.department_id').val(selectedIds);
         checkTwoValues();
 
@@ -267,9 +314,12 @@ $('#roleChoice').change(function () {
     var departmentid =$('.department_id').val();
     var roleChoice =$('#roleChoice').val();
 // var roleChoice = $(this).val();
-    console.log(roleChoice);
-    console.log(departmentid);
+    // console.log(roleChoice);
+    // console.log(departmentid);
     $('#data-container').html('');
+    $('#info-container').html('');
+    $('#administrativecalc').hide();
+    $('#administrative_calc_busyness_rate').hide();
     if (roleChoice && departmentid ) {
 // $("#jstree").jstree().deselect_all(true);
     $.ajax({
@@ -286,54 +336,28 @@ $('#roleChoice').change(function () {
         if(data.length>0){
         getEmpCount();
 
-$('#data-container').append('<br> <p><label>قيمة المفتاح: </label>'+data[0]['key_value'] + '<br><label>نوع الحساب:</label> ' + data[0]['const_name'] + ' </p>');
+$('#info-container').append('<br> <p><label>قيمة المفتاح: </label>'+data[0]['key_value'] +' <label id="changeable"></label> <br><label>نوع الحساب:</label> ' + data[0]['const_name'] + ' </p>');
 if (data[0]['calc_type_id'] == 1) {
-    //doctor and medical imaginig calculation
+
+    $('#changeable').text('ساعة');
+  //doctor and medical imaginig calculation
     $('#data-container').append('<input type="text" name="monthly_hours" id="newInput" placeholder="عدد ساعات العمل شهريا">'+'/'+data[0]['key_value']);
     var keyValue = data[0]['key_value'];
     let doctor = globalCount;
+    let dtl = '';
     $('#data-container').append('<p><label>العدد الموجود: </label>'+doctor);
     $('#data-container').append('العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
     $('#data-container').append('<br> <br>'+'الفائض/الاحتياج: '+'<input type="text" name="needInput" id="needInput">');
-    $('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="submit" onclick="SaveData(' + data[0]["key_value"] + ',' + data[0]["calc_type_id"] + ')"  >حفظ النتائج</a>');
+    $('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="submit" onclick="SaveData(' + data[0]["key_value"] + ',' + data[0]["calc_type_id"] + ', \'' + dtl + '\')"  >حفظ النتائج</a>');
     $('#newInput').on('change', function() {
 
     var inputValue = $(this).val();
     var result = inputValue / keyValue;
     var need = doctor-result;
-    $('#resultInput').val(result.toFixed(1));
-    $('#needInput').val(need.toFixed(1));
+    let dtl = '('+inputValue+'/'+ keyValue+')';
+    $('#resultInput').val(result.toFixed(0));
+    $('#needInput').val(need.toFixed(0));
     });
-
-    // $('.save-btn').click(function(event) {
-    // event.preventDefault();
-    // var jobtitle_id =$('#roleChoice').val();
-    // var department_id =$('.department_id').val();
-    // var key_value = data[0]['key_value'];
-    // var calc_type_id = data[0]['calc_type_id'];
-    // var doctor_count = globalCount;
-    // var doctor_result = $('#resultInput').text();
-    // var doctor_need = $('#needInput').text();
-
-    // axios.post('/cms/admin/results/store', {
-    // jobtitle_id : jobtitle_id,
-    // department_id : department_id,
-    // key_value : key_value,
-    // calc_type_id: calc_type_id,
-    // doctor_count:doctor_count,
-    // doctor_result: doctor_result,
-    // doctor_need: doctor_need
-    // })
-
-
-    // .then(function (response) {
-    // console.log(response);
-    // })
-    // .catch(function (error) {
-
-    // console.log(error);
-    // });
-    // });
 
 }
 else if(data[0]['calc_type_id'] == 2)
@@ -344,17 +368,18 @@ else if(data[0]['calc_type_id'] == 2)
     $('#data-container').append('<p><label>العدد الموجود: </label>'+nurse);
     $('#data-container').append('العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
     $('#data-container').append('<br> <br>'+'الفائض/الاحتياج: '+'<input type="text" name="needInput" id="needInput">');
-
+$('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="submit" onclick="SaveData(' + data[0]["key_value"] + ',' + data[0]["calc_type_id"] + ')"  >حفظ النتائج</a>' );
     $('#newInput').on('change', function() {
     var inputValue = $(this).val();
     var result = inputValue * keyValue;
     var need = nurse-result;
-    $('#resultInput').val(result.toFixed(1));
-    $('#needInput').val(need.toFixed(1));
+    $('#resultInput').val(result.toFixed(0));
+    $('#needInput').val(need.toFixed(0));
     });
 
 }else if(data[0]['calc_type_id'] == 3)
  {// علاج طبيعي
+    $('#changeable').text('ساعة');
     let Physiotherapy_technician = globalCount;
     $('#data-container').append('<label>العدد الموجود: </label>'+Physiotherapy_technician);
     $('#data-container').append(' <form class="form-horizontal">\
@@ -388,7 +413,7 @@ else if(data[0]['calc_type_id'] == 2)
     $('#data-container').append('<a class="btn btn-primary calculate-btn" type="submit">حساب</a>');
     $('#data-container').append('<br>'+'العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
     $('#data-container').append('<br><br>'+'الفائض/الاحتياج: '+'<input type="text" name="needInput" id="needInput">');
-
+$('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="submit" onclick="SaveData(' + data[0]["key_value"] + ',' + data[0]["calc_type_id"] + ')"  >حفظ النتائج</a>' );
     $('.calculate-btn').click(function() {
     let number_of_sessions = parseInt($('#number_of_sessions').val());
     let session_duration = parseInt($('#session_duration').val());
@@ -396,8 +421,8 @@ else if(data[0]['calc_type_id'] == 2)
     let working_days = parseInt($('#working_days').val());
     let result = (number_of_sessions * session_duration) / (working_minutes_per_day * working_days);
     let need = Physiotherapy_technician - result ;
-    $('#resultInput').val(result.toFixed(1));
-    $('#needInput').val(need.toFixed(1));
+    $('#resultInput').val(result.toFixed(0));
+    $('#needInput').val(need.toFixed(0));
 
     });
 
@@ -437,22 +462,24 @@ else if(data[0]['calc_type_id'] == 2)
     $('#data-container').append('<a class="btn btn-primary calculate-btn" type="submit">حساب</a>');
     $('#data-container').append('<br>'+'العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
     $('#data-container').append('<br><br>'+'الفائض/الاحتياج: '+'<input type="text" name="needInput" id="needInput">');
-
+$('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="submit" onclick="SaveData(' + data[0]["key_value"] + ',' + data[0]["calc_type_id"] + ')"  >حفظ النتائج</a>' );
     $('.calculate-btn').click(function() {
     let number_of_examinations = parseInt($('#number_of_examinations').val());
     let examination_time = parseInt($('#examination_time').val());
     let working_minutes_per_day = parseInt($('#working_minutes_per_day').val());
     let working_days = parseInt($('#working_days').val());
     let result = (number_of_examinations * examination_time) / (working_minutes_per_day * working_days);
+    let dtl = '('+number_of_examinations+'*'+ examination_time+')';
     let need = laboratory_technician - result ;
-    $('#resultInput').val(result.toFixed(1));
-    $('#needInput').val(need.toFixed(1));
+    $('#resultInput').val(result.toFixed(0));
+    $('#needInput').val(need.toFixed(0));
     });
 
 
 
 }else if(data[0]['calc_type_id'] == 6)
 {//صيدلة
+    $('#changeable').text('روشتة');
     $('#data-container').append(' <form class="form-horizontal">\
     <div class="card-body">\
         <div class="form-group row">\
@@ -469,15 +496,78 @@ else if(data[0]['calc_type_id'] == 2)
         </div>\
     </div>\
 </form>');
+var pharmacist = globalCount;
+var prescriptions_per_pharmacist = data[0]['key_value'];
+var reports_per_pharmacist = data[0]['value_col1'];
+$('#data-container').append('<a class="btn btn-primary calculate-btn" type="submit">حساب</a>');
+$('#data-container').append('<p><label>العدد الموجود: </label>'+pharmacist);
+$('#data-container').append('العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
+$('#data-container').append('<br><br>'+'الفائض/الاحتياج: '+'<input type="text" name="needInput" id="needInput">');
+$('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="submit" onclick="SaveData(' + data[0]["key_value"] + ',' + data[0]["calc_type_id"] + ')"  >حفظ النتائج</a>' );
+
+$('.calculate-btn').click(function() {
+    let number_of_prescriptions = parseInt($('#number_of_prescriptions').val()) || 0;
+    let number_of_medical_reports = parseInt($('#number_of_medical_reports').val()) || 0;
+    let total_prescriptions =(number_of_medical_reports / reports_per_pharmacist) * prescriptions_per_pharmacist + number_of_prescriptions;
+    let result =Math.ceil(total_prescriptions / prescriptions_per_pharmacist);
+    let need = pharmacist - result ;
+    $('#resultInput').val(result.toFixed(0));
+    $('#needInput').val(need.toFixed(0));
+});
 
 
+}else if(data[0]['calc_type_id'] == 7){
+//نظام العمل- الاداريين
+// `$('#administrativecalc').css('display', 'block');`
+$('#changeable').text('موظفين');
+$('#administrativecalc').show();
 
+var administartive_count = globalCount;
+var admin_count_24_hours = data[0]['key_value'];
+var admin_count_7_hours = data[0]['value_col1'];
+
+    // $('#data-container').append('<a class="btn btn-primary calculate-btn" type="submit">حساب</a>');
+    $('#data-container').append('<p><label>العدد الموجود: </label>'+administartive_count);
+    $('#data-container').append('العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
+    $('#data-container').append('<br><br>'+'الفائض/الاحتياج: '+'<input type="text" name="needInput" id="needInput">');
+    $('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="submit"onclick="SaveData(' + data[0]["key_value"] + ',' + data[0]["calc_type_id"] + ')"  >حفظ النتائج</a>' );
+        $('.calculate-btn').click(function()
+         {
+            let count_of_24_hours_points = parseInt($('#twenty_four_hours').val()) || 0;
+            let count_of_7_hours_points = parseInt($('#seven_hours').val()) || 0;
+            let result =(count_of_24_hours_points *admin_count_24_hours) +(count_of_7_hours_points *admin_count_7_hours);
+            let need=administartive_count - result ;
+            $('#resultInput').val(result.toFixed(0));
+           $('#needInput').val(need.toFixed(0))});
+
+}else if(data[0]['calc_type_id'] == 8){
+//انشغال الاسرة- الاداريين
+    $('#changeable').text('% من الاسرة');
+    $('#administrative_calc_busyness_rate').show();
+
+    var administartive_count = globalCount;
+    $('#data-container').append('<p><label>العدد الموجود: </label>'+administartive_count);
+    $('#data-container').append('العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
+    $('#data-container').append('<br><br>'+'الفائض/الاحتياج: '+'<input type="text" name="needInput" id="needInput">');
+    $('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="submit" onclick="SaveData(' + data[0]["key_value"] + ',' + data[0]["calc_type_id"] + ')"  >حفظ النتائج</a>' );
+    $('.calculate-btn').click(function() {
+
+        let busyness_rate =parseInt($('#busyness_rate').val()) ||0;
+        if(busyness_rate >= 75 && busyness_rate <= 100 ){
+            $('#warning-message').remove();
+            let result=1;
+        }else if (busyness_rate >= 0 && busyness_rate < 75){
+            $('#warning-message').remove();
+            let result=1;
+            $('#data-container').append('<p id="warning-message" style="font-weight: bold; color: red;">يتم في هذه الحالة دمج قسمين سويا ليتم عمل مراسل واحد</p>');
+        }
+        let result=1;
+        let need=administartive_count - result ;
+
+        $('#resultInput').val(result.toFixed(0));
+        $('#needInput').val(need.toFixed(0))});
 }
-// else if (){}
 
-// $('#jstree')
-// .jstree(true)
-// .select_node( data[0]['department_id']);
 }
 }
 });
