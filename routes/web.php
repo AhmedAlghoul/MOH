@@ -24,6 +24,7 @@ use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\SaveResultController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPermissionController;
+use App\Models\Classification;
 use App\Models\Constant;
 use App\Models\Department;
 use App\Models\EmployeeRole;
@@ -56,14 +57,15 @@ Route::get('/test', function () {
     $constans = Constant::all();
     $selectedIds = Managment::all();
     $results_show = SaveResult::all();
+    $classifications = Classification::all();
 
     // $roles = EmployeeRole::all();
     // $constant = Constant::all();
     // dd($constans);
     // dd($managment);
-    // dd($keys);
+    dd($keys);
     // dd($managment);
-    dd($results_show);
+    // dd($classifications);
 });
 
 Route::prefix('cms/admin')->middleware('guest:web')->group(function () {

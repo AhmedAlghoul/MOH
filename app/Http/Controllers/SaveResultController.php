@@ -69,8 +69,8 @@ class SaveResultController extends Controller
         $saveresult->EMP_COUNT = $request->emp_count;
         $saveresult->RESULT_CALC = $request->result;
         $saveresult->NEED_EMP = $request->need;
-        $saveresult->DTL_REUSLT = $request->dtl;
-        dd($saveresult);
+        $saveresult->DTL_REUSLT = $request->details;
+        // dd($saveresult);
         $saveresult->save();
 
         // session()->flash('success', 'تم حفظ البيانات بنجاح');

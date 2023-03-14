@@ -35,8 +35,11 @@
     <!-- general form elements -->
     <div class="card card-primary" id="form-card">
         <div class="card-header">
-            <button style="float: left" type="button" class="btn btn-default">
-                طريقة حساب المفتاح </button>
+            {{-- <button style="float: left" type="button" class="btn btn-default">
+                طريقة حساب المفتاح </button> --}}
+                <a class="btn btn-info" style="float: left" data-toggle="modal" data-target="#calcModal">
+             طريقة حساب المفتاح
+                </a>
             <h3 class="card-title">حساب المفتاح</h3>
         </div>
         <!-- /.card-header -->
@@ -211,20 +214,26 @@
 </div>
 <!-- /.card -->
 
-
+@include('cms.modal.calculateMethodModal')
 @endsection
 
 @section('scripts')
 
 {{-- show new dropdown due to previous dropdown --}}
 <script>
+    $(document).ready(function(){
+    $('.btn-info').click(function(){
+    $('#calcModal').modal('show');
+    });
+    });
     // $(document).ready(function() {
-     function SaveData(key_value,calc_type_id,dtl) {
+     function SaveData(key_value,calc_type_id) {
         var jobtitle_id =$('#roleChoice').val();
         var department_id =$('.department_id').val();
         // var key_value = data[0]['key_value'];
         // var calc_type_id = data[0]['calc_type_id'];
         var emp_count = globalCount;
+        var details = globaldetails;
         var result = $('#resultInput').val();
         var need = $('#needInput').val();
     $.ajax({
@@ -239,7 +248,7 @@
             "emp_count":emp_count,
             "result": result,
             "need": need,
-            "dtl": dtl
+            "details": details
             },
     success: function(data) {
             $('#alert_success').removeClass('d-none');
@@ -309,13 +318,13 @@ $('#roleChoice').change(function () {
         }
         });
         }}
-
+    let globaldetails;
         function checkTwoValues() {
     var departmentid =$('.department_id').val();
     var roleChoice =$('#roleChoice').val();
-// var roleChoice = $(this).val();
-    // console.log(roleChoice);
-    // console.log(departmentid);
+    // var roleChoice = $(this).val();
+    console.log(roleChoice);
+    console.log(departmentid);
     $('#data-container').html('');
     $('#info-container').html('');
     $('#administrativecalc').hide();
@@ -337,6 +346,7 @@ $('#roleChoice').change(function () {
         getEmpCount();
 
 $('#info-container').append('<br> <p><label>قيمة المفتاح: </label>'+data[0]['key_value'] +' <label id="changeable"></label> <br><label>نوع الحساب:</label> ' + data[0]['const_name'] + ' </p>');
+$('#warning-message').hide();
 if (data[0]['calc_type_id'] == 1) {
 
     $('#changeable').text('ساعة');
@@ -348,13 +358,16 @@ if (data[0]['calc_type_id'] == 1) {
     $('#data-container').append('<p><label>العدد الموجود: </label>'+doctor);
     $('#data-container').append('العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
     $('#data-container').append('<br> <br>'+'الفائض/الاحتياج: '+'<input type="text" name="needInput" id="needInput">');
-    $('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="submit" onclick="SaveData(' + data[0]["key_value"] + ',' + data[0]["calc_type_id"] + ', \'' + dtl + '\')"  >حفظ النتائج</a>');
+    $('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="submit" onclick="SaveData(' + data[0]["key_value"] + ',' + data[0]["calc_type_id"] + ')"  >حفظ النتائج</a>');
     $('#newInput').on('change', function() {
 
     var inputValue = $(this).val();
     var result = inputValue / keyValue;
     var need = doctor-result;
     let dtl = '('+inputValue+'/'+ keyValue+')';
+    globaldetails=dtl;
+
+
     $('#resultInput').val(result.toFixed(0));
     $('#needInput').val(need.toFixed(0));
     });
@@ -373,6 +386,8 @@ $('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="su
     var inputValue = $(this).val();
     var result = inputValue * keyValue;
     var need = nurse-result;
+    let dtl = '('+inputValue+'*'+ keyValue+')';
+    globaldetails=dtl;
     $('#resultInput').val(result.toFixed(0));
     $('#needInput').val(need.toFixed(0));
     });
@@ -421,6 +436,8 @@ $('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="su
     let working_days = parseInt($('#working_days').val());
     let result = (number_of_sessions * session_duration) / (working_minutes_per_day * working_days);
     let need = Physiotherapy_technician - result ;
+let dtl = '(' + number_of_sessions + '*' + session_duration + '/' + working_minutes_per_day + '*' + working_days + ')';
+    globaldetails=dtl;
     $('#resultInput').val(result.toFixed(0));
     $('#needInput').val(need.toFixed(0));
 
@@ -469,8 +486,9 @@ $('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="su
     let working_minutes_per_day = parseInt($('#working_minutes_per_day').val());
     let working_days = parseInt($('#working_days').val());
     let result = (number_of_examinations * examination_time) / (working_minutes_per_day * working_days);
-    let dtl = '('+number_of_examinations+'*'+ examination_time+')';
     let need = laboratory_technician - result ;
+    let dtl = '(' + number_of_examinations + '*' + examination_time + '/' + working_minutes_per_day + '*' + working_days + ')';
+    globaldetails=dtl;
     $('#resultInput').val(result.toFixed(0));
     $('#needInput').val(need.toFixed(0));
     });
@@ -511,6 +529,8 @@ $('.calculate-btn').click(function() {
     let total_prescriptions =(number_of_medical_reports / reports_per_pharmacist) * prescriptions_per_pharmacist + number_of_prescriptions;
     let result =Math.ceil(total_prescriptions / prescriptions_per_pharmacist);
     let need = pharmacist - result ;
+    let dtl = '('+total_prescriptions+'/'+ prescriptions_per_pharmacist+')';
+    globaldetails=dtl;
     $('#resultInput').val(result.toFixed(0));
     $('#needInput').val(need.toFixed(0));
 });
@@ -537,6 +557,8 @@ var admin_count_7_hours = data[0]['value_col1'];
             let count_of_7_hours_points = parseInt($('#seven_hours').val()) || 0;
             let result =(count_of_24_hours_points *admin_count_24_hours) +(count_of_7_hours_points *admin_count_7_hours);
             let need=administartive_count - result ;
+            let dtl = '(' + count_of_24_hours_points + '*' + admin_count_24_hours + '+' + count_of_7_hours_points + '*' + admin_count_7_hours + ')';
+            globaldetails=dtl;
             $('#resultInput').val(result.toFixed(0));
            $('#needInput').val(need.toFixed(0))});
 

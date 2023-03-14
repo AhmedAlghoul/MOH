@@ -30,73 +30,59 @@
   <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
     <div class="row">
-      <div class="col-lg-3 col-6">
+      <div class="col-lg-4 col-6">
         <!-- small box -->
         <div class="small-box bg-info">
           <div class="inner">
             <h3>
-              {{\App\Models\Employee::count()}}
+              {{\App\Models\Key::count()}}
             </h3>
 
-            <p>عدد الموظفين</p>
+            <p>مفتاح وظيفي</p>
           </div>
           <div class="icon">
             <i class="ion ion-person"></i>
           </div>
-          <a href="{{route('employee.index')}}" class="small-box-footer">معلومات اكثر <i
+          <a href="{{route('key.index')}}" class="small-box-footer">معلومات اكثر <i
               class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
       <!-- ./col -->
-      <div class="col-lg-3 col-6">
+      <div class="col-lg-4 col-6">
         <!-- small box -->
         <div class="small-box bg-success">
           <div class="inner">
             {{-- hospital count statics --}}
-            <h3>{{\App\Models\Hospital::count()}}</h3>
+            <h3>{{\App\Models\EmployeeRole::count()}}</h3>
 
-            <p>عدد المستشفيات</p>
+            <p> مسمى وظيفي</p>
           </div>
           <div class="icon">
             <i class="ion ion-medkit"></i>
           </div>
-          <a href="{{route('hospital.index')}}" class="small-box-footer">معلومات اكثر <i
+          <a href="{{route('employeeroles.index')}}" class="small-box-footer">معلومات اكثر <i
               class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
       <!-- ./col -->
-      <div class="col-lg-3 col-6">
+      <div class="col-lg-4 col-6">
         <!-- small box -->
         <div class="small-box bg-warning">
 
             <div class="inner">
-            {{-- <h3>{{$count_circle}}</h3> --}}
+            <h3>{{\App\Models\SaveResult::count()}}</h3>
 
-            <p>عدد الدوائر</p>
+            <p> نتيجة</p>
             </div>
           <div class="icon">
             <i class="ion ion-clipboard"></i>
           </div>
-          <a href="{{route('circle.index')}}" class="small-box-footer">معلومات اكثر <i
+          <a href="{{route('results.index')}}" class="small-box-footer">معلومات اكثر <i
               class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
       <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-          <div class="inner">
-            <h3>{{\App\Models\Department::count()}}</h3>
 
-            <p>عدد الأقسام</p>
-            </div>
-                <div class="icon">
-                    <i class="ion ion-clipboard"></i>
-                </div>
-                <a href="{{route('department.index')}}" class="small-box-footer">معلومات اكثر <i
-                        class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
 
     </div>
     <!-- /.row -->

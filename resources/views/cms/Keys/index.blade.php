@@ -52,6 +52,7 @@
                                 <tr>
                                     <th>الرقم</th>
                                     <th>القسم</th>
+                                    <th>الفئة الوظيفية</th>
                                     <th>المسمى الوظيفي</th>
                                     <th>نوع الاحتساب</th>
                                     <th>المفتاح</th>
@@ -72,7 +73,9 @@
                                         {{$key->departments->tb_managment_name}}
                                         @endif
                                     </td>
+                                    <td></td>
                                     <td>{{$key->EmployeesRoles->jobtitle_name_ar}}</td>
+
                                     <td>
                                         @if (!empty($key->Constants))
                                         {{$key->Constants->const_name}}

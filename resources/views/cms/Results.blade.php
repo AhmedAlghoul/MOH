@@ -13,10 +13,11 @@
     .card-header>.card-tools {
         float: left;
     }
+
     .dataTables_filter {
-    float: none;
-    text-align: center;
-    margin-bottom: 10px;
+        float: none;
+        text-align: center;
+        margin-bottom: 10px;
     }
 </style>
 <link rel="stylesheet" href="//cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css">
@@ -81,7 +82,10 @@
                                     <td>{{$calcResult->created_at}}</td>
 
                                     <td>
-                                        <a href="#" class="btn btn-info">
+                                        {{-- <a href="#" class="btn btn-info">
+                                            <i class="fas fa-eye"></i>
+                                        </a> --}}
+                                        <a class="btn btn-info" data-toggle="modal" data-target="#myModal" data-id="{{$calcResult->id}}">
                                             <i class="fas fa-eye"></i>
                                         </a>
 
@@ -113,7 +117,7 @@
     </div>
 
 </section>
-
+@include('cms.modal.detailsModal')
 @endsection
 
 
@@ -123,6 +127,11 @@
 <script src="//cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
 
 <script>
+    $(document).ready(function(){
+    $('.btn-info').click(function(){
+    $('#myModal').modal('show');
+    });
+    });
     // let table = new DataTable('#mytable');
 $(document).ready(function() {
 $('#mytable').DataTable({
