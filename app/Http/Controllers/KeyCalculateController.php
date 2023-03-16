@@ -366,25 +366,23 @@ class KeyCalculateController extends Controller
     public function checkvalue(Request $request)
     {
 
-
         $Labelsresult = Key::where('department_id', '=', $request->departmentid);
-        if ($request->has('roleChoice')) {
-            $Labelsresult = $Labelsresult->where('role_id', '=', $request->roleChoice)
-            ->select('department_id', 'key_value', 'value_col1', 'value_col2', 'calc_type_id', 'calc_method')->get();
-        }elseif( $request->has('classificationChoice' )){
-            $Labelsresult = $Labelsresult->where('class_type', '=', $request->classificationChoice)
+        if ($request->choice_id_global== 2) {
+            $Labelsresult = $Labelsresult->where('role_id', '=', $request->imported_data)
+                ->select('department_id', 'key_value', 'value_col1', 'value_col2', 'calc_type_id', 'calc_method')->get();
+        } elseif ($request->choice_id_global == 1) {
+            $Labelsresult = $Labelsresult->where('class_type', '=', $request->imported_data)
                 ->select('department_id', 'key_value', 'value_col1', 'value_col2', 'calc_type_id', 'calc_method')->get();
         }
 
         if (count($Labelsresult) == 0) {
 
             $Labelsresult = Key::whereNull('department_id');
-            if ($request->has('roleChoice')) {
-                $Labelsresult = $Labelsresult->where('role_id', '=', $request->roleChoice)
-            ->select('department_id', 'key_value', 'value_col1', 'value_col2','calc_type_id', 'calc_method')->get();
-
-            } elseif ($request->has('classificationChoice')) {
-                $Labelsresult = $Labelsresult->where('class_type', '=', $request->classificationChoice)
+            if ($request->choice_id_global == 2) {
+                $Labelsresult = $Labelsresult->where('role_id', '=', $request->imported_data)
+                    ->select('department_id', 'key_value', 'value_col1', 'value_col2', 'calc_type_id', 'calc_method')->get();
+            } elseif ($request->choice_id_global == 1) {
+                $Labelsresult = $Labelsresult->where('class_type', '=', $request->imported_data)
                     ->select('department_id', 'key_value', 'value_col1', 'value_col2', 'calc_type_id', 'calc_method')->get();
             }
         } else {
@@ -400,6 +398,33 @@ class KeyCalculateController extends Controller
         // $result = Key::where($request->roleChoice, $request->selectedIds)->select('department_id', 'key_value', 'calc_type_id')->get();
         // return response()->json($Labelsresult);
     }
+    //new not working
+    // public function checkvalue(Request $request)
+    // {
+
+    //     dd($request->all());
+
+    //     $Labelsresult = Key::where('department_id', '=', $request->departmentid)
+    //              ->where('role_id', '=', $request->imported_data)
+    //         ->select('department_id', 'key_value', 'value_col1', 'value_col2', 'calc_type_id', 'calc_method')->get();
+    //     if (count($Labelsresult) == 0) {
+
+    //         $Labelsresult = Key::where('imported_data', '=', $request->imported_data)
+    //         ->whereNull('department_id')
+    //         ->select('department_id', 'key_value', 'value_col1', 'value_col2','calc_type_id', 'calc_method')->get();
+    //     }else {
+    //         $Labelsresult = $Labelsresult;
+    //     }
+    //     if (isset($Labelsresult[0])) {
+    //         $Labelsresult[0]['const_name'] = $Labelsresult[0]->Constants->const_name;
+    //     } else {
+    //         //$Labelsresult[0]['const_name'] = '';
+    //     }
+
+    //     return response()->json($Labelsresult);
+    //     // $result = Key::where($request->roleChoice, $request->selectedIds)->select('department_id', 'key_value', 'calc_type_id')->get();
+    //     // return response()->json($Labelsresult);
+    // }
 
 
 

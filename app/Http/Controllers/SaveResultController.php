@@ -62,7 +62,12 @@ class SaveResultController extends Controller
         // );
 
         $saveresult = new SaveResult();
-        $saveresult->JOBTITLE_ID = $request->jobtitle_id;
+        if($request->choice_id_global == 1){
+            $saveresult->CLASS_TYPE = $request->imported_data;
+
+        }elseif($request->choice_id_global == 2){
+            $saveresult->JOBTITLE_ID = $request->imported_data;
+        }
         $saveresult->DEPARTMENT_ID = $request->department_id;
         $saveresult->KEY_VALUE = $request->key_value;
         $saveresult->CALC_TYPE_ID = $request->calc_type_id;

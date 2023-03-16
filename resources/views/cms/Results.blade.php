@@ -66,8 +66,17 @@
                                 @foreach ($calcResults as $calcResult)
                                 <tr>
                                     <td>{{$calcResult->id}}</td>
-                                    <td>{{$calcResult->employeerole->jobtitle_name_ar}}</td>
-                                    <td></td>
+                                    <td>
+                                        @if (!empty($calcResult->employeerole))
+                                        {{$calcResult->employeerole->jobtitle_name_ar}}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if (!empty($calcResult->classification))
+                                            {{$calcResult->classification->job_classification_name}}
+                                        @endif
+
+                                    </td>
                                     <td>{{$calcResult->departmentname->tb_managment_name}}</td>
                                     <td>{{$calcResult->key_value}}</td>
                                     {{-- <td>{{$calcResult->calc_type_id}}</td> --}}
@@ -179,7 +188,17 @@ $('#mytable').DataTable({
         "infoFiltered": "(تم تصفية _MAX_ من السجلات)",
         "loadingRecords": "جارٍ التحميل...",
           },
-            responsive:  true
+            responsive: {
+            details: {
+            renderer: function ( api, rowIdx, columns ) {
+            var data = $.map( columns, function ( col, i ) {
+            return col.hidden ? '<tr data-dt-row="' + col.rowIndex + '" data-dt-column="' + col.columnIndex + '">' + '<td><i>data from hidden column: ' + col.columnIndex + '</i><br><b>' + col.title + ':' + '</b></td> ' + '<td>' + table.cell(rowIdx, i).render('display') + '</td>' + '</tr>' : '';
+            }).join('');
+            return data ? $('<table />').append( data ) : false;
+            }
+            }
+            }
+
         });
         });
     function confirmDestroy(id){

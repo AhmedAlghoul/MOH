@@ -235,10 +235,12 @@
     });
     });
 
+    let choice_id_global;
     $(document).ready(function(){
         //to change the next select to be jobtitles or classifications
         $('#calculation_method').change(function () {
-        var choice_id = $(this).val();
+        let choice_id = $(this).val();
+        choice_id_global=choice_id;
         $('#data-container').html('');
         $('#info-container').html('');
         console.log(choice_id);
@@ -256,8 +258,8 @@
 
         if (data.classifications){
         $.each(data.classifications, function(index, item) {
-        DataSelect.attr('name', 'classification');
-        DataSelect.attr('id', 'classificationChoice');
+        // DataSelect.attr('name', 'classification');
+        // DataSelect.attr('id', 'classificationChoice');
         // Create the option element
         var option = $('<option>', {
             value: item.job_classification_id,
@@ -270,8 +272,8 @@
             $('label[for="imported_data"]').text('الفئة الوظيفية');
             }
             else if (data.jobtitles){
-            DataSelect.attr('name', 'role');
-            DataSelect.attr('id', 'roleChoice');
+            // DataSelect.attr('name', 'role');
+            // DataSelect.attr('id', 'roleChoice');
             $.each(data.jobtitles, function(index, item) {
             // Create the option element
             var option = $('<option>', {
@@ -292,7 +294,7 @@
 
     // $(document).ready(function() {
      function SaveData(key_value,calc_type_id) {
-        var jobtitle_id =$('#roleChoice').val();
+        var imported_data =$('#imported_data').val();
         var department_id =$('.department_id').val();
         // var key_value = data[0]['key_value'];
         // var calc_type_id = data[0]['calc_type_id'];
@@ -305,14 +307,15 @@
         type: "post",
         dataType : "json",
         data: {
-            "jobtitle_id" : jobtitle_id,
+            "imported_data" : imported_data,
             "department_id" : department_id,
             "key_value" : key_value,
             "calc_type_id": calc_type_id,
             "emp_count":emp_count,
             "result": result,
             "need": need,
-            "details": details
+            "details": details,
+            "choice_id_global": choice_id_global
             },
     success: function(data) {
             $('#alert_success').removeClass('d-none');
@@ -356,31 +359,33 @@ $('#jstree').on('changed.jstree', function(e, data) {
 
 
 
-    $('#roleChoice').change(function () {
+    $('#imported_data').change(function () {
         checkTwoValues();
             });
 
-    $('#classificationChoice').change(function () {
-            checkTwoValues();
-            });
+    // $('#classificationChoice').change(function () {
+    //         checkTwoValues();
+    //         });
 
 
     let globalCount; // define a global variable
         function getEmpCount() {
         var departmentid = $('.department_id').val();
-        var roleChoice = $('#roleChoice').val();
-        var classificationChoice =$('#classificationChoice').val();
+        var imported_data = $('#imported_data').val();
+        // var classificationChoice =$('#classificationChoice').val();
         $('#data-container').html('');
-        if (roleChoice && departmentid || classificationChoice && departmentid) {
+        // if (roleChoice && departmentid || classificationChoice && departmentid) {
+        if (imported_data && departmentid ) {
         $.ajax({
         url: "{{route('getCount')}}",
         type: "get",
         dataType : "json",
         async:false,
         data: {
-        "roleChoice": roleChoice,
+        "imported_data": imported_data,
         "departmentid": departmentid,
-        "classificationChoice":classificationChoice
+        "choice_id_global" :choice_id_global
+        // "classificationChoice":classificationChoice
         },
         success: function(data) {
             let count = data;
@@ -392,8 +397,9 @@ $('#jstree').on('changed.jstree', function(e, data) {
     let globaldetails;
         function checkTwoValues() {
     var departmentid =$('.department_id').val();
-    var roleChoice =$('#roleChoice').val();
-    var classificationChoice =$('#classificationChoice').val();
+    var imported_data =$('#imported_data').val();
+
+    // var classificationChoice =$('#classificationChoice').val();
     // var roleChoice = $(this).val();
     // console.log(roleChoice);
     // console.log(departmentid);
@@ -402,16 +408,18 @@ $('#jstree').on('changed.jstree', function(e, data) {
     $('#info-container').html('');
     $('#administrativecalc').hide();
     $('#administrative_calc_busyness_rate').hide();
-    if (roleChoice && departmentid || classificationChoice && departmentid ) {
+    // if (roleChoice && departmentid || classificationChoice && departmentid ) {
+    if (imported_data && departmentid ) {
 // $("#jstree").jstree().deselect_all(true);
     $.ajax({
         url: "{{route('checkvalue')}}",
         type: "get",
         dataType : "json",
         data: {
-        "roleChoice": roleChoice,
+        "imported_data": imported_data,
         "departmentid": departmentid,
-        "classificationChoice": classificationChoice
+        "choice_id_global" : choice_id_global
+        // "classificationChoice": classificationChoice
     },
         success: function(data) {
         console.log(data);
