@@ -8,7 +8,8 @@
             </div>
             <div class="modal-body">
                 <!-- Insert your information here -->
-                
+                <p id="calcdetails"></p>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">إغلاق</button>

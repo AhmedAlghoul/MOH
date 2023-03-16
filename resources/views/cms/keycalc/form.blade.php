@@ -243,6 +243,7 @@
         choice_id_global=choice_id;
         $('#data-container').html('');
         $('#info-container').html('');
+        $('#calcdetails').text('');
         console.log(choice_id);
         $.ajax({
         url: "{{route('getData')}}",
@@ -401,13 +402,14 @@ $('#jstree').on('changed.jstree', function(e, data) {
 
     // var classificationChoice =$('#classificationChoice').val();
     // var roleChoice = $(this).val();
-    // console.log(roleChoice);
-    // console.log(departmentid);
+    console.log(imported_data);
+    console.log(departmentid);
     // console.log(classificationChoice);
     $('#data-container').html('');
     $('#info-container').html('');
     $('#administrativecalc').hide();
     $('#administrative_calc_busyness_rate').hide();
+    $('#calcdetails').text('');
     // if (roleChoice && departmentid || classificationChoice && departmentid ) {
     if (imported_data && departmentid ) {
 // $("#jstree").jstree().deselect_all(true);
@@ -422,10 +424,17 @@ $('#jstree').on('changed.jstree', function(e, data) {
         // "classificationChoice": classificationChoice
     },
         success: function(data) {
-        console.log(data);
 
+        console.log(data);
+            if(data[0]['calc_method'] != null){
+            $('#calcdetails').text('');
+            // $('#calcdetails').text(data[0]['calc_method']);
+            $('#calcdetails').text($('<div />').html(data[0]['calc_method']).text());
+            }
         if(data.length>0){
+
         getEmpCount();
+
 
 $('#info-container').append('<br> <p><label>قيمة المفتاح: </label>'+data[0]['key_value'] +' <label id="changeable"></label> <br><label>نوع الحساب:</label> ' + data[0]['const_name'] + ' </p>');
 $('#warning-message').hide();

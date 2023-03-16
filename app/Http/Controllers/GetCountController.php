@@ -38,17 +38,12 @@ class GetCountController extends Controller
                     'MANAGMENT_CODE' => $request->departmentid  ,
                     'JOB_TILTLE' =>  $request->choice_id_global == 2 ? $request->imported_data ?? ""  : "",
                     'CLASSIFICATION' => $request->choice_id_global == 1 ? $request->imported_data ?? "" : ""
-
-
-
                 ]
             );
                 //    dd($countResponse);
 
         $countResponse = json_decode($countResponse);
-        // dd($countResponse);
 
-        // dd($countResponse);
         return $countResponse->count;
 
     }

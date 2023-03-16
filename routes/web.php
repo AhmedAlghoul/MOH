@@ -63,11 +63,11 @@ Route::get('/test', function () {
     // $constant = Constant::all();
     // dd($constans);
     // dd($managment);
-    // dd($keys);
+    dd($keys);
     // dd($classifications);
     // dd($managment);
     // dd($roles);
-    dd($results_show);
+    // dd($results_show);
 });
 
 Route::prefix('cms/admin')->middleware('guest:web')->group(function () {
