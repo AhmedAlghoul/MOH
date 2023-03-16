@@ -59,13 +59,15 @@ Route::get('/test', function () {
     $results_show = SaveResult::all();
     $classifications = Classification::all();
 
-    // $roles = EmployeeRole::all();
+    $roles = EmployeeRole::all();
     // $constant = Constant::all();
     // dd($constans);
     // dd($managment);
-    dd($keys);
-    // dd($managment);
+    // dd($keys);
     // dd($classifications);
+    // dd($managment);
+    // dd($roles);
+    dd($results_show);
 });
 
 Route::prefix('cms/admin')->middleware('guest:web')->group(function () {
@@ -115,8 +117,10 @@ Route::prefix('cms/admin')->middleware('auth:web')->group(function () {
     Route::get('checkvalue', [KeyCalculateController::class, 'checkvalue'])->name('checkvalue');
     //populate treeview
     Route::get('treeview', [KeyCalculateController::class, 'treeview'])->name('treeview');
-
-
+   //Get Row Data
+   Route::post('getRowData',[SaveResultController::class, 'getRowData'])->name('getRowData');
+    //Get Data of dropdown
+    Route::get('getData', [KeyController::class, 'getData'])->name('getData');
     //get employee  departments
     Route::get('getEmployeeDepartments', [EmployeeController::class, 'getEmployeeDepartments'])->name('getEmployeeDepartments');
     //nurse calculate route

@@ -73,8 +73,18 @@
                                         {{$key->departments->tb_managment_name}}
                                         @endif
                                     </td>
-                                    <td></td>
-                                    <td>{{$key->EmployeesRoles->jobtitle_name_ar}}</td>
+                                    <td>
+                                        @if (!empty($key->Classifications))
+
+                                        {{$key->Classifications->job_classification_name}}
+                                        @endif
+                                    </td>
+
+                                    <td>
+                                        @if (!empty($key->EmployeesRoles))
+                                        {{$key->EmployeesRoles->jobtitle_name_ar}}
+                                        @endif
+                                    </td>
 
                                     <td>
                                         @if (!empty($key->Constants))

@@ -49,6 +49,7 @@
                                 <tr>
                                     <th span="1" style="width: 5%">الرقم</th>
                                     <th span="1" style="width: 20%">المسمى الوظيفي</th>
+                                    <th span="1" style="width: 15%"> الفئة الوظيفية</th>
                                     <th span="1" style="width: 20%">القسم</th>
                                     <th span="1" style="width: 15%">قيمة المفتاح</th>
                                     <th span="1" style="width: 15%">نوع الاحتساب</th>
@@ -66,6 +67,7 @@
                                 <tr>
                                     <td>{{$calcResult->id}}</td>
                                     <td>{{$calcResult->employeerole->jobtitle_name_ar}}</td>
+                                    <td></td>
                                     <td>{{$calcResult->departmentname->tb_managment_name}}</td>
                                     <td>{{$calcResult->key_value}}</td>
                                     {{-- <td>{{$calcResult->calc_type_id}}</td> --}}
@@ -85,7 +87,8 @@
                                         {{-- <a href="#" class="btn btn-info">
                                             <i class="fas fa-eye"></i>
                                         </a> --}}
-                                        <a class="btn btn-info" data-toggle="modal" data-target="#myModal" data-id="{{$calcResult->id}}">
+                                        <a onclick="showItem({{$calcResult->id}})" class="btn btn-info"
+                                            data-toggle="modal" data-target="#myModal" data-id="{{$calcResult->id}}">
                                             <i class="fas fa-eye"></i>
                                         </a>
 
@@ -127,11 +130,36 @@
 <script src="//cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
 
 <script>
-    $(document).ready(function(){
-    $('.btn-info').click(function(){
-    $('#myModal').modal('show');
-    });
-    });
+    function showItem(id) {
+        console.log(id);
+        $.ajax({
+        url: "{{route('getRowData')}}",
+        type: "post",
+        dataType : "json",
+        data: {
+        "id" : id,
+        },
+        success: function(data) {
+            // console.log();
+            // $('#jobtitle').val(data.data.jobtitle_name_ar);
+            // document.getElementById("jobtitle").value = data.data.employee_role.jobtitle_name_ar;
+            $("#jobtitle").val(data.data.employee_role.jobtitle_name_ar);
+            $("#keyvalue").val(data.data.key_value);
+            // $("#calcType").val(data.data.calculatetype.const_name);
+            $("#empcount").val(data.data.emp_count);
+            $("#result").val(data.data.result_calc);
+            $("#need").val(data.data.need_emp);
+            $("#details").val(data.data.dtl_reuslt);
+            $("#createdat").val(data.data.created_at);
+            $('#myModal').modal('show');
+        }
+        });
+        // $(document).ready(function(){
+        //     $('.btn-info').click(function(){
+        //     $('#myModal').modal('show');
+        // });
+        // });
+    }
     // let table = new DataTable('#mytable');
 $(document).ready(function() {
 $('#mytable').DataTable({

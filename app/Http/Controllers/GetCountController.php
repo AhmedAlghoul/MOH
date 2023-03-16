@@ -28,17 +28,25 @@ class GetCountController extends Controller
 
     public function getCount(Request $request)
     {
+        // dd($request->all());
         $token = $this->getToken();
         $countResponse = Http::withHeaders(['Authorization' => $token])
             ->post(
                 'http://apps.moh.gov.ps/newwebemp/hr/v1/api/emp_count',
                 [
-                    'MANAGMENT_CODE' => $request->departmentid,
-                    'JOB_TILTLE' => $request->roleChoice
+                    'MANAGMENT_CODE' => $request->departmentid  ,
+                    'JOB_TILTLE' => $request->roleChoice ?? null  ,
+                    'CLASSIFICATION' => $request->classificationChoice ?? null
 
                 ]
             );
+                //    dd($countResponse);
+
         $countResponse = json_decode($countResponse);
+        dd($countResponse);
+
+        // dd($countResponse);
         return $countResponse->count;
+
     }
 }

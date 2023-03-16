@@ -37,9 +37,9 @@
         <div class="card-header">
             {{-- <button style="float: left" type="button" class="btn btn-default">
                 طريقة حساب المفتاح </button> --}}
-                <a class="btn btn-info" style="float: left" data-toggle="modal" data-target="#calcModal">
-             طريقة حساب المفتاح
-                </a>
+            <a class="btn btn-info" style="float: left" data-toggle="modal" data-target="#calcModal">
+                طريقة حساب المفتاح
+            </a>
             <h3 class="card-title">حساب المفتاح</h3>
         </div>
         <!-- /.card-header -->
@@ -82,13 +82,21 @@
                         @endforeach
                     </ul>
                 </div> --}}
+                <div class="form-group col-md-12">
+                    <label for="calculation_method">اختر طريقة الحساب</label>
+                    <select class="form-control " id="calculation_method">
+                        <option value="">اختر طريقة الحساب</option>
+                        <option value="1">فئة وظيفية</option>
+                        <option value="2">مسمى وظيفي</option>
+
+                    </select>
+                </div>
+
                 <div class="col-md-4 ">
-                    <label>المسمى الوظيفي</label>
+                    <label for="imported_data">المسمى الوظيفي/الفئة الوظيفية</label>
                     <br>
-                    <select class="form-control js-example-basic-single" id="roleChoice" name="role">
-                        @foreach ($roles as $role)
-                        <option value="{{$role->jobtitle_code}}">{{$role->jobtitle_name_ar}}</option>
-                        @endforeach
+                    <select class="form-control js-example-basic-single imported_data" id="imported_data" name="Data">
+
                     </select>
                     <div id="info-container"></div>
 
@@ -226,6 +234,62 @@
     $('#calcModal').modal('show');
     });
     });
+
+    $(document).ready(function(){
+        //to change the next select to be jobtitles or classifications
+        $('#calculation_method').change(function () {
+        var choice_id = $(this).val();
+        $('#data-container').html('');
+        $('#info-container').html('');
+        console.log(choice_id);
+        $.ajax({
+        url: "{{route('getData')}}",
+        type: "get",
+        data: {
+        choice_id: choice_id
+        },
+        success: function(data) {
+        var DataSelect = $('.imported_data');
+        // Clear any existing options in the select element
+        DataSelect.empty();
+        // Iterate over the returned data and create an option element for each item
+
+        if (data.classifications){
+        $.each(data.classifications, function(index, item) {
+        DataSelect.attr('name', 'classification');
+        DataSelect.attr('id', 'classificationChoice');
+        // Create the option element
+        var option = $('<option>', {
+            value: item.job_classification_id,
+            text: item.job_classification_name
+            });
+
+            // Add the option element to the select element
+            DataSelect.append(option);
+            });
+            $('label[for="imported_data"]').text('الفئة الوظيفية');
+            }
+            else if (data.jobtitles){
+            DataSelect.attr('name', 'role');
+            DataSelect.attr('id', 'roleChoice');
+            $.each(data.jobtitles, function(index, item) {
+            // Create the option element
+            var option = $('<option>', {
+            value: item.jobtitle_code,
+            text: item.jobtitle_name_ar
+            });
+
+            // Add the option element to the select element
+            DataSelect.append(option);
+            });
+            $('label[for="imported_data"]').text('المسمى الوظيفي');
+            }
+
+            },
+            });
+            });
+    });
+
     // $(document).ready(function() {
      function SaveData(key_value,calc_type_id) {
         var jobtitle_id =$('#roleChoice').val();
@@ -292,16 +356,22 @@ $('#jstree').on('changed.jstree', function(e, data) {
 
 
 
-$('#roleChoice').change(function () {
-    checkTwoValues();
-        });
+    $('#roleChoice').change(function () {
+        checkTwoValues();
+            });
+
+    $('#classificationChoice').change(function () {
+            checkTwoValues();
+            });
+
 
     let globalCount; // define a global variable
         function getEmpCount() {
         var departmentid = $('.department_id').val();
         var roleChoice = $('#roleChoice').val();
+        var classificationChoice =$('#classificationChoice').val();
         $('#data-container').html('');
-        if (roleChoice && departmentid ) {
+        if (roleChoice && departmentid || classificationChoice && departmentid) {
         $.ajax({
         url: "{{route('getCount')}}",
         type: "get",
@@ -309,7 +379,8 @@ $('#roleChoice').change(function () {
         async:false,
         data: {
         "roleChoice": roleChoice,
-        "departmentid": departmentid
+        "departmentid": departmentid,
+        "classificationChoice":classificationChoice
         },
         success: function(data) {
             let count = data;
@@ -322,14 +393,16 @@ $('#roleChoice').change(function () {
         function checkTwoValues() {
     var departmentid =$('.department_id').val();
     var roleChoice =$('#roleChoice').val();
+    var classificationChoice =$('#classificationChoice').val();
     // var roleChoice = $(this).val();
-    console.log(roleChoice);
-    console.log(departmentid);
+    // console.log(roleChoice);
+    // console.log(departmentid);
+    // console.log(classificationChoice);
     $('#data-container').html('');
     $('#info-container').html('');
     $('#administrativecalc').hide();
     $('#administrative_calc_busyness_rate').hide();
-    if (roleChoice && departmentid ) {
+    if (roleChoice && departmentid || classificationChoice && departmentid ) {
 // $("#jstree").jstree().deselect_all(true);
     $.ajax({
         url: "{{route('checkvalue')}}",
@@ -337,7 +410,8 @@ $('#roleChoice').change(function () {
         dataType : "json",
         data: {
         "roleChoice": roleChoice,
-        "departmentid": departmentid
+        "departmentid": departmentid,
+        "classificationChoice": classificationChoice
     },
         success: function(data) {
         console.log(data);

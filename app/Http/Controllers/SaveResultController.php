@@ -61,8 +61,8 @@ class SaveResultController extends Controller
         //     ]
         // );
 
-        $saveresult= new SaveResult();
-        $saveresult->JOBTITLE_ID= $request->jobtitle_id;
+        $saveresult = new SaveResult();
+        $saveresult->JOBTITLE_ID = $request->jobtitle_id;
         $saveresult->DEPARTMENT_ID = $request->department_id;
         $saveresult->KEY_VALUE = $request->key_value;
         $saveresult->CALC_TYPE_ID = $request->calc_type_id;
@@ -75,7 +75,7 @@ class SaveResultController extends Controller
 
         // session()->flash('success', 'تم حفظ البيانات بنجاح');
         // return back()->with('success', 'تم حفظ البيانات بنجاح');
-            return true;
+        return true;
 
         // return redirect()->back()->with('success', 'تم حفظ البيانات بنجاح');
 
@@ -128,5 +128,10 @@ class SaveResultController extends Controller
         //
         $isDestroyed = SaveResult::destroy($id);
         return response()->json(['message' => $isDestroyed ? 'تم حذف نتيجة الحساب بنجاح' : 'حدث خطأ أثناء حذف النتيجة '], $isDestroyed ? 200 : 400);
+    }
+    public function getRowData(Request $request)
+    {
+        $data = SaveResult::with(['EmployeeRole', 'DepartmentName', 'CalculateType'])->findOrFail($request->id);
+        return response()->json(['data' => $data]);
     }
 }

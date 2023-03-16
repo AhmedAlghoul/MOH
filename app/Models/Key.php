@@ -21,5 +21,9 @@ class Key extends Model
     public function Constants(){
         return $this->belongsTo(Constant::class, 'calc_type_id', 'const_id');
     }
+    public function Classifications()
+    {
+        return $this->belongsTo(Classification::class, 'class_type', 'job_classification_id');
+    }
 
 }

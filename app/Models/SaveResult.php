@@ -22,6 +22,9 @@ class SaveResult extends Model
     {
         return $this->belongsTo(Constant::class, 'calc_type_id', 'const_id');
     }
-
+    // public function Classification()
+    // {
+    //     return $this->belongsTo(Classification::class, 'class_type', 'job_classification_id');
+    // }
 
 }

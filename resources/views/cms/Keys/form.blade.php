@@ -68,11 +68,12 @@
                     </ul>
                 </div> --}}
                 <div class="form-group col-md-12">
-                    <label>اختر طريقة الحساب</label>
-                    <select class="form-control " id="calulation method" >
-                        @foreach ($roles as $role)
-                        <option value="{{$role->jobtitle_code}}">{{$role->jobtitle_name_ar}}</option>
-                        @endforeach
+                    <label for="calculation_method">اختر طريقة الحساب</label>
+                    <select class="form-control " id="calculation_method">
+                        <option value="">اختر طريقة الحساب</option>
+                        <option value="1">فئة وظيفية</option>
+                        <option value="2">مسمى وظيفي</option>
+
                     </select>
                 </div>
 
@@ -87,12 +88,12 @@
                 </div>
 
                 <div class="col-md-6 ">
-                    <label>المسمى الوظيفي</label>
+                    <label for="imported_data">المسمى الوظيفي/الفئة الوظيفية</label>
                     <br>
-                    <select class="form-control js-example-basic-single" id="department-choice" name="role">
-                        @foreach ($roles as $role)
+                    <select class="form-control js-example-basic-single" id="imported_data" name="Data">
+                        {{-- @foreach ($roles as $role)
                         <option value="{{$role->jobtitle_code}}">{{$role->jobtitle_name_ar}}</option>
-                        @endforeach
+                        @endforeach --}}
                     </select>
                     <br>
                     <label>نوع الاحتساب</label>
@@ -142,6 +143,75 @@
 
 @section('scripts')
 <script>
+    $('#calculation_method').change(function () {
+    var choice_id = $(this).val();
+    console.log(choice_id);
+    $.ajax({
+        url: "{{route('getData')}}",
+        type: "get",
+        data: {
+        choice_id: choice_id
+},
+success: function(data) {
+    var DataSelect = $('#imported_data');
+    // Clear any existing options in the select element
+        DataSelect.empty();
+    // Iterate over the returned data and create an option element for each item
+
+    if (data.classifications){
+         $.each(data.classifications, function(index, item) {
+        DataSelect.attr('name', 'classification');
+            // Create the option element
+                var option = $('<option>', {
+                    value: item.job_classification_id,
+                    text: item.job_classification_name
+                    });
+
+    // Add the option element to the select element
+        DataSelect.append(option);
+                });
+                $('label[for="imported_data"]').text('الفئة الوظيفية');
+      }
+      else if (data.jobtitles){
+        DataSelect.attr('name', 'role');
+        $.each(data.jobtitles, function(index, item) {
+                // Create the option element
+                var option = $('<option>', {
+                    value: item.jobtitle_code,
+                    text: item.jobtitle_name_ar
+            });
+
+            // Add the option element to the select element
+            DataSelect.append(option);
+            });
+            $('label[for="imported_data"]').text('المسمى الوظيفي');
+    }
+
+    },
+});
+});
+// success: function(data) {
+//     if (choice_id == 1) {
+//     // Change the label to "الفئة الوظيفية"
+//     $('label[for="department-choice"]').text('الفئة الوظيفية');
+//     }
+//     else if (choice_id == 2) {
+//     // Change the label to "المسمى الوظيفي"
+//     $('label[for="department-choice"]').text('المسمى الوظيفي');
+
+//     }
+// //             $('select[name="department"]').empty();
+// //             $.each(data, function(key, value) {
+// //             $('select[name="department"]').append('<option value="' +
+// //                                                             value + '">' + value + '</option>');
+// // });
+// },
+
+// });
+// });
+
+
+
     $(document).ready(function(){
     let url ="{{route('treeview')}}";
     console.log(url);

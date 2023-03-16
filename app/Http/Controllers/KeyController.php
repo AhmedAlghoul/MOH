@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classification;
 use App\Models\Constant;
 use App\Models\Key;
 use App\Models\Department;
@@ -49,17 +50,18 @@ class KeyController extends Controller
         //
         $request->validate(
             [
-                'role' => 'required',
+                // 'role' => 'required',
                 'key_value' => 'required',
             ],
             [
-                'role.required' => 'الرجاء اختيار الدور',
+                // 'role.required' => 'الرجاء اختيار الدور',
                 'key_value.required' => 'الرجاء إدخال مفتاح الكادر',
             ]
         );
         $key = new Key();
         $key->department_id = $request->department;
         $key->role_id = $request->role;
+        $key->class_type = $request->classification;
         $key->calc_type_id = $request->calc_type;
         $key->key_value = $request->key_value;
         $key->value_col1 = $request->key_value2;
@@ -87,18 +89,20 @@ class KeyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id,Request $request)
     {
 
         $key = Key::findOrFail($id);
+        $my_select_value = $request->input('my_select');
         $departments = Managment::all();
         $roles = EmployeeRole::all();
+        $classifications = Classification::all();
         $constants = Constant::all();
         $key_value = $key->key_value;
         $value_col1 = $key->key_value2;
         $value_col2 = $key->key_value3;
         $calc_method = $key->calc_method;
-        return response()->view('cms.Keys.edit', ['key' => $key, 'departments' => $departments, 'roles' => $roles, 'key_value' => $key_value, 'value_col1' => $value_col1, 'value_col2' => $value_col2, 'constants' => $constants, 'calc_method' => $calc_method]);
+        return response()->view('cms.Keys.edit', ['key' => $key, 'departments' => $departments, 'roles' => $roles, 'key_value' => $key_value, 'value_col1' => $value_col1, 'value_col2' => $value_col2, 'constants' => $constants, 'calc_method' => $calc_method, 'classifications' => $classifications]);
     }
 
     /**
@@ -114,6 +118,7 @@ class KeyController extends Controller
         $key = Key::findOrFail($id);
         $key->department_id = $request->department;
         $key->role_id = $request->role;
+        $key->class_type = $request->classification;
         $key->calc_type_id = $request->calc_type;
         $key->key_value = $request->key_value;
         $key->value_col1 = $request->key_value2;
@@ -136,6 +141,37 @@ class KeyController extends Controller
         $isDestroyed = Key::destroy($id);
         return response()->json();
     }
+
+    public function getData(Request $request)
+    {
+        $choice_id = $request->input('choice_id');
+
+        //get departments of hospital
+        if ($choice_id == 1) {
+
+            $Classifications_data = Classification::all();
+            return response()->json(['classifications' => $Classifications_data]);
+
+
+
+        } elseif ($choice_id == 2)
+        {
+            $Job_titles_data = EmployeeRole::all();
+            return response()->json(['jobtitles' => $Job_titles_data]);
+
+
+        }
+
+
+        //for loop in departments to get name of department
+        // $departments_id = [];
+        // $departments_name = [];
+        // foreach ($departments as $department) {
+        //     $departments_name[] = $department->departments->name;
+        // }
+        // return response()->json($departments_name);
+    }
+
     public function treeview($select = null)
     {
         $trees = Managment::whereNull('TB_MANAGMENT_PARENT')->select(['tb_managment_code', 'tb_managment_name'])->get();

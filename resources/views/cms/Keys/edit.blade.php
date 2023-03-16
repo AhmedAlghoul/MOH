@@ -90,6 +90,7 @@
                 </div> --}}
 
                 <div class="col-md-6">
+                    @if ($key->role_id)
                     <div class="form-group">
                         <label>المسمى الوظيفي</label>
                         <br>
@@ -100,6 +101,24 @@
                             @endforeach
                         </select>
                     </div>
+                    @else($key->class_type)
+                    <div class="form-group">
+                        <label>الفئة الوظيفية</label>
+                        <br>
+                        <select class="form-control js-example-basic-single" name="classification">
+                            @foreach ($classifications as $classification)
+                            <option value="{{$classification->job_classification_id}}" @if ($classification->job_classification_id == $key->class_type)
+                                selected @endif>{{$classification->job_classification_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @endif
+
+
+
+
+
+
                     <div class="form-group ">
                         <label>نوع الاحتساب</label>
                         <br>
