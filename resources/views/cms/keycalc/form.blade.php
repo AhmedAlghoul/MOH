@@ -40,6 +40,7 @@
             <a class="btn btn-info" style="float: left" data-toggle="modal" data-target="#calcModal">
                 طريقة حساب المفتاح
             </a>
+
             <h3 class="card-title">حساب المفتاح</h3>
         </div>
         <!-- /.card-header -->
@@ -223,6 +224,7 @@
 <!-- /.card -->
 
 @include('cms.modal.calculateMethodModal')
+@include('cms.modal.employeesNamesModal')
 @endsection
 
 @section('scripts')
@@ -233,6 +235,11 @@
     $('.btn-info').click(function(){
     $('#calcModal').modal('show');
     });
+
+    // $('.btn-info').click(function(){
+    // $('#ffffModal').modal('show');
+    // });
+
     });
 
     let choice_id_global;
@@ -244,7 +251,7 @@
         $('#data-container').html('');
         $('#info-container').html('');
         $('#calcdetails').text('');
-        console.log(choice_id);
+        // console.log(choice_id);
         $.ajax({
         url: "{{route('getData')}}",
         type: "get",
@@ -332,13 +339,13 @@
 
     $(document).ready(function(){
     let url ="{{route('treeview')}}";
-    console.log(url);
+    // console.log(url);
     $('#jstree').jstree({
     "core" : {
     'data' : {
     'url' : url,
     'data' : function (node) {
-        console.log(node);
+        // console.log(node);
     return { 'parent' : node.id };
     }
     },
@@ -389,12 +396,21 @@ $('#jstree').on('changed.jstree', function(e, data) {
         // "classificationChoice":classificationChoice
         },
         success: function(data) {
-            let count = data;
-            console.log(count );
+            // console.log(data.count);
+            // console.log(data);
+            let count = data.count;
             globalCount = count;
+        if (count>0){
+            $('#employees_data').empty();
+            $.each(data.employees, function(index, item) {
+            $('#employees_data').append(
+            '<tr><td>' + item.TB_EMPBASICINFO_NO + '</td><td>' + item.ANAME + '</td></tr>');
+            });
+        }
         }
         });
         }}
+
     let globaldetails;
         function checkTwoValues() {
     var departmentid =$('.department_id').val();
@@ -402,8 +418,8 @@ $('#jstree').on('changed.jstree', function(e, data) {
 
     // var classificationChoice =$('#classificationChoice').val();
     // var roleChoice = $(this).val();
-    console.log(imported_data);
-    console.log(departmentid);
+    // console.log(imported_data);
+    // console.log(departmentid);
     // console.log(classificationChoice);
     $('#data-container').html('');
     $('#info-container').html('');
@@ -425,7 +441,7 @@ $('#jstree').on('changed.jstree', function(e, data) {
     },
         success: function(data) {
 
-        console.log(data);
+        // console.log(data);
             if(data[0]['calc_method'] != null){
             $('#calcdetails').text('');
             // $('#calcdetails').text(data[0]['calc_method']);
@@ -446,7 +462,10 @@ if (data[0]['calc_type_id'] == 1) {
     var keyValue = data[0]['key_value'];
     let doctor = globalCount;
     let dtl = '';
-    $('#data-container').append('<p><label>العدد الموجود: </label>'+doctor);
+    $('#data-container').append('<p><label id="empcount">العدد الموجود: </label>'+doctor );
+        if(doctor > 0){
+   $('#data-container').append('<a class="btn btn-info" id="empshow" style="float: left; margin-top: -50px;" data-toggle="modal" data-target="#employeesModal"> عرض الموظفين</a>');
+                        }
     $('#data-container').append('العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
     $('#data-container').append('<br> <br>'+'الفائض/الاحتياج: '+'<input type="text" name="needInput" id="needInput">');
     $('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="submit" onclick="SaveData(' + data[0]["key_value"] + ',' + data[0]["calc_type_id"] + ')"  >حفظ النتائج</a>');
@@ -470,6 +489,9 @@ else if(data[0]['calc_type_id'] == 2)
     var keyValue = data[0]['key_value'];
     var nurse = globalCount;
     $('#data-container').append('<p><label>العدد الموجود: </label>'+nurse);
+        if(nurse > 0){
+        $('#data-container').append('<a class="btn btn-info" id="empshow" style="float: left; margin-top: -50px;"data-toggle="modal" data-target="#employeesModal"> عرض الموظفين</a>');
+        }
     $('#data-container').append('العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
     $('#data-container').append('<br> <br>'+'الفائض/الاحتياج: '+'<input type="text" name="needInput" id="needInput">');
 $('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="submit" onclick="SaveData(' + data[0]["key_value"] + ',' + data[0]["calc_type_id"] + ')"  >حفظ النتائج</a>' );
@@ -488,6 +510,9 @@ $('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="su
     $('#changeable').text('ساعة');
     let Physiotherapy_technician = globalCount;
     $('#data-container').append('<label>العدد الموجود: </label>'+Physiotherapy_technician);
+    if(Physiotherapy_technician > 0){
+    $('#data-container').append('<a class="btn btn-info" id="empshow" style="float: left; margin-top: -5px;"data-toggle="modal" data-target="#employeesModal"> عرض الموظفين</a>');
+    }
     $('#data-container').append(' <form class="form-horizontal">\
         <div class="card-body">\
             <div class="form-group row">\
@@ -539,6 +564,11 @@ let dtl = '(' + number_of_sessions + '*' + session_duration + '/' + working_minu
 {//مختبرات
     let laboratory_technician = globalCount;
     $('#data-container').append('<label>العدد الموجود: </label>'+laboratory_technician);
+
+    if(laboratory_technician > 0){
+    $('#data-container').append('<a class="btn btn-info" id="empshow" style="float: left; margin-top: -5px;"data-toggle="modal" data-target="#employeesModal"> عرض الموظفين</a>');
+    }
+
     $('#data-container').append(' <form class="form-horizontal">\
         <div class="card-body">\
             <div class="form-group row">\
@@ -610,6 +640,11 @@ var prescriptions_per_pharmacist = data[0]['key_value'];
 var reports_per_pharmacist = data[0]['value_col1'];
 $('#data-container').append('<a class="btn btn-primary calculate-btn" type="submit">حساب</a>');
 $('#data-container').append('<p><label>العدد الموجود: </label>'+pharmacist);
+
+    if(pharmacist > 0){
+    $('#data-container').append('<a class="btn btn-info" id="empshow" style="float: left; margin-top: -50px;"data-toggle="modal" data-target="#employeesModal"> عرض الموظفين</a>');
+    }
+
 $('#data-container').append('العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
 $('#data-container').append('<br><br>'+'الفائض/الاحتياج: '+'<input type="text" name="needInput" id="needInput">');
 $('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="submit" onclick="SaveData(' + data[0]["key_value"] + ',' + data[0]["calc_type_id"] + ')"  >حفظ النتائج</a>' );
@@ -639,6 +674,10 @@ var admin_count_7_hours = data[0]['value_col1'];
 
     // $('#data-container').append('<a class="btn btn-primary calculate-btn" type="submit">حساب</a>');
     $('#data-container').append('<p><label>العدد الموجود: </label>'+administartive_count);
+
+        if(administartive_count > 0){
+        $('#data-container').append('<a class="btn btn-info" id="empshow" style="float: left; margin-top: -52px;"data-toggle="modal" data-target="#employeesModal"> عرض الموظفين</a>');
+        }
     $('#data-container').append('العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
     $('#data-container').append('<br><br>'+'الفائض/الاحتياج: '+'<input type="text" name="needInput" id="needInput">');
     $('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="submit"onclick="SaveData(' + data[0]["key_value"] + ',' + data[0]["calc_type_id"] + ')"  >حفظ النتائج</a>' );
@@ -660,6 +699,9 @@ var admin_count_7_hours = data[0]['value_col1'];
 
     var administartive_count = globalCount;
     $('#data-container').append('<p><label>العدد الموجود: </label>'+administartive_count);
+        if(administartive_count > 0){
+        $('#data-container').append('<a class="btn btn-info" id="empshow" style="float: left; margin-top: -52px;" data-toggle="modal" data-target="#employeesModal"> عرض الموظفين</a>');
+        }
     $('#data-container').append('العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
     $('#data-container').append('<br><br>'+'الفائض/الاحتياج: '+'<input type="text" name="needInput" id="needInput">');
     $('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="submit" onclick="SaveData(' + data[0]["key_value"] + ',' + data[0]["calc_type_id"] + ')"  >حفظ النتائج</a>' );

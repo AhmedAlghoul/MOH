@@ -15,33 +15,38 @@
                         <label class="mr-2"> المسمى الوظيفي</label>
                         <input type="text" class="form-control " id="jobtitle" value="" disabled>
 
-                        <label class="mr-2"> قيمة المفتاح</label>
-                        <input type="text" class="form-control" id="keyvalue" value="" disabled>
+                        <label class="mr-2"> القسم</label>
+                        <input type="text" class="form-control" id="dep" value="" disabled>
 
                         <label class="mr-2"> نوع الاحتساب</label>
-                        <input type="text" class="form-control" id="calcType" value=""
-                            disabled>
-
-                        <label class="mr-2"> عدد الموظفين الحالي</label>
-                        <input type="text" class="form-control" id="empcount" value="" disabled>
+                        <input type="text" class="form-control" id="calcType" value="" disabled>
 
                         <label class="mr-2"> العدد المطلوب</label>
                         <input type="text" class="form-control" id="result" value="" disabled>
 
-                        <label class="mr-2"> الاحتياج</label>
-                        <input type="text" class="form-control" id="need" value="" disabled>
+
 
                         <label class="mr-2"> التفاصيل</label>
                         <input type="text" class="form-control" id="details" value="" disabled>
 
-                        <label class="mr-2"> تاريخ الادخال</label>
-                        <input type="text" class="form-control " id="createdat" value="{{$calcResult->created_at}}" disabled>
+
                     </div>
 
                     <div class="col-md-6">
-                        <label class="mr-2"> القسم</label>
-                        <input type="text" class="form-control "
-                            value="{{$calcResult->departmentname->tb_managment_name}}" disabled>
+                        <label class="mr-2"> الفئة الوظيفية</label>
+                        <input type="text" class="form-control " id="classtype" value="" disabled>
+
+                        <label class="mr-2"> قيمة المفتاح</label>
+                        <input type="text" class="form-control" id="keyvalue" value="" disabled>
+
+                        <label class="mr-2"> عدد الموظفين الحالي</label>
+                        <input type="text" class="form-control" id="empcount" value="" disabled>
+
+                        <label class="mr-2"> الاحتياج</label>
+                        <input type="text" class="form-control" id="need" value="" disabled>
+
+                        <label class="mr-2"> تاريخ الادخال</label>
+                        <input type="text" class="form-control " id="createdat" value="{{$calcResult->created_at}}" disabled>
                     </div>
                 </div>
 

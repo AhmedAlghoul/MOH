@@ -44,7 +44,7 @@ class GetCountController extends Controller
 
         $countResponse = json_decode($countResponse);
 
-        return $countResponse->count;
+        return $countResponse;
 
     }
 }

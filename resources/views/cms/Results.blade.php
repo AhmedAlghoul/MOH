@@ -73,7 +73,7 @@
                                     </td>
                                     <td>
                                         @if (!empty($calcResult->classification))
-                                            {{$calcResult->classification->job_classification_name}}
+                                        {{$calcResult->classification->job_classification_name}}
                                         @endif
 
                                     </td>
@@ -149,18 +149,35 @@
         "id" : id,
         },
         success: function(data) {
-            // console.log();
+            // console.log(data.data);
             // $('#jobtitle').val(data.data.jobtitle_name_ar);
             // document.getElementById("jobtitle").value = data.data.employee_role.jobtitle_name_ar;
-            $("#jobtitle").val(data.data.employee_role.jobtitle_name_ar);
-            $("#keyvalue").val(data.data.key_value);
-            // $("#calcType").val(data.data.calculatetype.const_name);
-            $("#empcount").val(data.data.emp_count);
-            $("#result").val(data.data.result_calc);
-            $("#need").val(data.data.need_emp);
-            $("#details").val(data.data.dtl_reuslt);
-            $("#createdat").val(data.data.created_at);
-            $('#myModal').modal('show');
+            if(data.data.employee_role && data.data.employee_role.jobtitle_name_ar) {
+                     $("#jobtitle").val(data.data.employee_role.jobtitle_name_ar);
+            }else{
+                $("#jobtitle").val("");
+            }
+
+            if(data.data.classification && data.data.classification.job_classification_name) {
+                     $("#classtype").val(data.data.classification.job_classification_name );
+            }else{
+                $("#classtype").val("");
+            }
+                    $("#dep").val(data.data.department_name.tb_managment_name);
+                    $("#keyvalue").val(data.data.key_value);
+                    $("#calcType").val(data.data.calculate_type.const_name);
+                    $("#empcount").val(data.data.emp_count);
+                    $("#result").val(data.data.result_calc);
+                    $("#need").val(data.data.need_emp);
+
+                    if(data.data.dtl_reuslt) {
+                    $("#details").val(data.data.dtl_reuslt);
+                    }else{
+                        $("#details").val("");
+                    }
+                    $("#createdat").val(data.data.created_at);
+
+                     $('#myModal').modal('show');
         }
         });
         // $(document).ready(function(){

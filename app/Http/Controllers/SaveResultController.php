@@ -136,7 +136,9 @@ class SaveResultController extends Controller
     }
     public function getRowData(Request $request)
     {
-        $data = SaveResult::with(['EmployeeRole', 'DepartmentName', 'CalculateType'])->findOrFail($request->id);
+        $data = SaveResult::with(['EmployeeRole', 'DepartmentName', 'CalculateType', 'Classification'])->findOrFail($request->id);
+        // dd($data);
         return response()->json(['data' => $data]);
+        dd(response()->json(['data' => $data]));
     }
 }
