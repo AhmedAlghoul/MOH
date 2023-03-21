@@ -77,15 +77,7 @@
                     </select>
                 </div>
 
-                <input type="hidden" class="department_id" name="department">
 
-                <div class="col-md-6">
-                    <label>القسم</label>
-                    <div id="jstree">
-
-                    </div>
-
-                </div>
 
                 <div class="col-md-6 ">
                     <label for="imported_data">المسمى الوظيفي/الفئة الوظيفية</label>
@@ -121,6 +113,16 @@
                         <textarea class="form-control tinymce-editor" rows="7" name="calc_method"
                             placeholder="الرجاء إدخال طريقة حساب المفتاح"></textarea>
                     </div>
+                </div>
+
+                <input type="hidden" class="department_id" name="department">
+
+                <div class="col-md-6">
+                    <label>القسم</label>
+                    <div id="jstree">
+
+                    </div>
+
                 </div>
 
             </div>

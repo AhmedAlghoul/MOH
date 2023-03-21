@@ -149,7 +149,7 @@
         "id" : id,
         },
         success: function(data) {
-            // console.log(data.data);
+            // console.log(data.result);
             // $('#jobtitle').val(data.data.jobtitle_name_ar);
             // document.getElementById("jobtitle").value = data.data.employee_role.jobtitle_name_ar;
             if(data.data.employee_role && data.data.employee_role.jobtitle_name_ar) {
@@ -163,7 +163,8 @@
             }else{
                 $("#classtype").val("");
             }
-                    $("#dep").val(data.data.department_name.tb_managment_name);
+                    // $("#dep").val(data.data.department_name.tb_managment_name);
+                    $("#dep").val(data.result);
                     $("#keyvalue").val(data.data.key_value);
                     $("#calcType").val(data.data.calculate_type.const_name);
                     $("#empcount").val(data.data.emp_count);

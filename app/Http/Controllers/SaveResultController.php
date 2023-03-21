@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Managment;
 use App\Models\SaveResult;
 use Illuminate\Http\Request;
 
@@ -62,10 +63,9 @@ class SaveResultController extends Controller
         // );
 
         $saveresult = new SaveResult();
-        if($request->choice_id_global == 1){
+        if ($request->choice_id_global == 1) {
             $saveresult->CLASS_TYPE = $request->imported_data;
-
-        }elseif($request->choice_id_global == 2){
+        } elseif ($request->choice_id_global == 2) {
             $saveresult->JOBTITLE_ID = $request->imported_data;
         }
         $saveresult->DEPARTMENT_ID = $request->department_id;
@@ -134,11 +134,34 @@ class SaveResultController extends Controller
         $isDestroyed = SaveResult::destroy($id);
         return response()->json(['message' => $isDestroyed ? 'تم حذف نتيجة الحساب بنجاح' : 'حدث خطأ أثناء حذف النتيجة '], $isDestroyed ? 200 : 400);
     }
+
+
+
     public function getRowData(Request $request)
     {
+        // dd($request->all());
         $data = SaveResult::with(['EmployeeRole', 'DepartmentName', 'CalculateType', 'Classification'])->findOrFail($request->id);
-        // dd($data);
-        return response()->json(['data' => $data]);
-        dd(response()->json(['data' => $data]));
+        $str = $this->getId($data->department_id);
+        return response()->json(['data' => $data, 'result' => $str]);
+        // dd(response()->json(['data' => $data]));
     }
+
+    public function getId($id)
+    {
+        $str = $this->getParent($id);
+        return $str;
+    }
+    function getParent($id)
+    {
+        $str = '';
+        $row = Managment::where('tb_managment_code', $id)->first();
+        if ($row) {
+            $str .= $row->tb_managment_name;
+            if ($row->tb_managment_parent) {
+                $str .= '/' . $this->getParent($row->tb_managment_parent);
+            }
+        }
+        return $str;
+    }
+
 }
