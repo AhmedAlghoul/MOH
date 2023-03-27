@@ -46,7 +46,7 @@
                         <input type="text" class="form-control" id="need" value="" disabled>
 
                         <label class="mr-2"> تاريخ الادخال</label>
-                        <input type="text" class="form-control " id="createdat" value="{{$calcResult->created_at}}" disabled>
+                        <input type="text" class="form-control " id="createdat" value="" disabled>
                     </div>
                 </div>
 

@@ -170,6 +170,7 @@
                     $("#empcount").val(data.data.emp_count);
                     $("#result").val(data.data.result_calc);
                     $("#need").val(data.data.need_emp);
+                    $("#createdat").val(data.data.created_at);
 
                     if(data.data.dtl_reuslt) {
                     $("#details").val(data.data.dtl_reuslt);
