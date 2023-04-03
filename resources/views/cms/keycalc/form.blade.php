@@ -5,7 +5,11 @@
 @section('styles')
 <style>
     .form-control {
-        width: 40%;
+        width: 33%;
+    }
+
+    .inp {
+        width: 50%;
     }
 
     .card-title {
@@ -20,6 +24,20 @@
 
     .calculate-btn {
         margin-top: -30px;
+    }
+
+    #empshow {
+        text-decoration: underline;
+        text-align: center;
+    }
+
+    #empshow:hover {
+        font-weight: bold;
+    }
+
+    #data-container .alert {
+        background-color: #2196F3;
+        color: #fff;
     }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
@@ -37,7 +55,8 @@
         <div class="card-header">
             {{-- <button style="float: left" type="button" class="btn btn-default">
                 طريقة حساب المفتاح </button> --}}
-            <a class="btn btn-info" style="float: left" data-toggle="modal" data-target="#calcModal">
+            <a class="btn btn-light" style="float: left;background-color: #2196F3;font-weight: bold; "
+                data-toggle="modal" data-target="#calcModal">
                 طريقة حساب المفتاح
             </a>
 
@@ -109,7 +128,7 @@
                                     <label for="twenty_four_hours" class="col-sm-4 col-form-label"> عدد النقاط بنظام
                                         24 ساعة</label>
                                     <div class="col-sm-8">
-                                        <input type="number" class="form-control" id="twenty_four_hours"
+                                        <input type="number" class="form-control inp" id="twenty_four_hours"
                                             name="twenty_four_hours">
                                     </div>
                                 </div>
@@ -117,7 +136,7 @@
                                     <label for="seven_hours" class="col-sm-4 col-form-label">عدد النقاط بنظام 7
                                         ساعات</label>
                                     <div class="col-sm-8">
-                                        <input type="number" class="form-control" id="seven_hours" name="seven_hours">
+                                        <input type="number" class="form-control inp" id="seven_hours" name="seven_hours">
                                     </div>
                                 </div>
                                 <a class="btn btn-primary calculate-btn" type="submit">حساب</a>
@@ -134,7 +153,7 @@
                                     <label for="busyness_rate" class="col-sm-4 col-form-label"> نسبة انشغال
                                         الاسرة</label>
                                     <div class="col-sm-8">
-                                        <input type="number" class="form-control" id="busyness_rate"
+                                        <input type="number" class="form-control inp" id="busyness_rate"
                                             name="busyness_rate">
                                     </div>
                                 </div>
@@ -440,7 +459,10 @@ $('#jstree').on('changed.jstree', function(e, data) {
         // "classificationChoice": classificationChoice
     },
         success: function(data) {
-
+    if (data.length === 0) {
+$('#data-container').html('<div class="alert" role="alert" style="font-weight: bold;margin-top:10px;"> عذراً ، لا يوجد مفتاح مضاف</div>');
+    return;
+    }
         // console.log(data);
             if(data[0]['calc_method'] != null){
             $('#calcdetails').text('');
@@ -462,10 +484,11 @@ if (data[0]['calc_type_id'] == 1) {
     var keyValue = data[0]['key_value'];
     let doctor = globalCount;
     let dtl = '';
-    $('#data-container').append('<p><label id="empcount">العدد الموجود: </label>'+doctor );
+    $('#data-container').append('<br> <br>'+'<p><label id="empcount" style="margin-left:30px">العدد الموجود: </label>'+doctor );
         if(doctor > 0){
-   $('#data-container').append('<a class="btn btn-info" id="empshow" style="float: left; margin-top: -50px;" data-toggle="modal" data-target="#employeesModal"> عرض الموظفين</a>');
-                        }
+//    $('#data-container').append('<a class="btn btn-info" id="empshow" style="float: left; margin-top: -50px;" data-toggle="modal" data-target="#employeesModal"> عرض الموظفين</a>');
+$('#data-container').append('<a  id="empshow" style="float: left; margin-top: -50px;margin-left: 130px;"data-toggle="modal" data-target="#employeesModal"> موظف</a>');
+}
     $('#data-container').append('العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
     $('#data-container').append('<br> <br>'+'الفائض/الاحتياج: '+'<input type="text" name="needInput" id="needInput">');
     $('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="submit" onclick="SaveData(' + data[0]["key_value"] + ',' + data[0]["calc_type_id"] + ')"  >حفظ النتائج</a>');
@@ -488,10 +511,11 @@ else if(data[0]['calc_type_id'] == 2)
     $('#data-container').append('<input type="text" name="newInput" id="newInput" placeholder="عددالأسرة">'+'*'+data[0]['key_value']);
     var keyValue = data[0]['key_value'];
     var nurse = globalCount;
-    $('#data-container').append('<p><label>العدد الموجود: </label>'+nurse);
+    $('#data-container').append('<br> <br>'+'<p><label  style="margin-left:30px">العدد الموجود: </label>'+nurse);
         if(nurse > 0){
-        $('#data-container').append('<a class="btn btn-info" id="empshow" style="float: left; margin-top: -50px;"data-toggle="modal" data-target="#employeesModal"> عرض الموظفين</a>');
-        }
+        // $('#data-container').append('<a class="btn btn-info" id="empshow" style="float: left; margin-top: -50px;"data-toggle="modal" data-target="#employeesModal"> عرض الموظفين</a>');
+    $('#data-container').append('<a id="empshow" style="float: left; margin-top: -50px;margin-left: 130px;"data-toggle="modal" data-target="#employeesModal"> موظف</a>');
+    }
     $('#data-container').append('العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
     $('#data-container').append('<br> <br>'+'الفائض/الاحتياج: '+'<input type="text" name="needInput" id="needInput">');
 $('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="submit" onclick="SaveData(' + data[0]["key_value"] + ',' + data[0]["calc_type_id"] + ')"  >حفظ النتائج</a>' );
@@ -507,42 +531,48 @@ $('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="su
 
 }else if(data[0]['calc_type_id'] == 3)
  {// علاج طبيعي
-    $('#changeable').text('ساعة');
+    $('#changeable').text('دقيقة');
     let Physiotherapy_technician = globalCount;
-    $('#data-container').append('<label>العدد الموجود: </label>'+Physiotherapy_technician);
-    if(Physiotherapy_technician > 0){
-    $('#data-container').append('<a class="btn btn-info" id="empshow" style="float: left; margin-top: -5px;"data-toggle="modal" data-target="#employeesModal"> عرض الموظفين</a>');
-    }
+    // $('#data-container').append('<label>العدد الموجود: </label>'+Physiotherapy_technician);
+    // if(Physiotherapy_technician > 0){
+    // $('#data-container').append('<a class="btn btn-info" id="empshow" style="float: left; margin-top: -5px;"data-toggle="modal" data-target="#employeesModal"> عرض الموظفين</a>');
+    // }
     $('#data-container').append(' <form class="form-horizontal">\
         <div class="card-body">\
             <div class="form-group row">\
                 <label for="inputEmail3" class="col-sm-4 col-form-label"> عدد الجلسات</label>\
                 <div class="col-sm-8">\
-                    <input type="number" class="form-control" id="number_of_sessions" name="number_of_sessions">\
+                    <input type="number" class="form-control inp" id="number_of_sessions" name="number_of_sessions">\
                 </div>\
             </div>\
             <div class="form-group row">\
                 <label for="inputPassword3" class="col-sm-4 col-form-label">مدة الجلسة الافتراضية</label>\
                 <div class="col-sm-8">\
-                    <input type="number" class="form-control" id="session_duration" name="session_duration" value="'+data[0]['key_value']+'" >\
+                    <input type="number" class="form-control inp" id="session_duration" name="session_duration" value="'+data[0]['key_value']+'" >\
                 </div>\
             </div>\
             <div class="form-group row">\
                 <label for="inputEmail3" class="col-sm-4 col-form-label"> دقائق العمل يوميا</label>\
                 <div class="col-sm-8">\
-                    <input type="number" class="form-control" id="working_minutes_per_day" name="working_minutes_per_day" value="'+data[0]['value_col1']+'">\
+                    <input type="number" class="form-control inp" id="working_minutes_per_day" name="working_minutes_per_day" value="'+data[0]['value_col1']+'">\
                 </div>\
             </div>\
             <div class="form-group row">\
                 <label for="inputPassword3" class="col-sm-4 col-form-label">أيام العمل</label>\
                 <div class="col-sm-8">\
-                    <input type="number" class="form-control" id="working_days" name="working_days" value="'+data[0]['value_col2']+'">\
+                    <input type="number" class="form-control inp" id="working_days" name="working_days" value="'+data[0]['value_col2']+'">\
                 </div>\
             </div>\
         </div>\
     </form>');
     $('#data-container').append('<a class="btn btn-primary calculate-btn" type="submit">حساب</a>');
-    $('#data-container').append('<br>'+'العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
+
+    $('#data-container').append('<br> <br>'+'<label style="margin-left:30px">العدد الموجود: </label>'+Physiotherapy_technician);
+    if(Physiotherapy_technician > 0){
+    // $('#data-container').append('<a class="btn btn-info" id="empshow" style="float: left; margin-top: -5px;"data-toggle="modal" data-target="#employeesModal"> عرض الموظفين</a>');
+        $('#data-container').append('<a id="empshow" style="float: left; margin-top: -3px;margin-left: 130px;"data-toggle="modal" data-target="#employeesModal"> موظف</a>');
+}
+    $('#data-container').append('<br><br>'+'العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
     $('#data-container').append('<br><br>'+'الفائض/الاحتياج: '+'<input type="text" name="needInput" id="needInput">');
 $('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="submit" onclick="SaveData(' + data[0]["key_value"] + ',' + data[0]["calc_type_id"] + ')"  >حفظ النتائج</a>' );
     $('.calculate-btn').click(function() {
@@ -562,43 +592,46 @@ let dtl = '(' + number_of_sessions + '*' + session_duration + '/' + working_minu
 
 }else if(data[0]['calc_type_id'] == 4)
 {//مختبرات
+    $('#changeable').text('دقيقة');
     let laboratory_technician = globalCount;
-    $('#data-container').append('<label>العدد الموجود: </label>'+laboratory_technician);
-
-    if(laboratory_technician > 0){
-    $('#data-container').append('<a class="btn btn-info" id="empshow" style="float: left; margin-top: -5px;"data-toggle="modal" data-target="#employeesModal"> عرض الموظفين</a>');
-    }
 
     $('#data-container').append(' <form class="form-horizontal">\
         <div class="card-body">\
             <div class="form-group row">\
                 <label for="inputEmail3" class="col-sm-4 col-form-label"> متوسط عدد الفحوصات شهريا</label>\
                 <div class="col-sm-8">\
-                    <input type="number" class="form-control" id="number_of_examinations">\
+                    <input type="number" class="form-control inp" id="number_of_examinations">\
                 </div>\
             </div>\
             <div class="form-group row">\
                 <label for="inputPassword3" class="col-sm-4 col-form-label">مدة الفحص الافتراضية</label>\
                 <div class="col-sm-8">\
-                    <input type="number" class="form-control" id="examination_time" value="'+data[0]['key_value']+'" >\
+                    <input type="number" class="form-control inp" id="examination_time" value="'+data[0]['key_value']+'" >\
                 </div>\
             </div>\
             <div class="form-group row">\
                 <label for="inputEmail3" class="col-sm-4 col-form-label"> دقائق العمل يوميا</label>\
                 <div class="col-sm-8">\
-                    <input type="number" class="form-control" id="working_minutes_per_day" value="'+data[0]['value_col1']+'">\
+                    <input type="number" class="form-control inp" id="working_minutes_per_day" value="'+data[0]['value_col1']+'">\
                 </div>\
             </div>\
             <div class="form-group row">\
                 <label for="inputPassword3" class="col-sm-4 col-form-label">أيام العمل</label>\
                 <div class="col-sm-8">\
-                    <input type="number" class="form-control" id="working_days" value="'+data[0]['value_col2']+'">\
+                    <input type="number" class="form-control inp" id="working_days" value="'+data[0]['value_col2']+'">\
                 </div>\
             </div>\
         </div>\
     </form>');
     $('#data-container').append('<a class="btn btn-primary calculate-btn" type="submit">حساب</a>');
-    $('#data-container').append('<br>'+'العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
+
+    $('#data-container').append('<br> <br>'+'<label style="margin-left:27px">العدد الموجود: </label>'+laboratory_technician);
+
+    if(laboratory_technician > 0){
+    // $('#data-container').append('<a class="btn btn-info" id="empshow" style="float: left; margin-top: -5px;"data-toggle="modal" data-target="#employeesModal"> عرض الموظفين</a>');
+        $('#data-container').append('<a id="empshow" style="float: left; margin-top: -3px;margin-left: 130px;"data-toggle="modal" data-target="#employeesModal"> موظف</a>');
+}
+    $('#data-container').append('<br><br>'+'العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
     $('#data-container').append('<br><br>'+'الفائض/الاحتياج: '+'<input type="text" name="needInput" id="needInput">');
 $('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="submit" onclick="SaveData(' + data[0]["key_value"] + ',' + data[0]["calc_type_id"] + ')"  >حفظ النتائج</a>' );
     $('.calculate-btn').click(function() {
@@ -624,13 +657,13 @@ $('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="su
         <div class="form-group row">\
             <label for="number_of_prescriptions" class="col-sm-4 col-form-label"> عدد الروشتات</label>\
             <div class="col-sm-8">\
-                <input type="number" class="form-control" id="number_of_prescriptions" name="number_of_prescriptions">\
+                <input type="number" class="form-control inp" id="number_of_prescriptions" name="number_of_prescriptions">\
             </div>\
         </div>\
         <div class="form-group row">\
             <label for="number_of_medical_reports" class="col-sm-4 col-form-label">عدد التقارير</label>\
             <div class="col-sm-8">\
-                <input type="number" class="form-control" id="number_of_medical_reports" name="number_of_medical_reports">\
+                <input type="number" class="form-control inp" id="number_of_medical_reports" name="number_of_medical_reports">\
             </div>\
         </div>\
     </div>\
@@ -639,11 +672,12 @@ var pharmacist = globalCount;
 var prescriptions_per_pharmacist = data[0]['key_value'];
 var reports_per_pharmacist = data[0]['value_col1'];
 $('#data-container').append('<a class="btn btn-primary calculate-btn" type="submit">حساب</a>');
-$('#data-container').append('<p><label>العدد الموجود: </label>'+pharmacist);
+$('#data-container').append('<br> <br>'+'<p><label style="margin-left:27px">العدد الموجود: </label>'+pharmacist);
 
     if(pharmacist > 0){
-    $('#data-container').append('<a class="btn btn-info" id="empshow" style="float: left; margin-top: -50px;"data-toggle="modal" data-target="#employeesModal"> عرض الموظفين</a>');
-    }
+    // $('#data-container').append('<a class="btn btn-info" id="empshow" style="float: left; margin-top: -50px;"data-toggle="modal" data-target="#employeesModal"> عرض الموظفين</a>');
+$('#data-container').append('<a id="empshow" style="float: left; margin-top: -50px;margin-left: 130px;"data-toggle="modal" data-target="#employeesModal"> موظف</a>');
+        }
 
 $('#data-container').append('العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
 $('#data-container').append('<br><br>'+'الفائض/الاحتياج: '+'<input type="text" name="needInput" id="needInput">');
@@ -673,11 +707,12 @@ var admin_count_24_hours = data[0]['key_value'];
 var admin_count_7_hours = data[0]['value_col1'];
 
     // $('#data-container').append('<a class="btn btn-primary calculate-btn" type="submit">حساب</a>');
-    $('#data-container').append('<p><label>العدد الموجود: </label>'+administartive_count);
+    $('#data-container').append('<p><label style="margin-left:27px;">العدد الموجود: </label>'+administartive_count);
 
         if(administartive_count > 0){
-        $('#data-container').append('<a class="btn btn-info" id="empshow" style="float: left; margin-top: -52px;"data-toggle="modal" data-target="#employeesModal"> عرض الموظفين</a>');
-        }
+        // $('#data-container').append('<a class="btn btn-info" id="empshow" style="float: left; margin-top: -52px;"data-toggle="modal" data-target="#employeesModal"> عرض الموظفين</a>');
+    $('#data-container').append('<a id="empshow" style="float: left; margin-top: -50px;margin-left: 130px;"data-toggle="modal" data-target="#employeesModal"> موظف</a>');
+    }
     $('#data-container').append('العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
     $('#data-container').append('<br><br>'+'الفائض/الاحتياج: '+'<input type="text" name="needInput" id="needInput">');
     $('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="submit"onclick="SaveData(' + data[0]["key_value"] + ',' + data[0]["calc_type_id"] + ')"  >حفظ النتائج</a>' );
@@ -698,10 +733,11 @@ var admin_count_7_hours = data[0]['value_col1'];
     $('#administrative_calc_busyness_rate').show();
 
     var administartive_count = globalCount;
-    $('#data-container').append('<p><label>العدد الموجود: </label>'+administartive_count);
+    $('#data-container').append('<p><label style="margin-left:27px;">العدد الموجود: </label>'+administartive_count);
         if(administartive_count > 0){
-        $('#data-container').append('<a class="btn btn-info" id="empshow" style="float: left; margin-top: -52px;" data-toggle="modal" data-target="#employeesModal"> عرض الموظفين</a>');
-        }
+        // $('#data-container').append('<a class="btn btn-info" id="empshow" style="float: left; margin-top: -52px;" data-toggle="modal" data-target="#employeesModal"> عرض الموظفين</a>');
+          $('#data-container').append('<a id="empshow" style="float: left; margin-top: -50px;margin-left: 130px;"data-toggle="modal" data-target="#employeesModal"> موظف</a>');
+          }
     $('#data-container').append('العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
     $('#data-container').append('<br><br>'+'الفائض/الاحتياج: '+'<input type="text" name="needInput" id="needInput">');
     $('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="submit" onclick="SaveData(' + data[0]["key_value"] + ',' + data[0]["calc_type_id"] + ')"  >حفظ النتائج</a>' );
