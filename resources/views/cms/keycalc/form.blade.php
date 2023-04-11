@@ -136,7 +136,8 @@
                                     <label for="seven_hours" class="col-sm-4 col-form-label">عدد النقاط بنظام 7
                                         ساعات</label>
                                     <div class="col-sm-8">
-                                        <input type="number" class="form-control inp" id="seven_hours" name="seven_hours">
+                                        <input type="number" class="form-control inp" id="seven_hours"
+                                            name="seven_hours">
                                     </div>
                                 </div>
                                 <a class="btn btn-primary calculate-btn" type="submit">حساب</a>
@@ -162,6 +163,25 @@
                         </form>
                     </div>
                     {{-- End of administrative calculaction form --}}
+
+                    {{--start of nurse-operation room form --}}
+                    <div id="nurseOperation" style="display: none;">
+                        <form class="form-horizontal">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <label for="rooms_count" class="col-sm-4 col-form-label"> عدد الغرف</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control inp" id="rooms_count"
+                                            name="rooms_count">
+                                    </div>
+                                </div>
+                                <a class="btn btn-primary calculate-btn" type="submit">حساب</a>
+                            </div>
+                        </form>
+                    </div>
+
+                    {{--End of nurse-operation room form --}}
+
                     <div id="data-container"></div>
                     <div id="data-input"></div>
 
@@ -444,6 +464,7 @@ $('#jstree').on('changed.jstree', function(e, data) {
     $('#info-container').html('');
     $('#administrativecalc').hide();
     $('#administrative_calc_busyness_rate').hide();
+    $('#nurseOperation').hide();
     $('#calcdetails').text('');
     // if (roleChoice && departmentid || classificationChoice && departmentid ) {
     if (imported_data && departmentid ) {
@@ -648,6 +669,34 @@ $('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="su
     });
 
 
+
+}else if(data[0]['calc_type_id'] == 5)
+{//عدد الغرف-تمريض
+$('#changeable').text('ممرض لكل غرفة');
+$('#nurseOperation').show();
+
+var nurses_count = globalCount;
+var needed_nurses = data[0]['key_value'];
+
+$('#data-container').append('<p><label style="margin-left:27px;">العدد الموجود: </label>'+nurses_count);
+
+    if(nurses_count > 0){
+    $('#data-container').append('<a id="empshow" style="float: left; margin-top: -50px;margin-left: 130px;"data-toggle="modal" data-target="#employeesModal"> موظف</a>');
+    }
+
+    $('#data-container').append('العدد المطلوب: '+'<input type="text" name="resultInput" id="resultInput">');
+    $('#data-container').append('<br><br>'+'الفائض/الاحتياج: '+'<input type="text" name="needInput" id="needInput">');
+    $('#data-container').append('<br>'+'<a class="btn btn-primary save-btn" type="submit" onclick="SaveData(' + data[0]["key_value"] + ',' + data[0]["calc_type_id"] + ')"  >حفظ النتائج</a>' );
+
+    $('.calculate-btn').click(function() {
+         let count_of_operation_rooms = parseInt($('#rooms_count').val()) || 0;
+
+         let result=(count_of_operation_rooms * needed_nurses) ;
+         let need=nurses_count - result ;
+         let dtl='(' + count_of_operation_rooms + '*' + needed_nurses + ')' ;
+         globaldetails=dtl;
+        $('#resultInput').val(result.toFixed(0));
+        $('#needInput').val(need.toFixed(0))});
 
 }else if(data[0]['calc_type_id'] == 6)
 {//صيدلة
