@@ -177,8 +177,7 @@
                     }else{
                         $("#details").val("");
                     }
-                    $("#createdat").val(data.data.created_at);
-
+                    
                      $('#myModal').modal('show');
         }
         });
