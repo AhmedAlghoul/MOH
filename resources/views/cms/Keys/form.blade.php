@@ -90,13 +90,16 @@
                     <br>
                     <label>نوع الاحتساب</label>
                     <br>
-                    <select class="form-control js-example-basic-single " name="calc_type">
+                    <select class="form-control js-example-basic-single " name="calc_type" id="calc_type">
+                        <option value="" selected>اختر نوع الاحتساب</option>
                         @foreach ($constants as $constant)
                         <option value="{{$constant->const_id}}">{{$constant->const_name}}</option>
                         @endforeach
                     </select>
-                    <br>
-                    <label>مفتاح الكادر </label>
+
+                    <div id="labels_inputs_container"></div>
+
+                    {{-- <label>مفتاح الكادر </label>
                     <input type="number" step=any min=0 name="key_value" class="form-control"
                         placeholder="أدخل مفتاح الكادر">
 
@@ -106,7 +109,7 @@
 
                     <label>مفتاح الكادر </label>
                     <input type="number" step=any min=0 name="key_value3" class="form-control"
-                        placeholder="مفتاح الكادر إذا وجد">
+                        placeholder="مفتاح الكادر إذا وجد"> --}}
 
                     <div class="form-group">
                         <label for="body">طريقة حساب المفتاح</label>
@@ -251,6 +254,46 @@ success: function(data) {
     //     });
 
     });
+
+        $(document).ready(function() {
+        $('#calc_type').change(function() {
+            var selected_const_id = $(this).val();
+        $.ajax({
+            url: "{{route('getLabelsInputs')}}",
+            type: "GET",
+            data: {selected_const_id: selected_const_id},
+                success: function(response) {
+                    $('#labels_inputs_container').html(response);
+
+                //    var inputs = response.labels_inputs;
+                //    var $inputs = $(inputs);
+                //    var getbyname = $inputs.find("[name='key_value[]']");
+                //   getbyname.each(function(index) {
+                //         var inputName = $(this).attr('name'); // get the current input's name
+                //         var newName = inputName + (index + 1); // append the current index plus one to the name
+                //         var inputId = $(this).attr('id'); // get the current input's id
+                //         var newId = inputId + (index + 1); // append the current index plus one to the id
+                //         $(this).attr('name', newName); // set the input's new name
+                //         $(this).attr('id', newId); // set the input's new id
+                //         $(this).next('label').attr('for', newId); // update the label's 'for' attribute to match the new id
+                // });
+
+                //     // console.log(inp);
+                //     var updatedInputsHtml = $inputs.prop('outerHTML');
+                //     console.log(updatedInputsHtml);
+                //     $('#labels_inputs_container').html(updatedInputsHtml);
+                    // $('#labels_inputs_container').html(response.labels_inputs);
+                    //  let labelsInputsContainer = response.labels_inputs.getElementsByName('key_value[]');
+                    // $('#labels_inputs_container').html(response.labels_inputs);
+},
+        error: function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus, errorThrown);
+}
+        });
+        });
+        });
+
+
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.3.1/tinymce.min.js"
     integrity="sha512-eV68QXP3t5Jbsf18jfqT8xclEJSGvSK5uClUuqayUbF5IRK8e2/VSXIFHzEoBnNcvLBkHngnnd3CY7AFpUhF7w=="

@@ -107,7 +107,8 @@
                         <br>
                         <select class="form-control js-example-basic-single" name="classification">
                             @foreach ($classifications as $classification)
-                            <option value="{{$classification->job_classification_id}}" @if ($classification->job_classification_id == $key->class_type)
+                            <option value="{{$classification->job_classification_id}}" @if ($classification->
+                                job_classification_id == $key->class_type)
                                 selected @endif>{{$classification->job_classification_name}}</option>
                             @endforeach
                         </select>
@@ -135,16 +136,21 @@
                         <input type="number" step=any min=0 name="key_value" class="form-control"
                             placeholder="أدخل مفتاح الكادر" value="{{$key->key_value}}">
                     </div>
+
+                    @if ($key->value_col1)
                     <div class="form-group">
                         <label>مفتاح الكادر 2</label>
                         <input type="number" step=any min=0 name="key_value2" class="form-control"
                             placeholder="أدخل مفتاح الكادر" value="{{$key->value_col1}}">
                     </div>
+                    @endif
+                    @if ($key->value_col2)
                     <div class="form-group">
                         <label>مفتاح الكادر 3</label>
                         <input type="number" step=any min=0 name="key_value3" class="form-control"
                             placeholder="أدخل مفتاح الكادر" value="{{$key->value_col2}}">
                     </div>
+                    @endif
                     <div class="form-group">
                         <label for="body">طريقة حساب المفتاح</label>
                         <textarea class="form-control tinymce-editor" rows="7" cols=" 8" name="calc_method"

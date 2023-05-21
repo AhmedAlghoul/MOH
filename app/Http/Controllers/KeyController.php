@@ -47,25 +47,34 @@ class KeyController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $request->validate(
-            [
-                // 'role' => 'required',
-                'key_value' => 'required',
-            ],
-            [
-                // 'role.required' => 'الرجاء اختيار الدور',
-                'key_value.required' => 'الرجاء إدخال مفتاح الكادر',
-            ]
-        );
+        // $request->validate(
+        //     [
+        //         // 'role' => 'required',
+        //         'key_value' => 'required',
+        //     ],
+        //     [
+        //         // 'role.required' => 'الرجاء اختيار الدور',
+        //         'key_value.required' => 'الرجاء إدخال مفتاح الكادر',
+        //     ]
+        // );
+        // dd($request->all());
+
         $key = new Key();
         $key->department_id = $request->department;
         $key->role_id = $request->role;
         $key->class_type = $request->classification;
         $key->calc_type_id = $request->calc_type;
-        $key->key_value = $request->key_value;
-        $key->value_col1 = $request->key_value2;
-        $key->value_col2 = $request->key_value3;
+
+        foreach ($request->key_value as $index => $item) {
+            if ($index == 0) {
+                $key->key_value = intval($item);
+            } else {
+                $key->{'value_col' . $index} = intval($item);
+            }
+        }
+        // $key->key_value = $request->key_value;
+        // $key->value_col1 = $request->key_value1;
+        // $key->value_col2 = $request->key_value2;
         $key->calc_method = $request->calc_method;
         $key->save();
 
@@ -89,7 +98,7 @@ class KeyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id,Request $request)
+    public function edit($id, Request $request)
     {
 
         $key = Key::findOrFail($id);
@@ -151,15 +160,9 @@ class KeyController extends Controller
 
             $Classifications_data = Classification::all();
             return response()->json(['classifications' => $Classifications_data]);
-
-
-
-        } elseif ($choice_id == 2)
-        {
+        } elseif ($choice_id == 2) {
             $Job_titles_data = EmployeeRole::all();
             return response()->json(['jobtitles' => $Job_titles_data]);
-
-
         }
 
 
@@ -207,5 +210,63 @@ class KeyController extends Controller
         header('Content-type: application/json');
         header('Access-Control-Allow-Origin: *');
         echo json_encode($arr);
+    }
+
+    // public function getLabelsInputs(Request $request)
+    // {
+    //         global  $global_count_names;
+    //     // Get selected constant ID from the dropdown
+    //     $const_id = $request->input('selected_const_id');
+
+    //     $constant = Constant::where('const_id', $const_id)->first();
+
+    //     $column_names = explode('-', $constant->col_name);
+    //         $global_count_names = $column_names;
+    //     // Loop through the column names and create the corresponding labels and inputs
+    //     $labels_inputs = "";
+    //     foreach ($column_names as $column_name) {
+    //         if ($column_name !== null && $column_name !== "") {
+    //             // Create the label
+    //             $labels_inputs .= "<label for='$column_name'>$column_name:</label>";
+
+    //             // Create the input
+    //             $labels_inputs .= "<input type='number' step=any min=0 name='key_value[]' class='form-control'><br>";
+    //         }
+    //     }
+    //         // return response()->json(['labels_inputs' => $labels_inputs]);
+
+    //         return $labels_inputs;
+    //     }
+
+
+
+    public function getLabelsInputs(Request $request)
+    {
+        global $global_count_names;
+
+        // Get selected constant ID from the dropdown
+        $const_id = $request->input('selected_const_id');
+
+        $constant = Constant::where('const_id', $const_id)->first();
+
+        $column_names = explode('-', $constant->col_name);
+        $global_count_names = $column_names;
+
+        // Loop through the column names and create the corresponding labels and inputs
+        $labels_inputs = "";
+        $index = 0;
+        foreach ($column_names as $column_name) {
+            if ($column_name !== null && $column_name !== "") {
+                // Create the label
+                $labels_inputs .= "<label for='$column_name'>$column_name:</label>";
+
+                // Create the input
+                $labels_inputs .= "<input type='number' step=any min=0 name='key_value[$index]' class='form-control'><br>";
+
+                $index++;
+            }
+        }
+
+        return $labels_inputs;
     }
 }
