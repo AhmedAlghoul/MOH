@@ -83,7 +83,7 @@ class OracleAutoIncrementHelper
     }
 
     /**
-     * Create an object name that limits to 30 chars.
+     * Create an object name that limits to 30 or 128 chars depending on the server version.
      *
      * @param  string  $prefix
      * @param  string  $table
@@ -93,8 +93,9 @@ class OracleAutoIncrementHelper
      */
     private function createObjectName($prefix, $table, $col, $type)
     {
-        // max object name length is 30 chars
-        return substr($prefix.$table.'_'.$col.'_'.$type, 0, 30);
+        $maxLength = $this->connection->getSchemaGrammar()->getMaxLength();
+
+        return substr($prefix.$table.'_'.$col.'_'.$type, 0, $maxLength);
     }
 
     /**
