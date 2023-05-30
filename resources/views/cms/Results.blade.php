@@ -40,7 +40,14 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">عرض النتائج</h3>
-
+                        <div class="btn-group">
+                            <button class="btn btn-app" href="https://google.com">
+                                <i class="fas fa-redo-alt"></i>
+                            </button>
+                            <a class="btn btn-app" href="{{route('resultspdf')}}">
+                                <i class="fas fa-print"></i>
+                            </a>
+                        </div>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
@@ -177,7 +184,7 @@
                     }else{
                         $("#details").val("");
                     }
-                    
+
                      $('#myModal').modal('show');
         }
         });
@@ -270,4 +277,5 @@ Swal.fire({
 });
 }
 </script>
+
 @endsection

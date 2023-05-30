@@ -72,14 +72,14 @@ Route::get('/test', function () {
 
     $roles = EmployeeRole::all();
     $constant = Constant::all();
-    dd($keys);
+    // dd($keys);
     //  dd($users);
     // dd($managment);
     // dd($keys);
     // dd($classifications);
     // dd($managment);
     // dd($roles);
-    // dd($results_show);
+    dd($results_show);
 });
 
 Route::prefix('cms/admin')->middleware('guest:web')->group(function () {
@@ -92,8 +92,6 @@ Route::get('/', [UserAuthController::class, 'showLogin']);
 
 //auth:(guardname)
 Route::prefix('cms/admin')->middleware('auth:web')->group(function () {
-
-
 
     Route::view('parent', 'cms.parent')->name('cms.parent');
     Route::view('/', 'cms.homepage')->name('cms.homepage');
@@ -124,6 +122,7 @@ Route::prefix('cms/admin')->middleware('auth:web')->group(function () {
     //get employee  departments
     Route::get('getEmployeeDepartments', [EmployeeController::class, 'getEmployeeDepartments'])->name('getEmployeeDepartments');
 
+    Route::get('resultspdf', [SaveResultController::class, 'resultPdf'])->name('resultspdf');
     Route::get('logout', [UserAuthController::class, 'logout'])->name('cms.logout');
 
     ################start of system users and user permissions Route ############

@@ -106,7 +106,7 @@
                                             <i class="fas fa-edit"></i>
                                         </a> --}}
                                         {{-- using javascript method -axios --}}
-                                        <a href="#" class="btn btn-danger" onclick="confirmDestroy({{$key->id}})">
+                                        <a href="#" class="btn btn-danger" onclick="confirmDestroy({{$user->id}})">
                                             <i class="fas fa-trash-alt"></i>
                                         </a>
                                     </td>

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Managment;
 use App\Models\SaveResult;
 use Illuminate\Http\Request;
+use \Mpdf\Mpdf as PDF;
+use Illuminate\Support\Facades\Storage;
+
 
 class SaveResultController extends Controller
 {
@@ -163,5 +166,203 @@ class SaveResultController extends Controller
         }
         return $str;
     }
+    //results without borders
 
+    // public function resultPdf()
+    // {
+    //     // Setup a filename
+    //     $documentFileName = "Results.pdf";
+
+    //     // Create the mPDF document
+    //     $document = new PDF([
+    //         'mode' => 'utf-8',
+    //         'format' => 'A4',
+    //         'margin_header' => '3',
+    //         'margin_top' => '20',
+    //         'margin_bottom' => '20',
+    //         'margin_footer' => '2',
+    //     ]);
+
+    //     // Set the font configuration for Arabic support
+    //     $document->autoScriptToLang = true;
+    //     $document->baseScript = 1;
+    //     $document->autoLangToFont = true;
+    //     // Set some header information for output
+    //     $header = [
+    //         'Content-Type' => 'application/pdf',
+    //         'Content-Disposition' => 'inline; filename="' . $documentFileName . '"'
+    //     ];
+
+    //     // Set the RTL configuration
+    //     $document->SetDirectionality('rtl');
+
+    //     // Start the table
+    //     $document->WriteHTML('<table ');
+
+    //     // Add the table header
+    //     $document->WriteHTML('<thead>');
+    //     $document->WriteHTML('<tr>');
+    //     $document->WriteHTML('<th>المسمى الوظيفي</th>');
+    //     $document->WriteHTML('<th>الفئة الوظيفية</th>');
+    //     $document->WriteHTML('<th>القسم</th>');
+    //     $document->WriteHTML('<th>قيمة المفتاح</th>');
+    //     $document->WriteHTML('<th>نوع الاحتساب</th>');
+    //     $document->WriteHTML('<th>عدد الموظفين الحالي</th>');
+    //     $document->WriteHTML('<th>العدد المطلوب</th>');
+    //     $document->WriteHTML('<th>الاحتياج</th>');
+    //     $document->WriteHTML('<th>التفاصيل</th>');
+    //     $document->WriteHTML('<th>تاريخ الادخال</th>');
+    //     $document->WriteHTML('</tr>');
+    //     $document->WriteHTML('</thead>');
+
+
+    //     // Fetch and iterate over your model data
+    //     $modelData = SaveResult::all();
+    //     $document->WriteHTML('<tbody>');
+
+    //     foreach ($modelData as $data) {
+
+    //         // Add a table row with the model data
+    //         $document->WriteHTML('<tr>');
+    //         $document->WriteHTML('<td>');
+    //         if (!empty($data->employeerole)) {
+    //             $document->WriteHTML($data->employeerole->jobtitle_name_ar);
+    //         }
+    //         $document->WriteHTML('</td>');
+
+    //         $document->WriteHTML('<td>');
+    //         if (!empty($data->classification)) {
+    //             $document->WriteHTML($data->classification->job_classification_name);
+    //         }
+    //         $document->WriteHTML('</td>');
+
+    //         $document->WriteHTML('<td>');
+    //         if (!empty($data->departmentname)) {
+    //             $document->WriteHTML($data->departmentname->tb_managment_name);
+    //         }
+    //         $document->WriteHTML('</td>');
+
+    //         $document->WriteHTML('<td>' . $data->key_value . '</td>');
+
+    //         if (!is_null($data->calc_type_id) && !is_null($data->calculatetype)) {
+    //             $document->WriteHTML('<td>' . $data->calculatetype->const_name . '</td>');
+    //         }
+
+    //         $document->WriteHTML('<td>' . $data->emp_count . '</td>');
+    //         $document->WriteHTML('<td>' . $data->result_calc . '</td>');
+    //         $document->WriteHTML('<td>' . $data->need_emp . '</td>');
+    //         $document->WriteHTML('<td>' . $data->dtl_reuslt . '</td>');
+    //         $document->WriteHTML('<td>' . $data->created_at . '</td>');
+    //         $document->WriteHTML('</tr>');
+    //     }
+    //     $document->WriteHTML('</tbody>');
+    //     // End the table
+    //     $document->WriteHTML('</table>');
+
+    //     // Save the PDF to your public storage
+    //     Storage::disk('public')->put($documentFileName, $document->Output($documentFileName, "S"));
+
+    //     // Download the file with the given header information
+    //     return Storage::disk('public')->download($documentFileName, 'Request', $header);
+    // }
+
+    //result with borders
+    public function resultPdf()
+    {
+        // Setup a filename
+        $documentFileName = "Results.pdf";
+
+        // Create the mPDF document
+        $document = new PDF([
+            'mode' => 'utf-8',
+            'format' => 'A4',
+            'margin_header' => '3',
+            'margin_top' => '20',
+            'margin_bottom' => '20',
+            'margin_footer' => '2',
+        ]);
+
+        // Set the font configuration for Arabic support
+        $document->autoScriptToLang = true;
+        $document->baseScript = 1;
+        $document->autoLangToFont = true;
+
+        // Set some header information for output
+        $header = [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="' . $documentFileName . '"'
+        ];
+
+        // Set the RTL configuration
+        $document->SetDirectionality('rtl');
+
+        // Start the table
+        $document->WriteHTML('<table style="border-collapse: collapse; width: 100%; border: 1px solid #000;">');
+
+        // Add the table header
+        $document->WriteHTML('<thead>');
+        $document->WriteHTML('<tr>');
+        $document->WriteHTML('<th style="border: 1px solid #000;">المسمى الوظيفي</th>');
+        $document->WriteHTML('<th style="border: 1px solid #000;">الفئة الوظيفية</th>');
+        $document->WriteHTML('<th style="border: 1px solid #000;">القسم</th>');
+        $document->WriteHTML('<th style="border: 1px solid #000;">قيمة المفتاح</th>');
+        $document->WriteHTML('<th style="border: 1px solid #000;">نوع الاحتساب</th>');
+        $document->WriteHTML('<th style="border: 1px solid #000;">عدد الموظفين الحالي</th>');
+        $document->WriteHTML('<th style="border: 1px solid #000;">العدد المطلوب</th>');
+        $document->WriteHTML('<th style="border: 1px solid #000;">الاحتياج</th>');
+        $document->WriteHTML('<th style="border: 1px solid #000;">التفاصيل</th>');
+        $document->WriteHTML('<th style="border: 1px solid #000;">تاريخ الادخال</th>');
+        $document->WriteHTML('</tr>');
+        $document->WriteHTML('</thead>');
+
+
+        // Fetch and iterate over your model data
+        $modelData = SaveResult::all();
+        $document->WriteHTML('<tbody>');
+
+        foreach ($modelData as $data) {
+
+            // Add a table row with the model data
+            $document->WriteHTML('<tr>');
+            $document->WriteHTML('<td style="border: 1px solid #000;">');
+            if (!empty($data->employeerole)) {
+                $document->WriteHTML($data->employeerole->jobtitle_name_ar);
+            }
+            $document->WriteHTML('</td>');
+
+            $document->WriteHTML('<td style="border: 1px solid #000;">');
+            if (!empty($data->classification)) {
+                $document->WriteHTML($data->classification->job_classification_name);
+            }
+            $document->WriteHTML('</td>');
+
+            $document->WriteHTML('<td style="border: 1px solid #000;">');
+            if (!empty($data->departmentname)) {
+                $document->WriteHTML($data->departmentname->tb_managment_name);
+            }
+            $document->WriteHTML('</td>');
+
+            $document->WriteHTML('<td style="border: 1px solid #000;">' . $data->key_value . '</td>');
+
+            if (!is_null($data->calc_type_id) && !is_null($data->calculatetype)) {
+                $document->WriteHTML('<td style="border: 1px solid #000;">' . $data->calculatetype->const_name . '</td>');
+            }
+
+            $document->WriteHTML('<td style="border: 1px solid #000;">' . $data->emp_count . '</td>');
+            $document->WriteHTML('<td style="border: 1px solid #000;">' . $data->result_calc . '</td>');
+            $document->WriteHTML('<td style="border: 1px solid #000;">' . $data->need_emp . '</td>');
+            $document->WriteHTML('<td style="border: 1px solid #000;">' . $data->dtl_reuslt . '</td>');
+            $document->WriteHTML('<td style="border: 1px solid #000;">' . $data->created_at . '</td>');
+            $document->WriteHTML('</tr>');
+        }
+        $document->WriteHTML('</tbody>');
+        // End the table
+        $document->WriteHTML('</table>');
+
+        // Save the PDF to your public storage
+        Storage::disk('public')->put($documentFileName, $document->Output($documentFileName, "S"));
+
+        // Download the file with the given header information
+        return Storage::disk('public')->download($documentFileName, 'Request', $header);
+    }
 }
